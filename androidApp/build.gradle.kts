@@ -1,3 +1,5 @@
+import Application.Android
+
 plugins {
     id(Plugins.androidApplication)
     id(Plugins.kotlinKapt)
@@ -8,16 +10,16 @@ plugins {
 }
 
 android {
-    compileSdk = Application.compileSdk
+    compileSdk = Android.compileSdk
 
     defaultConfig {
-        applicationId = Application.id
-        minSdk = Application.minSdk
-        targetSdk = Application.targetSdk
-        versionCode = Application.versionCode
-        versionName = Application.versionName
+        applicationId = Android.id
+        minSdk = Android.minSdk
+        targetSdk = Android.targetSdk
+        versionCode = Android.versionCode
+        versionName = Android.versionName
 
-        testInstrumentationRunner = Application.instrumentationRunner
+        testInstrumentationRunner = Android.instrumentationRunner
     }
 
     buildTypes {

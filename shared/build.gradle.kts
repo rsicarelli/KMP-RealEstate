@@ -1,4 +1,8 @@
 @file:Suppress("UNUSED_VARIABLE")
+
+import Application.Android
+import Application.iOS
+import Application.iOS.CocoaPods
 import org.jetbrains.kotlin.gradle.plugin.mpp.KotlinNativeTarget
 
 plugins {
@@ -12,11 +16,11 @@ plugins {
 version = "1.0"
 
 android {
-    compileSdk = Application.compileSdk
-    sourceSets["main"].manifest.srcFile("src/androidMain/AndroidManifest.xml")
+    compileSdk = Android.compileSdk
+    sourceSets["main"].manifest.srcFile(Android.manifestPath)
     defaultConfig {
-        minSdk = Application.minSdk
-        targetSdk = Application.targetSdk
+        minSdk = Android.minSdk
+        targetSdk = Android.targetSdk
     }
     compileOptions {
         sourceCompatibility = JavaVersion.VERSION_1_8
@@ -35,22 +39,23 @@ android {
 kotlin {
     android()
 
-    val iosTarget: (String, KotlinNativeTarget.() -> Unit) -> KotlinNativeTarget = when {
-        System.getenv("SDK_NAME")?.startsWith("iphoneos") == true -> ::iosArm64
-        System.getenv("NATIVE_ARCH")?.startsWith("arm") == true -> ::iosSimulatorArm64
-        else -> ::iosX64
-    }
-
-    iosTarget("ios") {}
-
-    cocoapods {
-        summary = "Home Hunt shared module"
-        homepage = "www.homehunt.com"
-        ios.deploymentTarget = "14.1"
-        podfile = project.file("../iosApp/Podfile")
-        framework {
-            baseName = "shared"
+    with(iOS) {
+        val iosTarget: (String, KotlinNativeTarget.() -> Unit) -> KotlinNativeTarget = when {
+            System.getenv("SDK_NAME")?.startsWith(iPhoneOS) == true -> ::iosArm64
+            System.getenv("NATIVE_ARCH")?.startsWith(arm) == true -> ::iosSimulatorArm64
+            else -> ::iosX64
         }
+
+        iosTarget(ios) {}
+
+        cocoapods {
+            summary = CocoaPods.summary
+            homepage = CocoaPods.homepage
+            ios.deploymentTarget = CocoaPods.deploymentTarget
+            podfile = project.file(CocoaPods.podFilePath)
+            framework { baseName = CocoaPods.frameworkName }
+        }
+
     }
 
     sourceSets {
@@ -77,7 +82,7 @@ kotlin {
                 implementation("junit:junit:4.13.2")
             }
         }
-        val iosMain by getting  {
+        val iosMain by getting {
             dependencies {
                 implementation(SQLDelight.nativeDriver)
             }
