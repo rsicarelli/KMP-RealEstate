@@ -1,4 +1,8 @@
 object Application {
+    const val group = "com.homehunt"
+    const val version = "0.1"
+    const val srcSet = "main"
+
     object Android {
         const val id = "com.rsicarelli.homehunt"
         const val minSdk = 21

@@ -9,15 +9,17 @@ plugins {
     kotlin(KotlinPlugins.multiplatform)
     kotlin(KotlinPlugins.cocoapods)
     kotlin(KotlinPlugins.serialization) version Kotlin.version
+    id(Plugins.apollo).version(Apollo.version)
     id(Plugins.androidLibrary)
     id(Plugins.sqlDelight)
 }
 
-version = "1.0"
+group = Application.group
+version = Application.version
 
 android {
     compileSdk = Android.compileSdk
-    sourceSets["main"].manifest.srcFile(Android.manifestPath)
+    sourceSets[Application.srcSet].manifest.srcFile(Android.manifestPath)
     defaultConfig {
         minSdk = Android.minSdk
         targetSdk = Android.targetSdk
@@ -26,6 +28,8 @@ android {
         sourceCompatibility = JavaVersion.VERSION_1_8
         targetCompatibility = JavaVersion.VERSION_1_8
     }
+
+    // workaround for https://youtrack.jetbrains.com/issue/KT-43944
     configurations {
         create("androidTestApi")
         create("androidTestDebugApi")
