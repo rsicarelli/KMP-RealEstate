@@ -95,7 +95,7 @@ kotlin {
     }
 }
 
-//apollo {
-//    // instruct the compiler to generate Kotlin models
-//    generateKotlinModels.set(true)
-//}
+apollo {
+    // instruct the compiler to generate Kotlin models
+    generateKotlinModels.set(true)
+}
