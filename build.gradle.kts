@@ -1,22 +1,19 @@
+// Top-level build file where you can add configuration options common to all sub-projects/modules.
 buildscript {
     repositories {
-        gradlePluginPortal()
-        google()
         mavenCentral()
+        google()
     }
+
     dependencies {
-        classpath("org.jetbrains.kotlin:kotlin-gradle-plugin:1.5.31")
-        classpath("com.android.tools.build:gradle:7.1.0-beta01")
+        classpath(Build.androidBuildTools)
+        classpath(Build.kotlinGradlePlugin)
+        classpath(Build.hiltAndroid)
+        classpath(Build.googleServicesPlugin)
+        classpath(Build.googleSecretesPlugin)
     }
 }
 
-allprojects {
-    repositories {
-        google()
-        mavenCentral()
-    }
-}
-
-tasks.register("clean", Delete::class) {
+tasks.register<Delete>("clean").configure {
     delete(rootProject.buildDir)
 }

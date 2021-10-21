@@ -1,0 +1,43 @@
+<resources>
+    <string name="app_name">Home Hunt</string>
+    <string name="error_unknown">Something wrong is not right</string>
+    <string name="welcome">Welcome to HomeHunt app</string>
+    <string name="do_login">Please do login to start using the app</string>
+    <string name="results">results</string>
+    <string name="price_range">Price range</string>
+    <string name="surface_range">Surface range</string>
+    <string name="bathrooms">Bathrooms</string>
+    <string name="video_available">Watch video</string>
+    <string name="about_this_property">About this property</string>
+    <string name="see_on_web">See original listing</string>
+    <string name="see_pdf">Open pdf file</string>
+    <string name="location_description">Location description</string>
+    <string name="favourite">Favourite</string>
+    <string name="unfavourite">Unfavourite</string>
+    <string name="favourites">favourites</string>
+    <string name="home">Home</string>
+    <string name="inactive">Inactive</string>
+    <string name="rented">Rented</string>
+    <string name="reserved">Reserved</string>
+    <string name="calculating_results">Calculating results&#8230;</string>
+    <string name="visibility">Visibility</string>
+    <string name="go_back">Go back</string>
+    <string name="bedrooms">Bedrooms</string>
+    <string name="filter">Filter</string>
+    <string name="google">Google</string>
+    <string name="show_seen">Show seen properties</string>
+    <string name="show_longer_term_only">Show long term only</string>
+    <string name="loading_app">Loading app</string>
+    <string name="of">of</string>
+    <string name="see_less">See less</string>
+    <string name="see_more">" &#8230; See more"</string>
+    <string name="no_results">No results found</string>
+    <string name="show_only_available">Show only available</string>
+    <string name="map">Map</string>
+    <string name="error_loading_properties">Error trying to load properties</string>
+    <string name="viewed">Viewed</string>
+    <plurals name="see_results_plurals">
+        <item quantity="one">See %d result</item>
+        <item quantity="other">See %d results</item>
+    </plurals>
+</resources>

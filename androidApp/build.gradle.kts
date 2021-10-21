@@ -1,27 +1,99 @@
 plugins {
     id("com.android.application")
-    kotlin("android")
-}
-
-dependencies {
-    implementation(project(":shared"))
-    implementation("com.google.android.material:material:1.3.0")
-    implementation("androidx.appcompat:appcompat:1.2.0")
-    implementation("androidx.constraintlayout:constraintlayout:2.0.4")
+    id("kotlin-kapt")
+    id("dagger.hilt.android.plugin")
+    id("com.google.gms.google-services")
+    id("com.google.android.libraries.mapsplatform.secrets-gradle-plugin")
+    kotlin(Plugins.android)
 }
 
 android {
-    compileSdkVersion(31)
+    compileSdk = 31
+
     defaultConfig {
-        applicationId = "com.rsicarelli.homehunt_kmm.android"
-        minSdkVersion(21)
-        targetSdkVersion(31)
-        versionCode = 1
-        versionName = "1.0"
+        applicationId = Application.id
+        minSdk = Application.minSdk
+        targetSdk = Application.targetSdk
+        versionCode = Application.versionCode
+        versionName = Application.versionName
+
+        testInstrumentationRunner = Application.instrumentationRunner
     }
+
     buildTypes {
         getByName("release") {
             isMinifyEnabled = false
         }
+    }
+
+    compileOptions {
+        sourceCompatibility = JavaVersion.VERSION_11
+        targetCompatibility = JavaVersion.VERSION_11
+    }
+
+    kotlinOptions {
+        jvmTarget = "11"
+    }
+
+    buildFeatures {
+        compose = true
+        viewBinding = true
+    }
+
+    composeOptions {
+        kotlinCompilerExtensionVersion = Compose.composeVersion
+    }
+}
+
+dependencies {
+    implementation(Accompanist.animations)
+    implementation(Accompanist.insets)
+    implementation(Accompanist.pager)
+    implementation(Accompanist.pagerIndicators)
+    implementation(Accompanist.systemUiController)
+
+    implementation(AndroidX.androidXCore)
+    implementation(AndroidX.androidXAppCompat)
+    implementation(AndroidX.androidXKTX)
+    runtimeOnly(AndroidX.lifecycleRuntimeKtx)
+
+    implementation(Coil.coil)
+
+    implementation(Compose.activity)
+    implementation(Compose.ui)
+    implementation(Compose.material)
+    implementation(Compose.tooling)
+    implementation(Compose.navigation)
+    implementation(Compose.hiltNavigation)
+    implementation(Compose.constraintLayout)
+    implementation(Compose.utils)
+
+    androidTestImplementation(ComposeTest.uiTestJunit4)
+    debugImplementation(ComposeTest.uiTestManifest)
+
+    implementation(Dependencies.coroutines)
+    implementation(Dependencies.touchImageView)
+    implementation(Dependencies.timber)
+
+    implementation(platform(Firebase.bom))
+    implementation((Firebase.firestore))
+    implementation(Firebase.auth)
+    implementation(Firebase.playServicesAuth)
+
+    implementation(Google.material)
+    implementation(Google.maps)
+    implementation(Google.mapsKtx)
+    implementation(Google.mapsUtilsKtx)
+
+    implementation(Hilt.android)
+    kapt(Hilt.compiler)
+
+    androidTestImplementation(HiltTest.hiltAndroidTesting)
+    kaptAndroidTest(Hilt.compiler)
+}
+
+tasks.withType<org.jetbrains.kotlin.gradle.tasks.KotlinCompile> {
+    kotlinOptions {
+        freeCompilerArgs = freeCompilerArgs + "-Xopt-in=kotlin.RequiresOptIn"
     }
 }
