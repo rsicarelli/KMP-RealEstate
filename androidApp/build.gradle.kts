@@ -1,14 +1,14 @@
 plugins {
-    id("com.android.application")
-    id("kotlin-kapt")
-    id("dagger.hilt.android.plugin")
-    id("com.google.gms.google-services")
-    id("com.google.android.libraries.mapsplatform.secrets-gradle-plugin")
+    id(Plugins.androidApplication)
+    id(Plugins.kotlinKapt)
+    id(Plugins.hilt)
+    id(Plugins.googleServices)
+    id(Plugins.secretsGradle)
     kotlin(Plugins.android)
 }
 
 android {
-    compileSdk = 31
+    compileSdk = Application.compileSdk
 
     defaultConfig {
         applicationId = Application.id
