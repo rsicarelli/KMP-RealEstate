@@ -11,6 +11,7 @@ buildscript {
         classpath(Build.hiltAndroid)
         classpath(Build.googleServicesPlugin)
         classpath(Build.googleSecretesPlugin)
+        classpath(Build.sqlDelightGradlePlugin)
     }
 }
 

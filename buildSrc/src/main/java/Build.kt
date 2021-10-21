@@ -14,4 +14,6 @@ object Build {
     private const val googleSecretsVersion = "2.0.0"
     const val googleSecretesPlugin =
         "com.google.android.libraries.mapsplatform.secrets-gradle-plugin:secrets-gradle-plugin:$googleSecretsVersion"
+
+    const val sqlDelightGradlePlugin = "com.squareup.sqldelight:gradle-plugin:${SQLDelight.sqlDelightVersion}"
 }

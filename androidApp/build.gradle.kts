@@ -71,7 +71,6 @@ dependencies {
     androidTestImplementation(ComposeTest.uiTestJunit4)
     debugImplementation(ComposeTest.uiTestManifest)
 
-    implementation(Dependencies.coroutines)
     implementation(Dependencies.touchImageView)
     implementation(Dependencies.timber)
 
@@ -87,6 +86,8 @@ dependencies {
 
     implementation(Hilt.android)
     kapt(Hilt.compiler)
+
+    implementation(Kotlin.coroutines)
 
     androidTestImplementation(HiltTest.hiltAndroidTesting)
     kaptAndroidTest(Hilt.compiler)

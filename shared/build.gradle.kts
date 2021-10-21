@@ -1,12 +1,36 @@
+@file:Suppress("UNUSED_VARIABLE")
 import org.jetbrains.kotlin.gradle.plugin.mpp.KotlinNativeTarget
 
 plugins {
-    kotlin("multiplatform")
-    kotlin("native.cocoapods")
-    id("com.android.library")
+    kotlin(KotlinPlugins.multiplatform)
+    kotlin(KotlinPlugins.cocoapods)
+    kotlin(KotlinPlugins.serialization) version Kotlin.version
+    id(Plugins.androidLibrary)
+    id(Plugins.sqlDelight)
 }
 
 version = "1.0"
+
+android {
+    compileSdk = Application.compileSdk
+    sourceSets["main"].manifest.srcFile("src/androidMain/AndroidManifest.xml")
+    defaultConfig {
+        minSdk = Application.minSdk
+        targetSdk = Application.targetSdk
+    }
+    compileOptions {
+        sourceCompatibility = JavaVersion.VERSION_1_8
+        targetCompatibility = JavaVersion.VERSION_1_8
+    }
+    configurations {
+        create("androidTestApi")
+        create("androidTestDebugApi")
+        create("androidTestReleaseApi")
+        create("testApi")
+        create("testDebugApi")
+        create("testReleaseApi")
+    }
+}
 
 kotlin {
     android()
@@ -23,35 +47,46 @@ kotlin {
         summary = "Home Hunt shared module"
         homepage = "www.homehunt.com"
         ios.deploymentTarget = "14.1"
-        frameworkName = "shared"
         podfile = project.file("../iosApp/Podfile")
+        framework {
+            baseName = "shared"
+        }
     }
-    
+
     sourceSets {
-        val commonMain by getting
+        val commonMain by getting {
+            dependencies {
+                implementation(SQLDelight.runtime)
+                implementation(Apollo.runtime)
+            }
+        }
         val commonTest by getting {
             dependencies {
                 implementation(kotlin("test-common"))
                 implementation(kotlin("test-annotations-common"))
             }
         }
-        val androidMain by getting
+        val androidMain by getting {
+            dependencies {
+                implementation(SQLDelight.androidDriver)
+            }
+        }
         val androidTest by getting {
             dependencies {
                 implementation(kotlin("test-junit"))
                 implementation("junit:junit:4.13.2")
             }
         }
-        val iosMain by getting
+        val iosMain by getting  {
+            dependencies {
+                implementation(SQLDelight.nativeDriver)
+            }
+        }
         val iosTest by getting
     }
 }
 
-android {
-    compileSdkVersion(31)
-    sourceSets["main"].manifest.srcFile("src/androidMain/AndroidManifest.xml")
-    defaultConfig {
-        minSdkVersion(21)
-        targetSdkVersion(31)
-    }
-}
+//apollo {
+//    // instruct the compiler to generate Kotlin models
+//    generateKotlinModels.set(true)
+//}
