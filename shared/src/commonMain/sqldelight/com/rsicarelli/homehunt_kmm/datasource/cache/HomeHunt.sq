@@ -1,4 +1,4 @@
-import android.location.Location;
+import com.rsicarelli.homehunt_kmm.domain.model.Location;
 import kotlin.collections.List;
 
 CREATE TABLE _Property(
@@ -10,7 +10,7 @@ CREATE TABLE _Property(
     dormCount INTEGER,
     fullDescription TEXT,
     isActive INTEGER AS Boolean,
-    location TEXT AS Location,
+    location TEXT AS Location NOT NULL,
     locationDescription TEXT,
     pdfUrl TEXT,
     photoGalleryUrls TEXT AS List<String> NOT NULL,

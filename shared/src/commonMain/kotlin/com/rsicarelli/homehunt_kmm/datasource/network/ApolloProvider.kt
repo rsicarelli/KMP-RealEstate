@@ -1,4 +1,4 @@
-package com.rsicarelli.homehunt_kmm
+package com.rsicarelli.homehunt_kmm.datasource.network
 
 import com.apollographql.apollo.ApolloClient
 import com.apollographql.apollo.api.ApolloExperimental
