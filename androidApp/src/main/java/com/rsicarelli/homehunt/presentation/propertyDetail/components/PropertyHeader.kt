@@ -10,7 +10,7 @@ import androidx.compose.ui.unit.sp
 import androidx.constraintlayout.compose.ConstraintLayout
 import com.rsicarelli.homehunt.R
 import com.rsicarelli.homehunt.core.util.toCurrency
-import com.rsicarelli.homehunt.domain.model.Property
+import com.rsicarelli.homehunt_kmm.domain.model.Property
 import com.rsicarelli.homehunt.presentation.components.IconText
 import com.rsicarelli.homehunt.ui.theme.Size_Regular
 import com.rsicarelli.homehunt.ui.theme.Size_Small

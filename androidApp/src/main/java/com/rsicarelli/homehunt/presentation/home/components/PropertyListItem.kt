@@ -10,12 +10,10 @@ import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.material.Card
 import androidx.compose.material.MaterialTheme
-import androidx.compose.material.Surface
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.clip
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
@@ -25,8 +23,8 @@ import com.google.accompanist.pager.ExperimentalPagerApi
 import com.google.accompanist.pager.rememberPagerState
 import com.rsicarelli.homehunt.R
 import com.rsicarelli.homehunt.core.util.toCurrency
-import com.rsicarelli.homehunt.domain.model.Property
-import com.rsicarelli.homehunt.domain.model.toTag
+import com.rsicarelli.homehunt_kmm.domain.model.Property
+import com.rsicarelli.homehunt_kmm.domain.model.toTag
 import com.rsicarelli.homehunt.presentation.components.FavouritableIconButton
 import com.rsicarelli.homehunt.presentation.components.GalleryCarousel
 import com.rsicarelli.homehunt.presentation.components.IconText

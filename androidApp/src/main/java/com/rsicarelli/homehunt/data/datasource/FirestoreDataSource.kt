@@ -2,9 +2,9 @@ package com.rsicarelli.homehunt.data.datasource
 
 import com.google.firebase.firestore.FirebaseFirestore
 import com.rsicarelli.homehunt.data.datasource.FirestoreDataSourceImpl.FirestoreMap.PROPERTY_COLLECTION
-import com.rsicarelli.homehunt.domain.model.Mapper
-import com.rsicarelli.homehunt.domain.model.Property
-import com.rsicarelli.homehunt.domain.model.toProperty
+import com.rsicarelli.homehunt_kmm.domain.model.Mapper
+import com.rsicarelli.homehunt_kmm.domain.model.Property
+import com.rsicarelli.homehunt_kmm.domain.model.toProperty
 import kotlinx.coroutines.*
 import kotlinx.coroutines.channels.awaitClose
 import kotlinx.coroutines.flow.*

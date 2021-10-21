@@ -1,7 +1,7 @@
 package com.rsicarelli.homehunt.domain.usecase
 
 import com.rsicarelli.homehunt.core.model.UseCase
-import com.rsicarelli.homehunt.domain.model.Property
+import com.rsicarelli.homehunt_kmm.domain.model.Property
 import com.rsicarelli.homehunt.domain.model.SearchOption
 import com.rsicarelli.homehunt.domain.usecase.FilterPropertiesUseCase.Outcome
 import com.rsicarelli.homehunt.domain.usecase.FilterPropertiesUseCase.Request

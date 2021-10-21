@@ -48,6 +48,8 @@ android {
 }
 
 dependencies {
+    implementation(project(":shared"))
+
     implementation(Accompanist.animations)
     implementation(Accompanist.insets)
     implementation(Accompanist.pager)

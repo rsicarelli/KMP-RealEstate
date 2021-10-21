@@ -1,8 +1,7 @@
 package com.rsicarelli.homehunt.presentation.home
 
 import com.rsicarelli.homehunt.core.model.ProgressBarState
-import com.rsicarelli.homehunt.core.model.UiEvent
-import com.rsicarelli.homehunt.domain.model.Property
+import com.rsicarelli.homehunt_kmm.domain.model.Property
 
 data class HomeState(
     val properties: List<Property> = emptyList(),

@@ -1,9 +1,9 @@
 package com.rsicarelli.homehunt.domain.strategy
 
-import com.rsicarelli.homehunt.domain.model.Property
-import com.rsicarelli.homehunt.domain.model.Property.Tag
+import com.rsicarelli.homehunt_kmm.domain.model.Property
+import com.rsicarelli.homehunt_kmm.domain.model.Property.Tag
 import com.rsicarelli.homehunt.domain.model.SearchOption
-import com.rsicarelli.homehunt.domain.model.toTag
+import com.rsicarelli.homehunt_kmm.domain.model.toTag
 
 interface Filter {
     fun applyFilter(searchOption: SearchOption, property: Property): Boolean

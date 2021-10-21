@@ -8,9 +8,8 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import com.google.accompanist.pager.ExperimentalPagerApi
 import com.rsicarelli.homehunt.R
-import com.rsicarelli.homehunt.domain.model.Property
+import com.rsicarelli.homehunt_kmm.domain.model.Property
 import com.rsicarelli.homehunt.presentation.components.GalleryCarousel
-import com.rsicarelli.homehunt.ui.theme.GalleryItemSizeLarger
 
 @OptIn(
     ExperimentalMaterialApi::class,
@@ -33,7 +32,7 @@ fun PropertyDetail(
                 onOpenGallery = onOpenGallery,
                 footer = { currentPage ->
                     PropertyGalleryCarouselFooter(
-                        hasVideo = property.videoUrl != null && property.videoUrl.isNotEmpty(),
+                        hasVideo = property.videoUrl != null && property.videoUrl?.isNotEmpty() ?: false,
                         currentPage = currentPage,
                         onPlayVideo = onPlayVideo,
                         gallerySize = property.photoGalleryUrls.size

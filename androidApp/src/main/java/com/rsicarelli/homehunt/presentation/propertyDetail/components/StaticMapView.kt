@@ -25,7 +25,7 @@ import com.google.android.gms.maps.model.MarkerOptions
 import com.google.maps.android.ktx.awaitMap
 import com.rsicarelli.homehunt.R
 import com.rsicarelli.homehunt.core.util.getBitmapDescriptor
-import com.rsicarelli.homehunt.domain.model.Property
+import com.rsicarelli.homehunt_kmm.domain.model.Property
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch

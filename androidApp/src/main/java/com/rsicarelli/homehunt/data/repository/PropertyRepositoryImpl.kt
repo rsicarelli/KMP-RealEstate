@@ -1,7 +1,7 @@
 package com.rsicarelli.homehunt.data.repository
 
 import com.rsicarelli.homehunt.data.datasource.FirestoreDataSource
-import com.rsicarelli.homehunt.domain.model.Property
+import com.rsicarelli.homehunt_kmm.domain.model.Property
 import com.rsicarelli.homehunt.domain.repository.PropertyRepository
 import kotlinx.coroutines.flow.Flow
 import javax.inject.Inject

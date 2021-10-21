@@ -1,7 +1,7 @@
 package utils
 
-import com.rsicarelli.homehunt.domain.model.Location
-import com.rsicarelli.homehunt.domain.model.Property
+import com.rsicarelli.homehunt_kmm.domain.model.Location
+import com.rsicarelli.homehunt_kmm.domain.model.Property
 
 object Fixtures {
 

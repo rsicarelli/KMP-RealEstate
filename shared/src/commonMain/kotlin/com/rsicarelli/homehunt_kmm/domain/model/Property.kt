@@ -1,7 +1,4 @@
-package com.rsicarelli.homehunt.domain.model
-
-import com.google.firebase.auth.ktx.auth
-import com.google.firebase.ktx.Firebase
+package com.rsicarelli.homehunt_kmm.domain.model
 
 data class Property(
     val reference: String,
@@ -29,7 +26,7 @@ data class Property(
 
     //TODO Refactor, should not be here
     fun viewedByMe(): Boolean {
-        return Firebase.auth.currentUser?.uid in viewedBy
+        return false
     }
 
     sealed class Tag(val identifier: String) {
@@ -49,7 +46,7 @@ data class Location(
 )
 
 fun String?.toTag(): Property.Tag = this?.let {
-    return@let when (it.uppercase()) {
+    return@let when (it) {
         Property.Tag.NEW.identifier -> Property.Tag.NEW
         Property.Tag.RESERVED.identifier -> Property.Tag.RESERVED
         Property.Tag.RENTED.identifier -> Property.Tag.RENTED

@@ -4,6 +4,7 @@ import com.google.firebase.auth.ktx.auth
 import com.google.firebase.ktx.Firebase
 import com.rsicarelli.homehunt.domain.strategy.Filter
 import com.rsicarelli.homehunt.domain.strategy.allFilters
+import com.rsicarelli.homehunt_kmm.domain.model.Property
 
 data class SearchOption(
     val priceRange: Pair<Double, Double>,
