@@ -99,3 +99,9 @@ apollo {
     // instruct the compiler to generate Kotlin models
     generateKotlinModels.set(true)
 }
+
+tasks.withType<org.jetbrains.kotlin.gradle.tasks.KotlinCompile> {
+    kotlinOptions {
+        freeCompilerArgs = freeCompilerArgs + "-Xopt-in=kotlin.RequiresOptIn"
+    }
+}
