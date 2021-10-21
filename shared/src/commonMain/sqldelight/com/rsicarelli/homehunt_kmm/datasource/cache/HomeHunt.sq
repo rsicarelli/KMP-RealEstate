@@ -1,0 +1,30 @@
+import android.location.Location;
+import kotlin.collections.List;
+
+CREATE TABLE _Property(
+    _id TEXT NOT NULL PRIMARY KEY,
+    avatarUrl TEXT NOT NULL,
+    bathCount INTEGER,
+    characteristics TEXT AS List<String> NOT NULL,
+    createdAt TEXT NOT NULL,
+    dormCount INTEGER,
+    fullDescription TEXT,
+    isActive INTEGER AS Boolean,
+    location TEXT AS Location,
+    locationDescription TEXT,
+    pdfUrl TEXT,
+    photoGalleryUrls TEXT AS List<String> NOT NULL,
+    price REAL AS Double NOT NULL,
+    propertyUrl TEXT NOT NULL,
+    surface INTEGER NOT NULL,
+    tag TEXT,
+    title TEXT NOT NULL,
+    videoUrl TEXT,
+    isUpVoted INTEGER AS Boolean NOT NULL DEFAULT 0,
+    isFavourited INTEGER AS Boolean NOT NULL DEFAULT 0
+);
+
+CREATE TABLE UserState (
+   userId TEXT NOT NULL,
+   token TEXT NOT NULL
+);

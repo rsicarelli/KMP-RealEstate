@@ -3,6 +3,7 @@
 import Application.Android
 import Application.iOS
 import Application.iOS.CocoaPods
+import SQLDelight.Database
 import org.jetbrains.kotlin.gradle.plugin.mpp.KotlinNativeTarget
 
 plugins {
@@ -95,9 +96,13 @@ kotlin {
     }
 }
 
-apollo {
-    // instruct the compiler to generate Kotlin models
-    generateKotlinModels.set(true)
+apollo { generateKotlinModels.set(true) }
+
+sqldelight {
+    database(Database.name) {
+        packageName = Database.packageName
+        sourceFolders = listOf(Database.sourceFolder)
+    }
 }
 
 tasks.withType<org.jetbrains.kotlin.gradle.tasks.KotlinCompile> {
