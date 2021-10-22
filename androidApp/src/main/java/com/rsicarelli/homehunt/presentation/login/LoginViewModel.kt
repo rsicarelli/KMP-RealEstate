@@ -2,10 +2,10 @@ package com.rsicarelli.homehunt.presentation.login
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.rsicarelli.homehunt.core.model.ProgressBarState
-import com.rsicarelli.homehunt.core.model.UiEvent.MessageToUser
-import com.rsicarelli.homehunt.core.model.UiEvent.Navigate
-import com.rsicarelli.homehunt.core.model.UiText
+import com.rsicarelli.homehunt.R
+import com.rsicarelli.homehunt_kmm.core.model.ProgressBarState
+import com.rsicarelli.homehunt_kmm.core.model.UiEvent.MessageToUser
+import com.rsicarelli.homehunt_kmm.core.model.UiEvent.Navigate
 import com.rsicarelli.homehunt.domain.usecase.SignInUseCase
 import com.rsicarelli.homehunt.ui.navigation.Screen
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -64,7 +64,7 @@ class LoginViewModel @Inject constructor(
 
     fun onError(exception: Throwable? = null) {
         Timber.e(exception)
-        _state.value = state.value.copy(uiEvent = MessageToUser(UiText.unknownError()))
+        _state.value = state.value.copy(uiEvent = MessageToUser(R.string.error_unknown))
     }
 
     private inline fun withValidCredentials(action: () -> Unit) {

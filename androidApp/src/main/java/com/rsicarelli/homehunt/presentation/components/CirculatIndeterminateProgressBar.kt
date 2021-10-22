@@ -9,8 +9,8 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
-import com.rsicarelli.homehunt.core.model.ProgressBarState
-import com.rsicarelli.homehunt.core.model.isLoading
+import com.rsicarelli.homehunt_kmm.core.model.ProgressBarState
+import com.rsicarelli.homehunt_kmm.core.model.isLoading
 import com.rsicarelli.homehunt.ui.theme.HomeHuntTheme
 
 @Composable

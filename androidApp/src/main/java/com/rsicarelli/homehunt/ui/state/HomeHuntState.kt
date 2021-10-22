@@ -1,26 +1,25 @@
-package com.rsicarelli.homehunt.core.model
+package com.rsicarelli.homehunt.ui.state
 
-import android.content.Context
 import androidx.compose.animation.ExperimentalAnimationApi
 import androidx.compose.material.ScaffoldState
 import androidx.compose.material.SnackbarDuration
 import androidx.compose.material.rememberScaffoldState
-import androidx.compose.runtime.*
-import androidx.compose.ui.platform.LocalContext
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.currentBackStackEntryAsState
-import androidx.navigation.compose.rememberNavController
 import com.google.accompanist.navigation.animation.rememberAnimatedNavController
-import com.rsicarelli.homehunt.core.util.asString
 import com.rsicarelli.homehunt.ui.navigation.bottomBarDestinations
+import com.rsicarelli.homehunt_kmm.core.model.UiEvent
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
 
 class HomeHuntState(
     private val coroutineScope: CoroutineScope,
     val scaffoldState: ScaffoldState,
-    val navController: NavHostController,
-    val context: Context,
+    val navController: NavHostController
 ) {
 
     val shouldShowBottomBar: Boolean
@@ -29,10 +28,10 @@ class HomeHuntState(
             return navBackStackEntry?.destination?.route in bottomBarDestinations
         }
 
-    fun showMessageToUser(uiText: UiText) {
+    fun showMessageToUser(message: String) {
         coroutineScope.launch {
             scaffoldState.snackbarHostState.showSnackbar(
-                message = uiText.asString(context),
+                message = message,
                 duration = SnackbarDuration.Short
             )
         }
@@ -63,7 +62,6 @@ fun rememberHomeHuntState(
     navController: NavHostController = rememberAnimatedNavController(),
     scaffoldState: ScaffoldState = rememberScaffoldState(),
     coroutineScope: CoroutineScope = rememberCoroutineScope(),
-    context: Context = LocalContext.current,
-): HomeHuntState = remember(navController, scaffoldState, coroutineScope, context) {
-    HomeHuntState(coroutineScope, scaffoldState, navController, context)
+): HomeHuntState = remember(navController, scaffoldState, coroutineScope) {
+    HomeHuntState(coroutineScope, scaffoldState, navController)
 }

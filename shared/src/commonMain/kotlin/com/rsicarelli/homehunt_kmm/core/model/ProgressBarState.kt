@@ -1,4 +1,4 @@
-package com.rsicarelli.homehunt.core.model
+package com.rsicarelli.homehunt_kmm.core.model
 
 sealed class ProgressBarState {
     object Loading : ProgressBarState()

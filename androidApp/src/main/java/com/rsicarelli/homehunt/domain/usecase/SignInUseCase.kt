@@ -1,9 +1,7 @@
 package com.rsicarelli.homehunt.domain.usecase
 
-import com.google.firebase.auth.AuthCredential
 import com.google.firebase.auth.FirebaseAuth
-import com.rsicarelli.homehunt.core.model.UseCase
-import com.rsicarelli.homehunt.core.util.await
+import com.rsicarelli.homehunt_kmm.core.model.UseCase
 import com.rsicarelli.homehunt.domain.usecase.SignInUseCase.Outcome
 import com.rsicarelli.homehunt.domain.usecase.SignInUseCase.Request
 import kotlinx.coroutines.Dispatchers

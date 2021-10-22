@@ -2,7 +2,7 @@ package com.rsicarelli.homehunt.presentation.filter
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.rsicarelli.homehunt.core.model.UiEvent
+import com.rsicarelli.homehunt_kmm.core.model.UiEvent
 import com.rsicarelli.homehunt.domain.usecase.GetFilterPreferencesUseCase
 import com.rsicarelli.homehunt.domain.usecase.PreviewFilterResultUseCase
 import com.rsicarelli.homehunt.domain.usecase.SaveFilterPreferencesUseCase

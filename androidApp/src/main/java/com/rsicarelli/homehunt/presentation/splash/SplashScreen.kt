@@ -14,8 +14,8 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.rsicarelli.homehunt.R
-import com.rsicarelli.homehunt.core.model.HomeHuntState
-import com.rsicarelli.homehunt.core.model.UiEvent
+import com.rsicarelli.homehunt.ui.state.HomeHuntState
+import com.rsicarelli.homehunt_kmm.core.model.UiEvent
 
 @Composable
 fun SplashScreen(

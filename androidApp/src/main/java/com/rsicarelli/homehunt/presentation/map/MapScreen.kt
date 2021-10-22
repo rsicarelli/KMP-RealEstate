@@ -17,7 +17,7 @@ import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.flowWithLifecycle
-import com.rsicarelli.homehunt.core.model.HomeHuntState
+import com.rsicarelli.homehunt.ui.state.HomeHuntState
 import com.rsicarelli.homehunt.presentation.components.FilterFab
 import com.rsicarelli.homehunt.presentation.components.rememberOnLifecycle
 import com.rsicarelli.homehunt.presentation.home.components.PropertyListItem

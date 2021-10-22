@@ -2,7 +2,7 @@ package com.rsicarelli.homehunt.presentation.home
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.rsicarelli.homehunt.core.model.ProgressBarState
+import com.rsicarelli.homehunt_kmm.core.model.ProgressBarState
 import com.rsicarelli.homehunt_kmm.domain.model.Property
 import com.rsicarelli.homehunt.domain.usecase.GetFilteredPropertiesUseCase
 import com.rsicarelli.homehunt.domain.usecase.MarkAsViewedUseCase

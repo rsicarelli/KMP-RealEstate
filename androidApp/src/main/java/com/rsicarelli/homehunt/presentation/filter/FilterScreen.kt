@@ -15,8 +15,8 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.flowWithLifecycle
 import com.google.accompanist.insets.statusBarsPadding
-import com.rsicarelli.homehunt.core.model.HomeHuntState
-import com.rsicarelli.homehunt.core.model.UiEvent
+import com.rsicarelli.homehunt.ui.state.HomeHuntState
+import com.rsicarelli.homehunt_kmm.core.model.UiEvent
 import com.rsicarelli.homehunt.presentation.components.BackButton
 import com.rsicarelli.homehunt.presentation.components.rememberOnLifecycle
 import com.rsicarelli.homehunt.presentation.filter.components.*

@@ -1,6 +1,6 @@
 package com.rsicarelli.homehunt.presentation.favourites
 
-import com.rsicarelli.homehunt.core.model.ProgressBarState
+import com.rsicarelli.homehunt_kmm.core.model.ProgressBarState
 import com.rsicarelli.homehunt_kmm.domain.model.Property
 
 data class FavouritesState(

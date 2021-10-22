@@ -2,7 +2,7 @@ package com.rsicarelli.homehunt.presentation.favourites
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.rsicarelli.homehunt.core.model.ProgressBarState
+import com.rsicarelli.homehunt_kmm.core.model.ProgressBarState
 import com.rsicarelli.homehunt.domain.usecase.GetFavouritedPropertiesUseCase
 import com.rsicarelli.homehunt.domain.usecase.ToggleFavouriteUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel

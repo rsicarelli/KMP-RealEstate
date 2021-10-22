@@ -1,7 +1,7 @@
 package com.rsicarelli.homehunt.presentation.map
 
-import com.rsicarelli.homehunt.core.model.ProgressBarState
-import com.rsicarelli.homehunt.core.model.UiEvent
+import com.rsicarelli.homehunt_kmm.core.model.ProgressBarState
+import com.rsicarelli.homehunt_kmm.core.model.UiEvent
 import com.rsicarelli.homehunt_kmm.domain.model.Property
 
 data class MapState(

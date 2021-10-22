@@ -3,8 +3,6 @@ package com.rsicarelli.homehunt.presentation.login
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.*
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.rounded.Info
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -16,10 +14,10 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.rsicarelli.homehunt.R
-import com.rsicarelli.homehunt.core.model.HomeHuntState
-import com.rsicarelli.homehunt.core.model.ProgressBarState
-import com.rsicarelli.homehunt.core.model.UiEvent
-import com.rsicarelli.homehunt.core.model.isLoading
+import com.rsicarelli.homehunt.ui.state.HomeHuntState
+import com.rsicarelli.homehunt_kmm.core.model.ProgressBarState
+import com.rsicarelli.homehunt_kmm.core.model.UiEvent
+import com.rsicarelli.homehunt_kmm.core.model.isLoading
 import com.rsicarelli.homehunt.presentation.components.CircularIndeterminateProgressBar
 import com.rsicarelli.homehunt.presentation.login.components.Welcome
 import com.rsicarelli.homehunt.ui.theme.*
@@ -54,7 +52,7 @@ private fun LoginContent(
     actions: LoginActions,
 ) {
     when (state.uiEvent) {
-        is UiEvent.MessageToUser -> actions.onShowMessageToUser(state.uiEvent.uiText)
+        is UiEvent.MessageToUser -> actions.onShowMessageToUser(stringResource(id = state.uiEvent.textId))
         is UiEvent.Navigate -> actions.onNavigateSingleTop(state.uiEvent.route)
     }
 

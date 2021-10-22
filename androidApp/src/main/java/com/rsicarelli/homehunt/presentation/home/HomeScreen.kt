@@ -29,7 +29,7 @@ import androidx.lifecycle.flowWithLifecycle
 import coil.compose.rememberImagePainter
 import com.google.accompanist.pager.*
 import com.rsicarelli.homehunt.R
-import com.rsicarelli.homehunt.core.model.HomeHuntState
+import com.rsicarelli.homehunt.ui.state.HomeHuntState
 import com.rsicarelli.homehunt.core.util.toCurrency
 import com.rsicarelli.homehunt.presentation.components.CircularIndeterminateProgressBar
 import com.rsicarelli.homehunt.presentation.components.EmptyContent

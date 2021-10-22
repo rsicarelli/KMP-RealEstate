@@ -1,6 +1,6 @@
 package com.rsicarelli.homehunt.presentation.filter
 
-import com.rsicarelli.homehunt.core.model.UiEvent
+import com.rsicarelli.homehunt_kmm.core.model.UiEvent
 import com.rsicarelli.homehunt.domain.model.SearchOption
 
 data class FilterState(
