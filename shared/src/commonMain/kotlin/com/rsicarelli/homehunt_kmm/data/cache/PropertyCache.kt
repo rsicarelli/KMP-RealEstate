@@ -1,7 +1,7 @@
-package com.rsicarelli.homehunt_kmm.datasource.cache
+package com.rsicarelli.homehunt_kmm.data.cache
 
-import com.rsicarelli.homehunt_kmm.datasource.cache.mappers.toProperty
-import com.rsicarelli.homehunt_kmm.datasource.cache.mappers.toPropertyList
+import com.rsicarelli.homehunt_kmm.data.cache.mappers.toProperty
+import com.rsicarelli.homehunt_kmm.data.cache.mappers.toPropertyList
 import com.rsicarelli.homehunt_kmm.domain.model.Property
 
 interface PropertyCache {

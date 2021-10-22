@@ -1,4 +1,4 @@
-package com.rsicarelli.homehunt_kmm.datasource.cache.mappers
+package com.rsicarelli.homehunt_kmm.data.cache.mappers
 
 import com.rsicarelli.homehunt_kmm.GetPropertiesQuery
 import com.rsicarelli.homehunt_kmm.domain.model.Location

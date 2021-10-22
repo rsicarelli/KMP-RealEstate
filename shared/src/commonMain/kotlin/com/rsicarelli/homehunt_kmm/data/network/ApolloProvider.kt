@@ -1,4 +1,4 @@
-package com.rsicarelli.homehunt_kmm.datasource.network
+package com.rsicarelli.homehunt_kmm.data.network
 
 import com.apollographql.apollo.ApolloClient
 import com.apollographql.apollo.api.ApolloExperimental
@@ -6,8 +6,7 @@ import com.apollographql.apollo.interceptor.BearerTokenInterceptor
 import com.apollographql.apollo.interceptor.TokenProvider
 import com.apollographql.apollo.network.http.ApolloHttpNetworkTransport
 import com.rsicarelli.homehunt_kmm.core.LoggingInterceptor
-import com.rsicarelli.homehunt_kmm.datasource.cache.HomeHuntDatabase
-import com.rsicarelli.homehunt_kmm.datasource.cache.UserCache
+import com.rsicarelli.homehunt_kmm.data.cache.UserCache
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 
 private const val API_URL = "https://home-hunt-server.herokuapp.com/graphql"

@@ -1,4 +1,4 @@
-package com.rsicarelli.homehunt_kmm.datasource.cache
+package com.rsicarelli.homehunt_kmm.data.cache
 
 import com.squareup.sqldelight.db.SqlDriver
 import com.squareup.sqldelight.drivers.native.NativeSqliteDriver

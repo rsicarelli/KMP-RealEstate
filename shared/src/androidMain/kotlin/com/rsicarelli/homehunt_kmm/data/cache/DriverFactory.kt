@@ -1,4 +1,4 @@
-package com.rsicarelli.homehunt_kmm.datasource.cache
+package com.rsicarelli.homehunt_kmm.data.cache
 
 import android.content.Context
 import com.squareup.sqldelight.android.AndroidSqliteDriver

@@ -1,6 +1,5 @@
-package com.rsicarelli.homehunt_kmm.datasource.cache.adapters
+package com.rsicarelli.homehunt_kmm.data.cache.adapters
 
-import com.apollographql.apollo.api.internal.json.JsonReader
 import com.rsicarelli.homehunt_kmm.domain.model.Location
 import com.squareup.sqldelight.ColumnAdapter
 

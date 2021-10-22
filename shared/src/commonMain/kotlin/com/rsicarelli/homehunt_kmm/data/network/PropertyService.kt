@@ -1,9 +1,9 @@
-package com.rsicarelli.homehunt_kmm.datasource.network
+package com.rsicarelli.homehunt_kmm.data.network
 
 import com.apollographql.apollo.ApolloClient
 import com.apollographql.apollo.api.ApolloExperimental
 import com.rsicarelli.homehunt_kmm.GetPropertiesQuery
-import com.rsicarelli.homehunt_kmm.datasource.cache.mappers.toPropertyList
+import com.rsicarelli.homehunt_kmm.data.cache.mappers.toPropertyList
 import com.rsicarelli.homehunt_kmm.domain.model.Property
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.single
