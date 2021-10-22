@@ -50,10 +50,10 @@ class HomeViewModel @Inject constructor(
     }
 
     fun onPropertyViewed(property: Property) {
-        if (property.viewedByMe()) return
+        if (property.isViewed) return
 
         viewModelScope.launch {
-            markAsViewed.invoke(MarkAsViewedRequest(property.reference)).single()
+            markAsViewed.invoke(MarkAsViewedRequest(property._id)).single()
         }
     }
 

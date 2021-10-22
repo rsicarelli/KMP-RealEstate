@@ -130,11 +130,11 @@ private class PropertyClusterRenderer(
     val notViewedIcon = context.getBitmapDescriptor(R.drawable.ic_round_marker_blue)
 
     override fun onBeforeClusterItemRendered(item: PropertyMapItem, markerOptions: MarkerOptions) {
-        markerOptions.icon(if (item.property.viewedByMe()) viewedIcon else notViewedIcon)
+        markerOptions.icon(if (item.property.isViewed) viewedIcon else notViewedIcon)
     }
 
     override fun onClusterItemUpdated(item: PropertyMapItem, marker: Marker) {
-        marker.setIcon(if (item.property.viewedByMe()) viewedIcon else notViewedIcon)
+        marker.setIcon(if (item.property.isViewed) viewedIcon else notViewedIcon)
     }
 
 }

@@ -65,7 +65,7 @@ private object Visibility : Filter {
     override fun applyFilter(searchOption: SearchOption, property: Property): Boolean {
         if (searchOption.showSeen) return true
 
-        return !property.viewedBy.contains(searchOption.userId)
+        return !property.isViewed
     }
 }
 

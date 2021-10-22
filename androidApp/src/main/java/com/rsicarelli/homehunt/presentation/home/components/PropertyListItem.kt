@@ -135,7 +135,7 @@ fun PropertyListItem(
                     leadingIcon = R.drawable.ic_round_ruler
                 )
                 AnimatedVisibility(
-                    visible = property.viewedByMe(),
+                    visible = property.isViewed,
                     enter = fadeIn(initialAlpha = 0.4f),
                     exit = fadeOut(animationSpec = tween(durationMillis = 250))
                 ) {

@@ -1,13 +1,12 @@
 package com.rsicarelli.homehunt_kmm.domain.model
 
 data class Property(
-    val reference: String,
+    val _id: String,
     val price: Double,
     val title: String,
     val location: Location,
     val surface: Int,
     val dormCount: Int?,
-    val description: String,
     val bathCount: Int?,
     val avatarUrl: String,
     val tag: String?,
@@ -19,15 +18,10 @@ data class Property(
     val photoGalleryUrls: List<String>,
     val pdfUrl: String?,
     val origin: String,
-    val viewedBy: List<String?>,
+    val isViewed: Boolean,
     val isFavourited: Boolean,
     val isActive: Boolean
 ) {
-
-    //TODO Refactor, should not be here
-    fun viewedByMe(): Boolean {
-        return false
-    }
 
     sealed class Tag(val identifier: String) {
         object EMPTY : Tag("")
@@ -56,13 +50,12 @@ fun String?.toTag(): Property.Tag = this?.let {
 
 fun Map<String, Any?>.toProperty() =
     Property(
-        reference = asString(Mapper.REFERENCE),
+        _id = asString(Mapper.REFERENCE),
         price = asDouble(Mapper.PRICE),
         title = asString(Mapper.TITLE),
         location = asLocation(Mapper.LOCATION),
         surface = asInt(Mapper.SURFACE),
         dormCount = asNullableInt(Mapper.DORM_COUNT),
-        description = asString(Mapper.DESCRIPTION),
         bathCount = asNullableInt(Mapper.BATH_COUNT),
         avatarUrl = asString(Mapper.AVATAR_URL),
         tag = asNullableString(Mapper.TAG, default = Property.Tag.EMPTY.identifier),
@@ -74,9 +67,9 @@ fun Map<String, Any?>.toProperty() =
         pdfUrl = asNullableString(Mapper.PDF_URL),
         locationDescription = asNullableString(Mapper.LOCATION_DESCRIPTION),
         origin = asString(Mapper.ORIGIN),
-        viewedBy = asStringList(Mapper.VIEWED_BY),
         isFavourited = asBoolean(Mapper.IS_FAVOURITED),
-        isActive = asBoolean(Mapper.IS_ACTIVE)
+        isActive = asBoolean(Mapper.IS_ACTIVE),
+        isViewed = false,
     )
 
 object Mapper {

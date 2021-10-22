@@ -7,9 +7,7 @@ import androidx.compose.animation.shrinkVertically
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.items
-import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
@@ -25,10 +23,8 @@ import com.rsicarelli.homehunt.presentation.components.rememberOnLifecycle
 import com.rsicarelli.homehunt.presentation.home.components.PropertyListItem
 import com.rsicarelli.homehunt.presentation.map.components.PropertiesMapView
 import com.rsicarelli.homehunt.ui.navigation.Screen
-import com.rsicarelli.homehunt.ui.theme.Size_Medium
 import com.rsicarelli.homehunt.ui.theme.Size_Regular
 import com.rsicarelli.homehunt.ui.theme.Size_Small
-import kotlinx.coroutines.launch
 
 
 @Composable
@@ -125,10 +121,10 @@ fun MultiplePropertiesPreview(state: MapState, actions: MapActions) {
                 items(state.propertySnippet) { property ->
                     PropertyListItem(
                         property = property,
-                        onSelectProperty = { actions.onNavigate("${Screen.PropertyDetail.route}/${property.reference}") },
+                        onSelectProperty = { actions.onNavigate("${Screen.PropertyDetail.route}/${property._id}") },
                         onFavouriteClick = {
                             actions.onToggleFavourite(
-                                property.reference,
+                                property._id,
                                 !property.isFavourited
                             )
                         },
@@ -165,10 +161,10 @@ private fun SinglePropertyPreview(
                 item {
                     PropertyListItem(
                         property = property,
-                        onSelectProperty = { actions.onNavigate("${Screen.PropertyDetail.route}/${property.reference}") },
+                        onSelectProperty = { actions.onNavigate("${Screen.PropertyDetail.route}/${property._id}") },
                         onFavouriteClick = {
                             actions.onToggleFavourite(
-                                property.reference,
+                                property._id,
                                 !property.isFavourited
                             )
                         },

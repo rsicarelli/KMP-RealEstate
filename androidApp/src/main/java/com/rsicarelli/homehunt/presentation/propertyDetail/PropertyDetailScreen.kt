@@ -62,7 +62,7 @@ private fun PropertyDetailContent(
                 onBackClicked = actions.onNavigateUp,
                 onFavouriteClick = {
                     actions.onToggleFavourite(
-                        property.reference,
+                        property._id,
                         !property.isFavourited
                     )
                 }

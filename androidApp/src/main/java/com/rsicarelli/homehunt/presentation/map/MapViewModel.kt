@@ -55,10 +55,10 @@ class MapViewModel @Inject constructor(
     }
 
     fun onPropertyViewed(property: Property) {
-        if (property.viewedByMe()) return
+        if (property.isViewed) return
 
         viewModelScope.launch {
-            markAsViewed.invoke(MarkAsViewedUseCase.Request(property.reference)).single()
+            markAsViewed.invoke(MarkAsViewedUseCase.Request(property._id)).single()
         }
     }
 

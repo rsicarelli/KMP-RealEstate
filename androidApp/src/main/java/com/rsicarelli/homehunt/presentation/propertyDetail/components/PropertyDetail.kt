@@ -70,7 +70,7 @@ fun PropertyDetail(
         }
         item {
             PropertyFooter(
-                reference = property.reference,
+                reference = property._id,
                 propertyUrl = property.propertyUrl,
                 pdfUrl = property.pdfUrl
             )

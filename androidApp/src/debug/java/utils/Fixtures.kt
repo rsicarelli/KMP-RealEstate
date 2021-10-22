@@ -6,7 +6,7 @@ import com.rsicarelli.homehunt_kmm.domain.model.Property
 object Fixtures {
 
     val aProperty = Property(
-        reference = "XXXXXXX",
+        _id = "XXXXXXX",
         price = 1000.0,
         title = "A beautiful apartment",
         location = Location(
@@ -18,7 +18,6 @@ object Fixtures {
         ),
         surface = 60,
         dormCount = 2,
-        description = "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas placerat euismod risus, eu blandit turpis euismod id. Nulla eget enim fermentum, fermentum leo ut, faucibus dui. Aenean fringilla porta nisl. In a volutpat turpis. Mauris aliquam ac diam quis elementum. Cras iaculis ex ante, ac pretium ex eleifend in. Vivamus elit sem, ornare vel fringilla ut, faucibus at erat. Aenean dui arcu, auctor eu malesuada eget, convallis at elit. Pellentesque eu mi neque. Sed faucibus quam id lacus venenatis, vitae porttitor urna laoreet.",
         bathCount = 2,
         avatarUrl = "https://someimage.com",
         tag = "EMPTY",
@@ -43,9 +42,9 @@ object Fixtures {
         photoGalleryUrls = listOf("https://aimage.com".repeat(40)),
         pdfUrl = "https://apdf.com",
         origin = "",
-        viewedBy = emptyList(),
         isFavourited = false,
-        isActive = true
+        isActive = true,
+        isViewed = false
     )
 
     val aListOfProperty = listOf(

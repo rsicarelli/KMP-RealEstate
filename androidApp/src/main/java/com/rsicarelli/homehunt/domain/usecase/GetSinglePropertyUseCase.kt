@@ -16,7 +16,7 @@ class GetSinglePropertyUseCase(
     override operator fun invoke(request: Request): Flow<Outcome> =
         propertiesRepository.getActiveProperties()
             .filterNotNull()
-            .map { properties -> properties.first { it.reference == request.referenceId } }
+            .map { properties -> properties.first { it._id == request.referenceId } }
             .map { Outcome(it) }
 
     class Request(val referenceId: String)

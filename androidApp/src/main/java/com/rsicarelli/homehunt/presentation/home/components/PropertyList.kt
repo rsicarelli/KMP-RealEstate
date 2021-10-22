@@ -42,10 +42,10 @@ fun PropertyList(
             items(properties) { property ->
                 PropertyListItem(
                     property = property,
-                    onSelectProperty = { onNavigate("${Screen.PropertyDetail.route}/${property.reference}") },
+                    onSelectProperty = { onNavigate("${Screen.PropertyDetail.route}/${property._id}") },
                     onFavouriteClick = {
                         onToggleFavourite(
-                            property.reference,
+                            property._id,
                             !property.isFavourited
                         )
                     },

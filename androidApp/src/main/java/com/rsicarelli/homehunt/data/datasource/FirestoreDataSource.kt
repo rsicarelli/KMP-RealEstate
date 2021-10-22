@@ -71,14 +71,14 @@ class FirestoreDataSourceImpl(
     override fun markAsViewed(referenceId: String, userId: String) {
         val document = db.collection(PROPERTY_COLLECTION).document(referenceId)
         document.get().addOnSuccessListener {
-            it.data?.toProperty()?.let { property ->
-                val viewedBy = property.viewedBy.toMutableList().apply {
-                    add(userId)
-                }
-                document.update(Mapper.VIEWED_BY, viewedBy).addOnSuccessListener {
-                    Timber.d("Marked as viewed")
-                }
-            }
+//            it.data?.toProperty()?.let { property ->
+////                val viewedBy = property.viewedBy.toMutableList().apply {
+////                    add(userId)
+////                }
+//                document.update(Mapper.VIEWED_BY, viewedBy).addOnSuccessListener {
+//                    Timber.d("Marked as viewed")
+//                }
+//            }
         }
     }
 
