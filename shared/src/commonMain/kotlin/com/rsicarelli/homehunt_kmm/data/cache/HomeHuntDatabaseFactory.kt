@@ -2,6 +2,7 @@ package com.rsicarelli.homehunt_kmm.data.cache
 
 import com.rsicarelli.homehunt_kmm.data.cache.adapters.listOfStringsAdapter
 import com.rsicarelli.homehunt_kmm.data.cache.adapters.locationAdapter
+import com.rsicarelli.homehunt_kmm.datasource.cache.HomeHuntDatabase
 import com.rsicarelli.homehuntkmm.datasource.cache._Property
 import com.squareup.sqldelight.db.SqlDriver
 

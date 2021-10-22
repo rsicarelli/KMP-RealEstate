@@ -1,6 +1,7 @@
 package com.rsicarelli.homehunt_kmm.data.cache
 
 import android.content.Context
+import com.rsicarelli.homehunt_kmm.datasource.cache.HomeHuntDatabase
 import com.squareup.sqldelight.android.AndroidSqliteDriver
 import com.squareup.sqldelight.db.SqlDriver
 

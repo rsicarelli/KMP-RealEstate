@@ -31,6 +31,20 @@ CREATE TABLE UserState (
    token TEXT NOT NULL
 );
 
+insertProperties:
+INSERT INTO _Property(_id, avatarUrl, bathCount, characteristics, createdAt, dormCount, fullDescription, isActive, isViewed, isUpVoted, isFavourited, location, locationDescription, origin, pdfUrl, photoGalleryUrls, price, propertyUrl, surface, tag, title, videoUrl)
+VALUES (?, ?, ? ,? ,? ,?, ?,? ,? ,? ,? ,? ,?,? ,?,?, ?, ?, ?, ?, ?,?);
+
+updatePropertyVisibility:
+UPDATE _Property
+SET isViewed = ?
+WHERE _id = ?;
+
+updatePropertyRating:
+UPDATE _Property
+SET isUpVoted = ?
+WHERE _id = ?;
+
 selectAllProperties:
 SELECT * FROM _Property;
 

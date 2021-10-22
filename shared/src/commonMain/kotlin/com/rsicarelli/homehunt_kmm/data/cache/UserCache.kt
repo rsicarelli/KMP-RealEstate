@@ -1,6 +1,7 @@
 package com.rsicarelli.homehunt_kmm.data.cache
 
 import com.rsicarelli.homehunt_kmm.data.cache.mappers.toUser
+import com.rsicarelli.homehunt_kmm.datasource.cache.HomeHuntDatabase
 import com.rsicarelli.homehunt_kmm.domain.model.User
 
 interface UserCache {
