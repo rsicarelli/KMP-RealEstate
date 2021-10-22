@@ -27,5 +27,4 @@ class UserCacheImpl(homeHuntDatabase: HomeHuntDatabase) : UserCache {
         }
     }
 
-
 }
