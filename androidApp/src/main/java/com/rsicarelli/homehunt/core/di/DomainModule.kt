@@ -1,7 +1,5 @@
 package com.rsicarelli.homehunt.core.di
 
-import com.rsicarelli.homehunt.domain.repository.PropertyRepository_Old
-import com.rsicarelli.homehunt.domain.repository.UserRepository_Old
 import com.rsicarelli.homehunt_kmm.domain.repository.PropertyRepository
 import com.rsicarelli.homehunt_kmm.domain.repository.SearchOptionRepository
 import com.rsicarelli.homehunt_kmm.domain.repository.UserRepository
@@ -18,15 +16,18 @@ object DomainModule {
 
     @Provides
     @Singleton
-    fun providesSignInUseCase(userRepository: UserRepository) = SignInUseCase(userRepository)
+    fun providesSignInUseCase(userRepository: UserRepository): SignInUseCase =
+        SignInUseCase(userRepository)
 
     @Provides
     @Singleton
-    fun providesSignUpUseCase(userRepository: UserRepository) = SignUpUseCase(userRepository)
+    fun providesSignUpUseCase(userRepository: UserRepository): SignUpUseCase =
+        SignUpUseCase(userRepository)
 
     @Provides
     @Singleton
-    fun providesVerifyUserCredentialsUseCase() = VerifyUserCredentialsUseCase()
+    fun providesVerifyUserCredentialsUseCase(): VerifyUserCredentialsUseCase =
+        VerifyUserCredentialsUseCase()
 
     @Provides
     @Singleton
@@ -35,29 +36,28 @@ object DomainModule {
 
     @Provides
     @Singleton
-    fun providesGetSinglePropertyUseCase(propertiesRepositoryOld: PropertyRepository_Old) =
-        GetSinglePropertyUseCase(propertiesRepositoryOld)
+    fun providesGetSinglePropertyUseCase(propertyRepository: PropertyRepository) =
+        GetSinglePropertyUseCase(propertyRepository)
 
     @Provides
     @Singleton
-    fun providesToggleFavouriteUseCase(propertiesRepositoryOld: PropertyRepository_Old) =
-        ToggleFavouriteUseCase(propertiesRepositoryOld)
+    fun providesToggleFavouriteUseCase(propertyRepository: PropertyRepository) =
+        ToggleFavouriteUseCase(propertyRepository)
 
     @Provides
     @Singleton
-    fun providesMarkAsViewedUseCase(
-        propertiesRepositoryOld: PropertyRepository_Old,
-        userRepositoryOld: UserRepository_Old
-    ) = MarkAsViewedUseCase(propertiesRepositoryOld, userRepositoryOld)
+    fun providesMarkAsViewedUseCase(propertyRepository: PropertyRepository) =
+        MarkAsViewedUseCase(propertyRepository)
 
     @Provides
     @Singleton
-    fun providesGetFavouritedPropertiesUseCase(propertiesRepositoryOld: PropertyRepository_Old) =
-        GetFavouritedPropertiesUseCase(propertiesRepositoryOld)
+    fun providesGetFavouritedPropertiesUseCase(propertyRepository: PropertyRepository) =
+        GetFavouritedPropertiesUseCase(propertyRepository)
 
     @Provides
     @Singleton
-    fun providesFilterPropertiesUseCase() = FilterPropertiesUseCase()
+    fun providesFilterPropertiesUseCase(): FilterPropertiesUseCase =
+        FilterPropertiesUseCase()
 
     @Provides
     @Singleton
