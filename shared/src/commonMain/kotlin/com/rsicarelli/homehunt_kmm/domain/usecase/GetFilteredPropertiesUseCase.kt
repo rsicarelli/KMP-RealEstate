@@ -1,14 +1,14 @@
-package com.rsicarelli.homehunt.domain.usecase
+package com.rsicarelli.homehunt_kmm.domain.usecase
 
 import com.rsicarelli.homehunt_kmm.core.model.UseCase
 import com.rsicarelli.homehunt_kmm.domain.model.Property
-import com.rsicarelli.homehunt.domain.repository.PropertyRepository_Old
+import com.rsicarelli.homehunt_kmm.domain.repository.PropertyRepository
 import kotlinx.coroutines.FlowPreview
 import kotlinx.coroutines.flow.*
 
 class GetFilteredPropertiesUseCase(
-    private val propertiesRepositoryOld: PropertyRepository_Old,
-    private val getFilterPreferences: GetFilterPreferencesUseCase,
+    private val propertyRepository: PropertyRepository,
+    private val getFilterPreferences: GetSearchOptionSettings,
     private val filterProperties: FilterPropertiesUseCase,
 ) : UseCase<Unit, GetFilteredPropertiesUseCase.Outcome> {
 
@@ -16,7 +16,7 @@ class GetFilteredPropertiesUseCase(
 
     @OptIn(FlowPreview::class)
     override fun invoke(request: Unit): Flow<Outcome> =
-        propertiesRepositoryOld.getActiveProperties()
+        propertyRepository.getProperties()
             .filterNotNull()
             .combine(getFilterPreferences(request)) { properties, filterOutcome ->
                 Pair(filterOutcome.searchOption, properties)

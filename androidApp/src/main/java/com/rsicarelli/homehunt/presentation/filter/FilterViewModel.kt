@@ -3,9 +3,9 @@ package com.rsicarelli.homehunt.presentation.filter
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.rsicarelli.homehunt_kmm.core.model.UiEvent
-import com.rsicarelli.homehunt.domain.usecase.GetFilterPreferencesUseCase
-import com.rsicarelli.homehunt.domain.usecase.PreviewFilterResultUseCase
-import com.rsicarelli.homehunt.domain.usecase.SaveFilterPreferencesUseCase
+import com.rsicarelli.homehunt_kmm.domain.usecase.GetSearchOptionSettings
+import com.rsicarelli.homehunt_kmm.domain.usecase.PreviewFilterResultUseCase
+import com.rsicarelli.homehunt_kmm.domain.usecase.SaveSearchOptionsUseCase
 import com.rsicarelli.homehunt.ui.navigation.Screen
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.FlowPreview
@@ -17,8 +17,8 @@ import javax.inject.Inject
 @HiltViewModel
 class FilterViewModel @Inject constructor(
     private val previewFilterResult: PreviewFilterResultUseCase,
-    private val getFilter: GetFilterPreferencesUseCase,
-    private val saveFilter: SaveFilterPreferencesUseCase
+    private val getFilter: GetSearchOptionSettings,
+    private val saveFilter: SaveSearchOptionsUseCase
 ) : ViewModel() {
 
     private val state: MutableStateFlow<FilterState> = MutableStateFlow(FilterState())
@@ -70,7 +70,7 @@ class FilterViewModel @Inject constructor(
 
     fun onSaveFilter() {
         viewModelScope.launch {
-            saveFilter(request = SaveFilterPreferencesUseCase.Request(state.value.toSearchOption()))
+            saveFilter(request = SaveSearchOptionsUseCase.Request(state.value.toSearchOption()))
                 .collect {
                     state.value = state.value.copy(uiEvent = UiEvent.Navigate(Screen.Home.route))
                 }

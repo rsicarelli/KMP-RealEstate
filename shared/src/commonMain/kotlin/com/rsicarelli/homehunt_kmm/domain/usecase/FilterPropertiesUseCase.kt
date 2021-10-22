@@ -1,10 +1,10 @@
-package com.rsicarelli.homehunt.domain.usecase
+package com.rsicarelli.homehunt_kmm.domain.usecase
 
 import com.rsicarelli.homehunt_kmm.core.model.UseCase
 import com.rsicarelli.homehunt_kmm.domain.model.Property
 import com.rsicarelli.homehunt_kmm.domain.model.SearchOption
-import com.rsicarelli.homehunt.domain.usecase.FilterPropertiesUseCase.Outcome
-import com.rsicarelli.homehunt.domain.usecase.FilterPropertiesUseCase.Request
+import com.rsicarelli.homehunt_kmm.domain.usecase.FilterPropertiesUseCase.Outcome
+import com.rsicarelli.homehunt_kmm.domain.usecase.FilterPropertiesUseCase.Request
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 

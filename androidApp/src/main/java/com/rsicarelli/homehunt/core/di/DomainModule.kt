@@ -3,12 +3,10 @@ package com.rsicarelli.homehunt.core.di
 import com.rsicarelli.homehunt.domain.repository.PropertyRepository_Old
 import com.rsicarelli.homehunt.domain.repository.UserRepository_Old
 import com.rsicarelli.homehunt.domain.usecase.*
+import com.rsicarelli.homehunt_kmm.domain.repository.PropertyRepository
 import com.rsicarelli.homehunt_kmm.domain.repository.SearchOptionRepository
 import com.rsicarelli.homehunt_kmm.domain.repository.UserRepository
-import com.rsicarelli.homehunt_kmm.domain.usecase.IsLoggedInUseCase
-import com.rsicarelli.homehunt_kmm.domain.usecase.SignInUseCase
-import com.rsicarelli.homehunt_kmm.domain.usecase.SignUpUseCase
-import com.rsicarelli.homehunt_kmm.domain.usecase.VerifyUserCredentialsUseCase
+import com.rsicarelli.homehunt_kmm.domain.usecase.*
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -65,27 +63,27 @@ object DomainModule {
     @Provides
     @Singleton
     fun providesPreviewFilterResultUseCase(
-        propertyRepositoryOld: PropertyRepository_Old,
+        propertyRepository: PropertyRepository,
         filterPropertiesUseCase: FilterPropertiesUseCase
-    ) = PreviewFilterResultUseCase(propertyRepositoryOld, filterPropertiesUseCase)
+    ) = PreviewFilterResultUseCase(propertyRepository, filterPropertiesUseCase)
 
     @Provides
     @Singleton
     fun providesGetFilterPreferencesUseCase(searchOptionRepository: SearchOptionRepository) =
-        GetFilterPreferencesUseCase(searchOptionRepository)
+        GetSearchOptionSettings(searchOptionRepository)
 
     @Provides
     @Singleton
     fun providesSaveFilterPreferencesUseCase(searchOptionRepository: SearchOptionRepository) =
-        SaveFilterPreferencesUseCase(searchOptionRepository)
+        SaveSearchOptionsUseCase(searchOptionRepository)
 
     @Provides
     fun providesGetFilteredPropertiesUseCase(
-        propertyRepositoryOld: PropertyRepository_Old,
-        getFilterPreferences: GetFilterPreferencesUseCase,
+        propertyRepository: PropertyRepository,
+        getFilterPreferences: GetSearchOptionSettings,
         filterProperties: FilterPropertiesUseCase,
     ) = GetFilteredPropertiesUseCase(
-        propertiesRepositoryOld = propertyRepositoryOld,
+        propertyRepository = propertyRepository,
         getFilterPreferences = getFilterPreferences,
         filterProperties = filterProperties
     )

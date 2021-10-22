@@ -4,7 +4,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.rsicarelli.homehunt_kmm.core.model.ProgressBarState
 import com.rsicarelli.homehunt_kmm.domain.model.Property
-import com.rsicarelli.homehunt.domain.usecase.GetFilteredPropertiesUseCase
+import com.rsicarelli.homehunt_kmm.domain.usecase.GetFilteredPropertiesUseCase
 import com.rsicarelli.homehunt.domain.usecase.MarkAsViewedUseCase
 import com.rsicarelli.homehunt.domain.usecase.ToggleFavouriteUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
