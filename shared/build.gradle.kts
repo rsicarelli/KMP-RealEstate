@@ -67,7 +67,7 @@ kotlin {
         val commonMain by getting {
             dependencies {
                 implementation(SQLDelight.runtime)
-                implementation(Apollo.runtime)
+                api(Apollo.runtime)
             }
         }
         val commonTest by getting {

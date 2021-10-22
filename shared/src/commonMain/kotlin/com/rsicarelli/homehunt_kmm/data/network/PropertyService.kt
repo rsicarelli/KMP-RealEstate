@@ -1,6 +1,5 @@
 package com.rsicarelli.homehunt_kmm.data.network
 
-import com.apollographql.apollo.ApolloClient
 import com.apollographql.apollo.api.ApolloExperimental
 import com.rsicarelli.homehunt_kmm.GetPropertiesQuery
 import com.rsicarelli.homehunt_kmm.MarkAsViewedMutation
@@ -21,10 +20,10 @@ interface PropertyService {
 
 @OptIn(ApolloExperimental::class, ExperimentalCoroutinesApi::class)
 class PropertyServiceImpl constructor(
-    private val apolloClient: ApolloClient
+    private val apolloProvider: ApolloProvider
 ) : PropertyService {
     override suspend fun getProperties(): List<Property>? {
-        val response = apolloClient.query(GetPropertiesQuery()).execute().single()
+        val response = apolloProvider.apolloClient.query(GetPropertiesQuery()).execute().single()
         return response.data?.properties?.toPropertyList()
     }
 
@@ -34,12 +33,15 @@ class PropertyServiceImpl constructor(
 
     override suspend fun markAsViewed(viewedPropertyInput: ViewedPropertyInput): Boolean {
         val response =
-            apolloClient.mutate(MarkAsViewedMutation(viewedPropertyInput)).execute().single()
+            apolloProvider.apolloClient.mutate(MarkAsViewedMutation(viewedPropertyInput)).execute()
+                .single()
         return response.data?.markAsViewed?.propertyId?.let { true } ?: false
     }
 
     override suspend fun toggleRatings(ratingInput: RatingInput): Boolean {
-        val response = apolloClient.mutate(ToggleRatingsMutation(ratingInput)).execute().single()
+        val response =
+            apolloProvider.apolloClient.mutate(ToggleRatingsMutation(ratingInput)).execute()
+                .single()
         return response.data?.toggleRating?.propertyId?.let { true } ?: false
     }
 

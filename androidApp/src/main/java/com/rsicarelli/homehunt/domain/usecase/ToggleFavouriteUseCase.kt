@@ -1,15 +1,15 @@
 package com.rsicarelli.homehunt.domain.usecase
 
 import com.rsicarelli.homehunt.core.model.UseCase
-import com.rsicarelli.homehunt.domain.repository.PropertyRepository
+import com.rsicarelli.homehunt.domain.repository.PropertyRepository_Old
 import kotlinx.coroutines.flow.flow
 
 class ToggleFavouriteUseCase(
-    private val propertyRepository: PropertyRepository
+    private val propertyRepositoryOld: PropertyRepository_Old
 ) : UseCase<ToggleFavouriteUseCase.Request, ToggleFavouriteUseCase.Outcome> {
 
     override operator fun invoke(request: Request) = flow {
-        propertyRepository.toggleFavourite(request.referenceId, request.isFavourited)
+        propertyRepositoryOld.toggleFavourite(request.referenceId, request.isFavourited)
         emit(Outcome(true))
     }
 

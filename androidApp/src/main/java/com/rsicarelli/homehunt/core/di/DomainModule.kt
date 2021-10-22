@@ -2,8 +2,8 @@ package com.rsicarelli.homehunt.core.di
 
 import com.google.firebase.auth.FirebaseAuth
 import com.rsicarelli.homehunt.data.datasource.FilterLocalDataSource
-import com.rsicarelli.homehunt.domain.repository.PropertyRepository
-import com.rsicarelli.homehunt.domain.repository.UserRepository
+import com.rsicarelli.homehunt.domain.repository.PropertyRepository_Old
+import com.rsicarelli.homehunt.domain.repository.UserRepository_Old
 import com.rsicarelli.homehunt.domain.usecase.*
 import dagger.Module
 import dagger.Provides
@@ -21,30 +21,30 @@ object DomainModule {
 
     @Provides
     @Singleton
-    fun providesIsLoggedInUseCase(userRepository: UserRepository) =
-        IsLoggedInUseCase(userRepository)
+    fun providesIsLoggedInUseCase(userRepositoryOld: UserRepository_Old) =
+        IsLoggedInUseCase(userRepositoryOld)
 
     @Provides
     @Singleton
-    fun providesGetSinglePropertyUseCase(propertiesRepository: PropertyRepository) =
-        GetSinglePropertyUseCase(propertiesRepository)
+    fun providesGetSinglePropertyUseCase(propertiesRepositoryOld: PropertyRepository_Old) =
+        GetSinglePropertyUseCase(propertiesRepositoryOld)
 
     @Provides
     @Singleton
-    fun providesToggleFavouriteUseCase(propertiesRepository: PropertyRepository) =
-        ToggleFavouriteUseCase(propertiesRepository)
+    fun providesToggleFavouriteUseCase(propertiesRepositoryOld: PropertyRepository_Old) =
+        ToggleFavouriteUseCase(propertiesRepositoryOld)
 
     @Provides
     @Singleton
     fun providesMarkAsViewedUseCase(
-        propertiesRepository: PropertyRepository,
-        userRepository: UserRepository
-    ) = MarkAsViewedUseCase(propertiesRepository, userRepository)
+        propertiesRepositoryOld: PropertyRepository_Old,
+        userRepositoryOld: UserRepository_Old
+    ) = MarkAsViewedUseCase(propertiesRepositoryOld, userRepositoryOld)
 
     @Provides
     @Singleton
-    fun providesGetFavouritedPropertiesUseCase(propertiesRepository: PropertyRepository) =
-        GetFavouritedPropertiesUseCase(propertiesRepository)
+    fun providesGetFavouritedPropertiesUseCase(propertiesRepositoryOld: PropertyRepository_Old) =
+        GetFavouritedPropertiesUseCase(propertiesRepositoryOld)
 
     @Provides
     @Singleton
@@ -53,9 +53,9 @@ object DomainModule {
     @Provides
     @Singleton
     fun providesPreviewFilterResultUseCase(
-        propertyRepository: PropertyRepository,
+        propertyRepositoryOld: PropertyRepository_Old,
         filterPropertiesUseCase: FilterPropertiesUseCase
-    ) = PreviewFilterResultUseCase(propertyRepository, filterPropertiesUseCase)
+    ) = PreviewFilterResultUseCase(propertyRepositoryOld, filterPropertiesUseCase)
 
     @Provides
     @Singleton
@@ -69,11 +69,11 @@ object DomainModule {
 
     @Provides
     fun providesGetFilteredPropertiesUseCase(
-        propertyRepository: PropertyRepository,
+        propertyRepositoryOld: PropertyRepository_Old,
         getFilterPreferences: GetFilterPreferencesUseCase,
         filterProperties: FilterPropertiesUseCase,
     ) = GetFilteredPropertiesUseCase(
-        propertiesRepository = propertyRepository,
+        propertiesRepositoryOld = propertyRepositoryOld,
         getFilterPreferences = getFilterPreferences,
         filterProperties = filterProperties
     )

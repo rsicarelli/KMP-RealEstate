@@ -1,6 +1,5 @@
 package com.rsicarelli.homehunt_kmm.data.network
 
-import com.apollographql.apollo.ApolloClient
 import com.apollographql.apollo.api.ApolloExperimental
 import com.rsicarelli.homehunt_kmm.SignInMutation
 import com.rsicarelli.homehunt_kmm.SignUpMutation
@@ -17,17 +16,19 @@ interface UserService {
 
 @OptIn(ApolloExperimental::class, ExperimentalCoroutinesApi::class)
 class UserServiceImpl constructor(
-    private val apolloClient: ApolloClient
+    private val apolloProvider: ApolloProvider
 ) : UserService {
     override suspend fun signIn(userInput: UserInput): User {
-        val response = apolloClient.mutate(SignInMutation(userInput)).execute().single()
+        val response =
+            apolloProvider.apolloClient.mutate(SignInMutation(userInput)).execute().single()
         response.data?.signIn?.let { data ->
             return data.toUser()
         } ?: error("Could not sign in")
     }
 
     override suspend fun signUp(userInput: UserInput): User {
-        val response = apolloClient.mutate(SignUpMutation(userInput)).execute().single()
+        val response =
+            apolloProvider.apolloClient.mutate(SignUpMutation(userInput)).execute().single()
         response.data?.signUp?.let { data ->
             return data.toUser()
         } ?: error("Could not sign up")
