@@ -1,9 +1,6 @@
 package com.rsicarelli.homehunt.core.di
 
 import android.app.Application
-import com.google.firebase.firestore.FirebaseFirestore
-import com.rsicarelli.homehunt.data.datasource.FirestoreDataSource
-import com.rsicarelli.homehunt.data.datasource.FirestoreDataSourceImpl
 import com.rsicarelli.homehunt_kmm.data.cache.*
 import com.rsicarelli.homehunt_kmm.data.network.PropertyService
 import com.rsicarelli.homehunt_kmm.data.network.UserService
@@ -19,8 +16,6 @@ import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
 import javax.inject.Singleton
 
 @Module
@@ -56,11 +51,6 @@ object DataModule {
     ): PropertyRepository {
         return PropertyRepositoryImpl(propertyCache, propertyService)
     }
-
-    @Provides
-    @Singleton
-    fun providesFirestoreDataSource(firestore: FirebaseFirestore): FirestoreDataSource =
-        FirestoreDataSourceImpl(firestore, CoroutineScope(Dispatchers.IO))
 
     @Provides
     @Singleton
