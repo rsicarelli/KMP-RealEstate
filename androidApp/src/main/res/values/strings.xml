@@ -1,7 +1,7 @@
 <resources>
     <string name="app_name">Home Hunt</string>
     <string name="error_unknown">Something wrong is not right</string>
-    <string name="welcome">Welcome to HomeHunt app</string>
+    <string name="welcome">Welcome to HomeHunt</string>
     <string name="do_login">Please do login to start using the app</string>
     <string name="results">results</string>
     <string name="price_range">Price range</string>
@@ -36,6 +36,12 @@
     <string name="map">Map</string>
     <string name="error_loading_properties">Error trying to load properties</string>
     <string name="viewed">Viewed</string>
+    <string name="enter_password">Enter password</string>
+    <string name="enter_username">Enter username</string>
+    <string name="sign_in">Sign in</string>
+    <string name="sign_up">Sign up</string>
+    <string name="error_username">Invalid username</string>
+    <string name="error_password">Invalid password</string>
     <plurals name="see_results_plurals">
         <item quantity="one">See %d result</item>
         <item quantity="other">See %d results</item>

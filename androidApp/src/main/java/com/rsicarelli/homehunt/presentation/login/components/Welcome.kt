@@ -22,27 +22,11 @@ import com.rsicarelli.homehunt.ui.theme.Size_Regular
 fun ColumnScope.Welcome() {
     Text(
         modifier = Modifier
-            .fillMaxWidth()
-            .padding(
-                top = Size_2X_Large,
-                end = Size_Large,
-                bottom = Size_Large,
-                start = Size_Large
-            ),
+            .fillMaxWidth(),
         text = stringResource(id = R.string.welcome),
         textAlign = TextAlign.Center,
         style = MaterialTheme.typography.h4,
         color = Color.White
-    )
-
-    Text(
-        text = stringResource(id = R.string.do_login),
-        textAlign = TextAlign.Center,
-        style = MaterialTheme.typography.subtitle1,
-        modifier = Modifier
-            .fillMaxWidth()
-            .padding(Size_Regular),
-        color = Color.White.copy(alpha = 0.5f)
     )
 }
 

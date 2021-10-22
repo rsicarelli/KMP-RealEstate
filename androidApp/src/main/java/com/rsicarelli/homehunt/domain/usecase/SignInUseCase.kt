@@ -15,16 +15,21 @@ class SignInUseCase(
 ) : UseCase<Request, Outcome> {
     override operator fun invoke(request: Request) = flow {
         try {
-            firebaseAuth.signInWithCredential(request.authCredential).await()
-                ?.run { if (user == null) emit(Outcome.Error) else emit(Outcome.Success) }
-                ?: emit(Outcome.Error)
+            emit(Outcome.Success)
+//            firebaseAuth.signInWithCredential(request.authCredential).await()
+//                ?.run { if (user == null) emit(Outcome.Error) else emit(Outcome.Success) }
+//                ?: emit(Outcome.Error)
         } catch (e: Exception) {
             e.printStackTrace()
             emit(Outcome.Error)
         }
     }.flowOn(Dispatchers.IO)
 
-    data class Request(val authCredential: AuthCredential)
+    data class Request(
+        val userName: String,
+        val password: String
+    )
+
     sealed class Outcome {
         object Success : Outcome()
         object Error : Outcome()

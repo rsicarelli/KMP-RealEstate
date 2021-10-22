@@ -2,7 +2,6 @@ package com.rsicarelli.homehunt.presentation.login
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.google.firebase.auth.AuthCredential
 import com.rsicarelli.homehunt.core.model.ProgressBarState
 import com.rsicarelli.homehunt.core.model.UiEvent.MessageToUser
 import com.rsicarelli.homehunt.core.model.UiEvent.Navigate
@@ -24,18 +23,26 @@ class LoginViewModel @Inject constructor(
     private val _state: MutableStateFlow<LoginState> = MutableStateFlow(LoginState())
     val state: StateFlow<LoginState> = _state
 
-    fun onDoLogin(authCredential: AuthCredential) {
-        viewModelScope.launch {
-            signIn(SignInRequest(authCredential))
-                .onStart { toggleLoading(ProgressBarState.Loading) }
-                .onCompletion { toggleLoading(ProgressBarState.Idle) }
-                .catch { onError(it) }
-                .collectLatest { outcome ->
-                    when (outcome) {
-                        SignInUseCase.Outcome.Error -> onError()
-                        SignInUseCase.Outcome.Success -> navigate(Navigate(Screen.Home.route))
+    fun onDoLogin() {
+        withValidCredentials {
+            viewModelScope.launch {
+                signIn(SignInRequest(state.value.userName, state.value.password))
+                    .onStart { toggleLoading(ProgressBarState.Loading) }
+                    .onCompletion { toggleLoading(ProgressBarState.Idle) }
+                    .catch { onError(it) }
+                    .collectLatest { outcome ->
+                        when (outcome) {
+                            SignInUseCase.Outcome.Error -> onError()
+                            SignInUseCase.Outcome.Success -> navigate(Navigate(Screen.Home.route))
+                        }
                     }
-                }
+            }
+        }
+    }
+
+    fun onSignUp() {
+        withValidCredentials {
+
         }
     }
 
@@ -47,8 +54,29 @@ class LoginViewModel @Inject constructor(
         _state.value = state.value.copy(uiEvent = Navigate(navigate.route))
     }
 
+    fun onPasswordChanged(password: String) {
+        _state.value = state.value.copy(password = password, invalidPassword = false)
+    }
+
+    fun onUserNameChanged(userName: String) {
+        _state.value = state.value.copy(userName = userName, invalidUserName = false)
+    }
+
     fun onError(exception: Throwable? = null) {
         Timber.e(exception)
         _state.value = state.value.copy(uiEvent = MessageToUser(UiText.unknownError()))
+    }
+
+    private inline fun withValidCredentials(action: () -> Unit) {
+        val validUserName = state.value.userName.isNotEmpty() || state.value.userName.isNotBlank()
+        val validPassword = state.value.password.isNotEmpty() || state.value.password.isNotBlank()
+
+        if (validUserName && validPassword) {
+            action()
+        } else {
+            _state.value =
+                state.value.copy(invalidPassword = !validPassword, invalidUserName = !validUserName)
+        }
+
     }
 }

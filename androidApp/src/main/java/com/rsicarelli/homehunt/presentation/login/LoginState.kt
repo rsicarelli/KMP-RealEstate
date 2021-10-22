@@ -5,5 +5,11 @@ import com.rsicarelli.homehunt.core.model.UiEvent
 
 data class LoginState(
     val uiEvent: UiEvent = UiEvent.Idle,
-    val progressBarState: ProgressBarState = ProgressBarState.Idle
-)
+    val progressBarState: ProgressBarState = ProgressBarState.Idle,
+    val password: String = "",
+    val userName: String = "",
+    val invalidUserName: Boolean = false,
+    val invalidPassword: Boolean = false
+) {
+
+}
