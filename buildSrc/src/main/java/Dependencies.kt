@@ -4,5 +4,9 @@ object Dependencies {
 
     private const val timberVersion = "5.0.1"
     const val timber = "com.jakewharton.timber:timber:$timberVersion"
+
+    private const val multiplatformSettingsVersion = "0.8.1"
+    const val multiplatformSettings =
+        "com.russhwolf:multiplatform-settings:$multiplatformSettingsVersion"
 }
 

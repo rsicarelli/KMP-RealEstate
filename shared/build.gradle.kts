@@ -66,8 +66,9 @@ kotlin {
     sourceSets {
         val commonMain by getting {
             dependencies {
-                implementation(SQLDelight.runtime)
                 api(Apollo.runtime)
+                implementation(Dependencies.multiplatformSettings)
+                implementation(SQLDelight.runtime)
             }
         }
         val commonTest by getting {
