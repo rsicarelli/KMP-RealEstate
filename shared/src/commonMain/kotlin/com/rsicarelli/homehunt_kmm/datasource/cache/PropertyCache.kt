@@ -9,9 +9,7 @@ interface PropertyCache {
     fun get(propertyId: String): Property?
 }
 
-class PropertyCacheImpl(
-    private val homeHuntDatabase: HomeHuntDatabase
-) : PropertyCache {
+class PropertyCacheImpl(homeHuntDatabase: HomeHuntDatabase) : PropertyCache {
     private val queries = homeHuntDatabase.homeHuntQueries
 
     override fun getAll(): List<Property> =
