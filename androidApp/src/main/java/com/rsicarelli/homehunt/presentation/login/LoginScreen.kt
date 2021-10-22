@@ -1,15 +1,22 @@
 package com.rsicarelli.homehunt.presentation.login
 
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.text.KeyboardActionScope
+import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.*
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
+import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.focus.FocusDirection
+import androidx.compose.ui.platform.LocalFocusManager
+import androidx.compose.ui.platform.LocalSoftwareKeyboardController
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.tooling.preview.Preview
@@ -49,11 +56,15 @@ fun LoginScreen(
     )
 }
 
+@OptIn(ExperimentalComposeUiApi::class)
 @Composable
 private fun LoginContent(
     state: LoginState,
     actions: LoginActions,
 ) {
+    val keyboardController = LocalSoftwareKeyboardController.current
+    val localFocusManager = LocalFocusManager.current
+
     when (state.uiEvent) {
         is UiEvent.MessageToUser -> actions.onShowMessageToUser(stringResource(id = state.uiEvent.textId))
         is UiEvent.Navigate -> actions.onNavigateSingleTop(state.uiEvent.route)
@@ -78,7 +89,8 @@ private fun LoginContent(
             username = state.userName,
             onUserNameChanged = actions.onUserNameChanged,
             hasError = state.invalidUsername,
-            enabled = !state.progressBarState.isLoading()
+            enabled = !state.progressBarState.isLoading(),
+            onNextIMEClick = { localFocusManager.moveFocus(FocusDirection.Down) }
         )
 
         Spacer(modifier = Modifier.height(Size_Regular))
@@ -87,7 +99,11 @@ private fun LoginContent(
             password = state.password,
             hasError = state.invalidPassword,
             onPasswordChanged = actions.onPasswordChanged,
-            enabled = !state.progressBarState.isLoading()
+            enabled = !state.progressBarState.isLoading(),
+            onDoneIMEClick = {
+                keyboardController?.hide()
+                actions.onDoLogin()
+            }
         )
 
         Box(modifier = Modifier.height(200.dp)) {
@@ -110,7 +126,10 @@ private fun LoginContent(
                             backgroundColor = rally_green_500,
                             contentColor = MaterialTheme.colors.background
                         ),
-                        onClick = actions.onDoLogin
+                        onClick = {
+                            actions.onDoLogin()
+                            keyboardController?.hide()
+                        }
                     ) {
                         Text(
                             text = stringResource(id = R.string.sign_in),
@@ -124,7 +143,10 @@ private fun LoginContent(
                         modifier = Modifier
                             .fillMaxWidth()
                             .height(48.dp),
-                        onClick = actions.onSignUp
+                        onClick = {
+                            actions.onSignUp()
+                            keyboardController?.hide()
+                        }
                     ) {
                         Text(
                             text = stringResource(id = R.string.sign_up),
@@ -144,6 +166,7 @@ private fun UserNameTextField(
     hasError: Boolean,
     username: String,
     onUserNameChanged: (String) -> Unit,
+    onNextIMEClick: KeyboardActionScope.() -> Unit,
     enabled: Boolean
 ) {
     Column {
@@ -151,6 +174,7 @@ private fun UserNameTextField(
             modifier = Modifier.fillMaxWidth(),
             enabled = enabled,
             value = username,
+            singleLine = true,
             onValueChange = onUserNameChanged,
             trailingIcon = {
                 if (hasError) {
@@ -163,7 +187,11 @@ private fun UserNameTextField(
             },
             isError = hasError,
             label = { Text(stringResource(id = R.string.enter_username)) },
-            keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Text)
+            keyboardOptions = KeyboardOptions(
+                keyboardType = KeyboardType.Text,
+                imeAction = ImeAction.Next
+            ),
+            keyboardActions = KeyboardActions(onNext = onNextIMEClick)
         )
         if (hasError) {
             Text(
@@ -185,6 +213,7 @@ private fun PasswordTextField(
     hasError: Boolean,
     password: String,
     onPasswordChanged: (String) -> Unit,
+    onDoneIMEClick: KeyboardActionScope.() -> Unit,
     enabled: Boolean
 ) {
     Column {
@@ -192,6 +221,7 @@ private fun PasswordTextField(
             modifier = Modifier.fillMaxWidth(),
             value = password,
             enabled = enabled,
+            singleLine = true,
             trailingIcon = {
                 if (hasError)
                     Icon(
@@ -204,7 +234,11 @@ private fun PasswordTextField(
             isError = hasError,
             label = { Text(stringResource(id = R.string.enter_password)) },
             visualTransformation = PasswordVisualTransformation(),
-            keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Password)
+            keyboardOptions = KeyboardOptions(
+                keyboardType = KeyboardType.Password,
+                imeAction = ImeAction.Done
+            ),
+            keyboardActions = KeyboardActions(onDone = onDoneIMEClick)
         )
         if (hasError) {
             Text(
