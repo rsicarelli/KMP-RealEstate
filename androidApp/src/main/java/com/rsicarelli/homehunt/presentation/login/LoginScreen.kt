@@ -100,10 +100,7 @@ private fun LoginContent(
             hasError = state.invalidPassword,
             onPasswordChanged = actions.onPasswordChanged,
             enabled = !state.progressBarState.isLoading(),
-            onDoneIMEClick = {
-                keyboardController?.hide()
-                actions.onDoLogin()
-            }
+            onDoneIMEClick = { keyboardController?.hide() }
         )
 
         Box(modifier = Modifier.height(200.dp)) {
