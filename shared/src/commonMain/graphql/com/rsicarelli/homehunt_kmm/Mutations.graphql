@@ -1,0 +1,31 @@
+mutation MarkAsViewed($viewedPropertyInput: ViewedPropertyInput!) {
+  markAsViewed(viewedPropertyInput: $viewedPropertyInput) {
+    propertyId
+  }
+}
+
+mutation ToggleRatings($ratingInput:RatingInput!) {
+  toggleRating(ratingInput:$ratingInput) {
+    propertyId
+  }
+}
+
+mutation SignUp($userInput:UserInput!) {
+  signUp(userInput:$userInput) {
+    token
+    user {
+      _id
+      userName
+    }
+  }
+}
+
+mutation SignIn($userInput:UserInput!) {
+  signIn(userInput:$userInput) {
+    token
+    user {
+      _id
+      userName
+    }
+  }
+}
