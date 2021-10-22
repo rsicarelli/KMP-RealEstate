@@ -1,10 +1,7 @@
-package com.rsicarelli.homehunt.domain.model
+package com.rsicarelli.homehunt_kmm.domain.model
 
-import com.google.firebase.auth.ktx.auth
-import com.google.firebase.ktx.Firebase
-import com.rsicarelli.homehunt.domain.strategy.Filter
-import com.rsicarelli.homehunt.domain.strategy.allFilters
-import com.rsicarelli.homehunt_kmm.domain.model.Property
+import com.rsicarelli.homehunt_kmm.domain.strategy.Filter
+import com.rsicarelli.homehunt_kmm.domain.strategy.allFilters
 
 data class SearchOption(
     val priceRange: Pair<Double, Double>,
@@ -16,7 +13,6 @@ data class SearchOption(
     val availableOnly: Boolean
 ) {
     private val filters: List<Filter> = allFilters
-    val userId = Firebase.auth.uid //should not be here, refactor later
 
     fun applyFilter(properties: List<Property>): List<Property> {
         return properties.filter { property ->

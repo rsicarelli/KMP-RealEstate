@@ -2,7 +2,7 @@ package com.rsicarelli.homehunt.data.datasource
 
 import android.content.SharedPreferences
 import androidx.core.content.edit
-import com.rsicarelli.homehunt.domain.model.SearchOption
+import com.rsicarelli.homehunt_kmm.domain.model.SearchOption
 
 interface FilterLocalDataSource {
     fun save(searchOption: SearchOption)

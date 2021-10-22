@@ -1,7 +1,7 @@
 package com.rsicarelli.homehunt.presentation.filter
 
 import com.rsicarelli.homehunt_kmm.core.model.UiEvent
-import com.rsicarelli.homehunt.domain.model.SearchOption
+import com.rsicarelli.homehunt_kmm.domain.model.SearchOption
 
 data class FilterState(
     val uiEvent: UiEvent = UiEvent.Idle,

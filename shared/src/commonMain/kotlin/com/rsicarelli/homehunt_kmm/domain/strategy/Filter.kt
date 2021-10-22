@@ -1,8 +1,8 @@
-package com.rsicarelli.homehunt.domain.strategy
+package com.rsicarelli.homehunt_kmm.domain.strategy
 
 import com.rsicarelli.homehunt_kmm.domain.model.Property
 import com.rsicarelli.homehunt_kmm.domain.model.Property.Tag
-import com.rsicarelli.homehunt.domain.model.SearchOption
+import com.rsicarelli.homehunt_kmm.domain.model.SearchOption
 import com.rsicarelli.homehunt_kmm.domain.model.toTag
 
 interface Filter {
@@ -47,17 +47,13 @@ private object Surface : Filter {
 
 private object Dorm : Filter {
     override fun applyFilter(searchOption: SearchOption, property: Property): Boolean {
-        return property.dormCount?.let {
-            it >= searchOption.dormCount
-        } ?: true
+        return property.dormCount >= searchOption.dormCount
     }
 }
 
 private object Bath : Filter {
     override fun applyFilter(searchOption: SearchOption, property: Property): Boolean {
-        return property.bathCount?.let {
-            it >= searchOption.bathCount
-        } ?: true
+        return property.bathCount >= searchOption.bathCount
     }
 }
 
@@ -73,7 +69,7 @@ private object LongTermOnly : Filter {
     override fun applyFilter(searchOption: SearchOption, property: Property): Boolean {
         if (!searchOption.longTermOnly) return true
 
-        return property.fullDescription?.lowercase()?.contains("short term")?.not() ?: true
+        return property.fullDescription.lowercase().contains("short term").not()
     }
 }
 

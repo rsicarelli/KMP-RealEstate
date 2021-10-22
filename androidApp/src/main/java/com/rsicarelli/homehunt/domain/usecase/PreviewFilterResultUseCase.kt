@@ -2,7 +2,7 @@ package com.rsicarelli.homehunt.domain.usecase
 
 import com.rsicarelli.homehunt_kmm.core.model.UseCase
 import com.rsicarelli.homehunt_kmm.domain.model.Property
-import com.rsicarelli.homehunt.domain.model.SearchOption
+import com.rsicarelli.homehunt_kmm.domain.model.SearchOption
 import com.rsicarelli.homehunt.domain.repository.PropertyRepository_Old
 import com.rsicarelli.homehunt.domain.usecase.PreviewFilterResultUseCase.Outcome
 import com.rsicarelli.homehunt.domain.usecase.PreviewFilterResultUseCase.Request

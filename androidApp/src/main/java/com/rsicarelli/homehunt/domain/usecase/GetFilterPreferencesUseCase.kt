@@ -2,7 +2,7 @@ package com.rsicarelli.homehunt.domain.usecase
 
 import com.rsicarelli.homehunt_kmm.core.model.UseCase
 import com.rsicarelli.homehunt.data.datasource.FilterLocalDataSource
-import com.rsicarelli.homehunt.domain.model.SearchOption
+import com.rsicarelli.homehunt_kmm.domain.model.SearchOption
 import kotlinx.coroutines.flow.flow
 
 class GetFilterPreferencesUseCase(
