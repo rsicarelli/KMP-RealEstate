@@ -1,9 +1,9 @@
 package com.rsicarelli.homehunt.core.di
 
-import com.rsicarelli.homehunt.data.datasource.FilterLocalDataSource
 import com.rsicarelli.homehunt.domain.repository.PropertyRepository_Old
 import com.rsicarelli.homehunt.domain.repository.UserRepository_Old
 import com.rsicarelli.homehunt.domain.usecase.*
+import com.rsicarelli.homehunt_kmm.domain.repository.SearchOptionRepository
 import com.rsicarelli.homehunt_kmm.domain.repository.UserRepository
 import com.rsicarelli.homehunt_kmm.domain.usecase.IsLoggedInUseCase
 import com.rsicarelli.homehunt_kmm.domain.usecase.SignInUseCase
@@ -71,13 +71,13 @@ object DomainModule {
 
     @Provides
     @Singleton
-    fun providesGetFilterPreferencesUseCase(filterLocalDataSource: FilterLocalDataSource) =
-        GetFilterPreferencesUseCase(filterLocalDataSource)
+    fun providesGetFilterPreferencesUseCase(searchOptionRepository: SearchOptionRepository) =
+        GetFilterPreferencesUseCase(searchOptionRepository)
 
     @Provides
     @Singleton
-    fun providesSaveFilterPreferencesUseCase(filterLocalDataSource: FilterLocalDataSource) =
-        SaveFilterPreferencesUseCase(filterLocalDataSource)
+    fun providesSaveFilterPreferencesUseCase(searchOptionRepository: SearchOptionRepository) =
+        SaveFilterPreferencesUseCase(searchOptionRepository)
 
     @Provides
     fun providesGetFilteredPropertiesUseCase(

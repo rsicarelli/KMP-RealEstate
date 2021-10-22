@@ -4,8 +4,6 @@ import android.app.Application
 import android.content.SharedPreferences
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
-import com.rsicarelli.homehunt.data.datasource.FilterLocalDataSource
-import com.rsicarelli.homehunt.data.datasource.FilterLocalDataSourceImpl
 import com.rsicarelli.homehunt.data.datasource.FirestoreDataSource
 import com.rsicarelli.homehunt.data.datasource.FirestoreDataSourceImpl
 import com.rsicarelli.homehunt.data.repository.PropertyRepositoryOldImpl
@@ -79,11 +77,6 @@ object DataModule {
     @Singleton
     fun providesPropertyRepository_OLD(firestoreDataSource: FirestoreDataSource): PropertyRepository_Old =
         PropertyRepositoryOldImpl(firestoreDataSource)
-
-    @Provides
-    @Singleton
-    fun providesFilterLocalDataSource(sharedPreferences: SharedPreferences): FilterLocalDataSource =
-        FilterLocalDataSourceImpl(sharedPreferences)
 
     @Provides
     @Singleton
