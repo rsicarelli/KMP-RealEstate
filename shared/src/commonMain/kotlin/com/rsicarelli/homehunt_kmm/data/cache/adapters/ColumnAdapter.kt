@@ -20,9 +20,9 @@ val locationAdapter = object : ColumnAdapter<Location, String> {
         return Location(
             lat = split[0].toDouble(),
             lng = split[1].toDouble(),
-            name = split[3],
-            isApproximated = split[4].toBoolean(),
-            isUnknown = split[5].toBoolean()
+            name = split[2],
+            isApproximated = split[3].toBoolean(),
+            isUnknown = split[4].toBoolean()
         )
     }
 

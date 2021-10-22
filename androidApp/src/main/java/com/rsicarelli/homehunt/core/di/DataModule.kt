@@ -1,15 +1,9 @@
 package com.rsicarelli.homehunt.core.di
 
 import android.app.Application
-import android.content.SharedPreferences
-import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
 import com.rsicarelli.homehunt.data.datasource.FirestoreDataSource
 import com.rsicarelli.homehunt.data.datasource.FirestoreDataSourceImpl
-import com.rsicarelli.homehunt.data.repository.PropertyRepositoryOldImpl
-import com.rsicarelli.homehunt.data.repository.UserRepositoryOldImpl
-import com.rsicarelli.homehunt.domain.repository.PropertyRepository_Old
-import com.rsicarelli.homehunt.domain.repository.UserRepository_Old
 import com.rsicarelli.homehunt_kmm.data.cache.*
 import com.rsicarelli.homehunt_kmm.data.network.PropertyService
 import com.rsicarelli.homehunt_kmm.data.network.UserService
@@ -67,16 +61,6 @@ object DataModule {
     @Singleton
     fun providesFirestoreDataSource(firestore: FirebaseFirestore): FirestoreDataSource =
         FirestoreDataSourceImpl(firestore, CoroutineScope(Dispatchers.IO))
-
-    @Provides
-    @Singleton
-    fun providesUserRepository_OLD(firebaseAuth: FirebaseAuth): UserRepository_Old =
-        UserRepositoryOldImpl(firebaseAuth)
-
-    @Provides
-    @Singleton
-    fun providesPropertyRepository_OLD(firestoreDataSource: FirestoreDataSource): PropertyRepository_Old =
-        PropertyRepositoryOldImpl(firestoreDataSource)
 
     @Provides
     @Singleton
