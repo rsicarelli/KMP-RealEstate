@@ -1,6 +1,6 @@
 package com.rsicarelli.homehunt_kmm.domain.model
 
-import com.rsicarelli.homehunt_kmm.domain.strategy.Filter
+import com.rsicarelli.homehunt_kmm.domain.strategy.PropertyFilter
 import com.rsicarelli.homehunt_kmm.domain.strategy.allFilters
 
 data class SearchOption(
@@ -12,12 +12,12 @@ data class SearchOption(
     val longTermOnly: Boolean,
     val availableOnly: Boolean
 ) {
-    private val filters: List<Filter> = allFilters
+    private val propertyFilters: List<PropertyFilter> = allFilters
 
     fun applyFilter(properties: List<Property>): List<Property> {
         return properties.filter { property ->
-            filters.all {
-                it.applyFilter(this, property)
+            propertyFilters.all {
+                it.apply(this, property)
             }
         }
     }

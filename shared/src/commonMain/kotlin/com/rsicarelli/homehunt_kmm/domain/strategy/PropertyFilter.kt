@@ -5,8 +5,8 @@ import com.rsicarelli.homehunt_kmm.domain.model.Property.Tag
 import com.rsicarelli.homehunt_kmm.domain.model.SearchOption
 import com.rsicarelli.homehunt_kmm.domain.model.toTag
 
-interface Filter {
-    fun applyFilter(searchOption: SearchOption, property: Property): Boolean
+interface PropertyFilter {
+    fun apply(searchOption: SearchOption, property: Property): Boolean
 }
 
 val allFilters = listOf(
@@ -19,11 +19,11 @@ val allFilters = listOf(
     Availability
 )
 
-private object Price : Filter {
+private object Price : PropertyFilter {
     private const val UNLIMITED_PRICE = 99999.0
     private const val MAX_PRICE = 2000.0
 
-    override fun applyFilter(searchOption: SearchOption, property: Property): Boolean {
+    override fun apply(searchOption: SearchOption, property: Property): Boolean {
         val (min, max) = searchOption.priceRange
 
         val range = if (max == MAX_PRICE) min..UNLIMITED_PRICE else min..max
@@ -32,11 +32,11 @@ private object Price : Filter {
     }
 }
 
-private object Surface : Filter {
+private object Surface : PropertyFilter {
     private const val UNLIMITED_SURFACE = 99999
     private const val MAX_SURFACE = 180
 
-    override fun applyFilter(searchOption: SearchOption, property: Property): Boolean {
+    override fun apply(searchOption: SearchOption, property: Property): Boolean {
         val (min, max) = searchOption.surfaceRange
 
         val range = if (max == MAX_SURFACE) min..UNLIMITED_SURFACE else min..max
@@ -45,36 +45,36 @@ private object Surface : Filter {
     }
 }
 
-private object Dorm : Filter {
-    override fun applyFilter(searchOption: SearchOption, property: Property): Boolean {
+private object Dorm : PropertyFilter {
+    override fun apply(searchOption: SearchOption, property: Property): Boolean {
         return property.dormCount >= searchOption.dormCount
     }
 }
 
-private object Bath : Filter {
-    override fun applyFilter(searchOption: SearchOption, property: Property): Boolean {
+private object Bath : PropertyFilter {
+    override fun apply(searchOption: SearchOption, property: Property): Boolean {
         return property.bathCount >= searchOption.bathCount
     }
 }
 
-private object Visibility : Filter {
-    override fun applyFilter(searchOption: SearchOption, property: Property): Boolean {
+private object Visibility : PropertyFilter {
+    override fun apply(searchOption: SearchOption, property: Property): Boolean {
         if (searchOption.showSeen) return true
 
         return !property.isViewed
     }
 }
 
-private object LongTermOnly : Filter {
-    override fun applyFilter(searchOption: SearchOption, property: Property): Boolean {
+private object LongTermOnly : PropertyFilter {
+    override fun apply(searchOption: SearchOption, property: Property): Boolean {
         if (!searchOption.longTermOnly) return true
 
         return property.fullDescription.lowercase().contains("short term").not()
     }
 }
 
-private object Availability : Filter {
-    override fun applyFilter(searchOption: SearchOption, property: Property): Boolean {
+private object Availability : PropertyFilter {
+    override fun apply(searchOption: SearchOption, property: Property): Boolean {
         if (searchOption.availableOnly) {
             return property.tag.toTag() != Tag.RESERVED && property.tag.toTag() != Tag.RENTED
         }
