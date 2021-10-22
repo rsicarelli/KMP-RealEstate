@@ -11,6 +11,8 @@ import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
 import javax.inject.Singleton
 import android.content.SharedPreferences
+import com.russhwolf.settings.AndroidSettings
+import com.russhwolf.settings.Settings
 
 
 @Module
@@ -26,7 +28,14 @@ object AppModule {
     fun providesFirebaseFirestore() = Firebase.firestore
 
     @Provides
+    @Singleton
     fun provideSharedPreferences(application: Application): SharedPreferences {
         return application.getSharedPreferences("home_hunt", Context.MODE_PRIVATE)
     }
+
+    @Provides
+    @Singleton
+    fun providesSettings(sharedPreferences: SharedPreferences): Settings =
+        AndroidSettings(sharedPreferences)
+
 }

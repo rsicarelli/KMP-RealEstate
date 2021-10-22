@@ -4,11 +4,10 @@ import android.app.Application
 import android.content.SharedPreferences
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
-import com.rsicarelli.homehunt.BaseApplication
-import com.rsicarelli.homehunt.data.datasource.FirestoreDataSource
-import com.rsicarelli.homehunt.data.datasource.FirestoreDataSourceImpl
 import com.rsicarelli.homehunt.data.datasource.FilterLocalDataSource
 import com.rsicarelli.homehunt.data.datasource.FilterLocalDataSourceImpl
+import com.rsicarelli.homehunt.data.datasource.FirestoreDataSource
+import com.rsicarelli.homehunt.data.datasource.FirestoreDataSourceImpl
 import com.rsicarelli.homehunt.data.repository.PropertyRepositoryOldImpl
 import com.rsicarelli.homehunt.data.repository.UserRepositoryOldImpl
 import com.rsicarelli.homehunt.domain.repository.PropertyRepository_Old
@@ -17,10 +16,13 @@ import com.rsicarelli.homehunt_kmm.data.cache.*
 import com.rsicarelli.homehunt_kmm.data.network.PropertyService
 import com.rsicarelli.homehunt_kmm.data.network.UserService
 import com.rsicarelli.homehunt_kmm.data.repository.PropertyRepositoryImpl
+import com.rsicarelli.homehunt_kmm.data.repository.SearchOptionRepositoryImpl
 import com.rsicarelli.homehunt_kmm.data.repository.UserRepositoryImpl
 import com.rsicarelli.homehunt_kmm.datasource.cache.HomeHuntDatabase
 import com.rsicarelli.homehunt_kmm.domain.repository.PropertyRepository
+import com.rsicarelli.homehunt_kmm.domain.repository.SearchOptionRepository
 import com.rsicarelli.homehunt_kmm.domain.repository.UserRepository
+import com.russhwolf.settings.Settings
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -56,7 +58,10 @@ object DataModule {
 
     @Singleton
     @Provides
-    fun providesPropertyRepository(propertyCache: PropertyCache, propertyService: PropertyService): PropertyRepository {
+    fun providesPropertyRepository(
+        propertyCache: PropertyCache,
+        propertyService: PropertyService
+    ): PropertyRepository {
         return PropertyRepositoryImpl(propertyCache, propertyService)
     }
 
@@ -79,4 +84,14 @@ object DataModule {
     @Singleton
     fun providesFilterLocalDataSource(sharedPreferences: SharedPreferences): FilterLocalDataSource =
         FilterLocalDataSourceImpl(sharedPreferences)
+
+    @Provides
+    @Singleton
+    fun providesSearchOptionCache(settings: Settings): SearchOptionCache =
+        SearchOptionCacheImpl(settings)
+
+    @Provides
+    @Singleton
+    fun providesSearchOptionRepository(searchOptionCache: SearchOptionCache): SearchOptionRepository =
+        SearchOptionRepositoryImpl(searchOptionCache)
 }

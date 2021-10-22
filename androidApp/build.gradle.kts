@@ -75,6 +75,7 @@ dependencies {
     androidTestImplementation(ComposeTest.uiTestJunit4)
     debugImplementation(ComposeTest.uiTestManifest)
 
+    implementation(Dependencies.multiplatformSettings)
     implementation(Dependencies.touchImageView)
     implementation(Dependencies.timber)
 

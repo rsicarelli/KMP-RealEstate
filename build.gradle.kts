@@ -18,9 +18,3 @@ buildscript {
 tasks.register<Delete>("clean").configure {
     delete(rootProject.buildDir)
 }
-
-tasks.withType<org.jetbrains.kotlin.gradle.tasks.KotlinCompile> {
-    kotlinOptions {
-        freeCompilerArgs = freeCompilerArgs + "-Xopt-in=kotlin.RequiresOptIn"
-    }
-}

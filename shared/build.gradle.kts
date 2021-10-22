@@ -64,6 +64,12 @@ kotlin {
     }
 
     sourceSets {
+        all {
+            languageSettings.apply {
+                optIn("kotlin.RequiresOptIn")
+            }
+        }
+
         val commonMain by getting {
             dependencies {
                 api(Apollo.runtime)
@@ -103,11 +109,5 @@ sqldelight {
     database(Database.name) {
         packageName = Database.packageName
         sourceFolders = listOf(Database.sourceFolder)
-    }
-}
-
-tasks.withType<org.jetbrains.kotlin.gradle.tasks.KotlinCompile> {
-    kotlinOptions {
-        freeCompilerArgs = freeCompilerArgs + "-Xopt-in=kotlin.RequiresOptIn"
     }
 }
