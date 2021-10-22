@@ -4,9 +4,9 @@ import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.rsicarelli.homehunt_kmm.core.model.ProgressBarState
-import com.rsicarelli.homehunt.domain.usecase.GetSinglePropertyUseCase
-import com.rsicarelli.homehunt.domain.usecase.MarkAsViewedUseCase
-import com.rsicarelli.homehunt.domain.usecase.ToggleFavouriteUseCase
+import com.rsicarelli.homehunt_kmm.domain.usecase.GetSinglePropertyUseCase
+import com.rsicarelli.homehunt_kmm.domain.usecase.MarkAsViewedUseCase
+import com.rsicarelli.homehunt_kmm.domain.usecase.ToggleFavouriteUseCase
 import com.rsicarelli.homehunt.ui.navigation.NavArguments
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.FlowPreview
@@ -16,9 +16,9 @@ import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.flow.single
 import kotlinx.coroutines.launch
 import javax.inject.Inject
-import com.rsicarelli.homehunt.domain.usecase.GetSinglePropertyUseCase.Request as GetSinglePropertyRequest
-import com.rsicarelli.homehunt.domain.usecase.MarkAsViewedUseCase.Request as MarkAsViewedRequest
-import com.rsicarelli.homehunt.domain.usecase.ToggleFavouriteUseCase.Request as ToggleFavouriteRequest
+import com.rsicarelli.homehunt_kmm.domain.usecase.GetSinglePropertyUseCase.Request as GetSinglePropertyRequest
+import com.rsicarelli.homehunt_kmm.domain.usecase.MarkAsViewedUseCase.Request as MarkAsViewedRequest
+import com.rsicarelli.homehunt_kmm.domain.usecase.ToggleFavouriteUseCase.Request as ToggleFavouriteRequest
 
 
 @HiltViewModel

@@ -3,8 +3,8 @@ package com.rsicarelli.homehunt.presentation.favourites
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.rsicarelli.homehunt_kmm.core.model.ProgressBarState
-import com.rsicarelli.homehunt.domain.usecase.GetFavouritedPropertiesUseCase
-import com.rsicarelli.homehunt.domain.usecase.ToggleFavouriteUseCase
+import com.rsicarelli.homehunt_kmm.domain.usecase.GetFavouritedPropertiesUseCase
+import com.rsicarelli.homehunt_kmm.domain.usecase.ToggleFavouriteUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.launchIn
@@ -28,7 +28,7 @@ class FavouritesViewModel @Inject constructor(
             toggleFavourite(
                 ToggleFavouriteUseCase.Request(
                     referenceId = referenceId,
-                    isFavourited = isFavourited
+                    isUpVoted = isFavourited
                 )
             ).single()
         }

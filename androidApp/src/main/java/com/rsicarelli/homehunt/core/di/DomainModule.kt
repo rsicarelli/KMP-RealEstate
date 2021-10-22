@@ -2,7 +2,6 @@ package com.rsicarelli.homehunt.core.di
 
 import com.rsicarelli.homehunt.domain.repository.PropertyRepository_Old
 import com.rsicarelli.homehunt.domain.repository.UserRepository_Old
-import com.rsicarelli.homehunt.domain.usecase.*
 import com.rsicarelli.homehunt_kmm.domain.repository.PropertyRepository
 import com.rsicarelli.homehunt_kmm.domain.repository.SearchOptionRepository
 import com.rsicarelli.homehunt_kmm.domain.repository.UserRepository

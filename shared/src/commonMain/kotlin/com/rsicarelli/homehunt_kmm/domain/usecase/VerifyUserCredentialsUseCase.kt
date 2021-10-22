@@ -52,7 +52,4 @@ class VerifyUserCredentialsUseCase : UseCase<Request, Outcome> {
         object AboveMaxLength : InvalidReason()
     }
 
-    companion object {
-
-    }
 }
