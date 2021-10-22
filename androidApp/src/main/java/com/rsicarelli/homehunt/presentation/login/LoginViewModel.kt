@@ -8,6 +8,7 @@ import com.rsicarelli.homehunt_kmm.core.model.UiEvent.MessageToUser
 import com.rsicarelli.homehunt_kmm.core.model.UiEvent.Navigate
 import com.rsicarelli.homehunt_kmm.domain.usecase.SignInUseCase
 import com.rsicarelli.homehunt.ui.navigation.Screen
+import com.rsicarelli.homehunt_kmm.domain.usecase.SignUpUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
@@ -17,7 +18,8 @@ import com.rsicarelli.homehunt_kmm.domain.usecase.SignInUseCase.Request as SignI
 
 @HiltViewModel
 class LoginViewModel @Inject constructor(
-    private val signIn: SignInUseCase
+    private val signIn: SignInUseCase,
+    private val signUp: SignUpUseCase
 ) : ViewModel() {
 
     private val _state: MutableStateFlow<LoginState> = MutableStateFlow(LoginState())
@@ -42,7 +44,18 @@ class LoginViewModel @Inject constructor(
 
     fun onSignUp() {
         withValidCredentials {
-
+            viewModelScope.launch {
+                signUp(SignUpUseCase.Request(state.value.userName, state.value.password))
+                    .onStart { toggleLoading(ProgressBarState.Loading) }
+                    .onCompletion { toggleLoading(ProgressBarState.Idle) }
+                    .catch { onError(it) }
+                    .collectLatest { outcome ->
+                        when (outcome) {
+                            SignUpUseCase.Outcome.Error -> onError()
+                            SignUpUseCase.Outcome.Success -> navigate(Navigate(Screen.Home.route))
+                        }
+                    }
+            }
         }
     }
 
