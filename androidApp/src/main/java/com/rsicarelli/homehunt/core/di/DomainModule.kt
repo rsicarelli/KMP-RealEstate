@@ -5,6 +5,7 @@ import com.rsicarelli.homehunt.data.datasource.FilterLocalDataSource
 import com.rsicarelli.homehunt.domain.repository.PropertyRepository_Old
 import com.rsicarelli.homehunt.domain.repository.UserRepository_Old
 import com.rsicarelli.homehunt.domain.usecase.*
+import com.rsicarelli.homehunt_kmm.domain.repository.UserRepository
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -21,8 +22,8 @@ object DomainModule {
 
     @Provides
     @Singleton
-    fun providesIsLoggedInUseCase(userRepositoryOld: UserRepository_Old) =
-        IsLoggedInUseCase(userRepositoryOld)
+    fun providesIsLoggedInUseCase(userRepository: UserRepository) =
+        IsLoggedInUseCase(userRepository)
 
     @Provides
     @Singleton

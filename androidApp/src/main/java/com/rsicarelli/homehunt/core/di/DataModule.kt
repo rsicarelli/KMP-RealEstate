@@ -1,5 +1,6 @@
 package com.rsicarelli.homehunt.core.di
 
+import android.app.Application
 import android.content.SharedPreferences
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
@@ -34,7 +35,7 @@ object DataModule {
 
     @Singleton
     @Provides
-    fun provideRecipeDatabase(context: BaseApplication): HomeHuntDatabase =
+    fun provideRecipeDatabase(context: Application): HomeHuntDatabase =
         HomeHuntDatabaseFactory(driverFactory = DriverFactory(context)).createDatabase()
 
     @Singleton
