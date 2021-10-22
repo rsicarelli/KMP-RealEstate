@@ -1,15 +1,15 @@
-package com.rsicarelli.homehunt.domain.usecase
+package com.rsicarelli.homehunt_kmm.domain.usecase
 
 import com.rsicarelli.homehunt_kmm.core.model.UseCase
-import com.rsicarelli.homehunt.domain.usecase.IsLoggedInUseCase.Outcome
+import com.rsicarelli.homehunt_kmm.domain.usecase.IsLoggedInUseCase.Outcome
 import com.rsicarelli.homehunt_kmm.domain.repository.UserRepository
 import kotlinx.coroutines.flow.flow
 
 class IsLoggedInUseCase(
-    private val userRepositoryOld: UserRepository
+    private val userRepository: UserRepository
 ) : UseCase<Unit, Outcome> {
     override fun invoke(request: Unit) = flow {
-        userRepositoryOld.getUser()
+        userRepository.getUser()
             .takeIf { it != null }
             ?.let { emit(Outcome.LoggedIn) }
             ?: emit(Outcome.LoggedOut)

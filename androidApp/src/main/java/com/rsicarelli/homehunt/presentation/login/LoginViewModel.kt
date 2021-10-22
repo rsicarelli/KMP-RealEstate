@@ -6,14 +6,14 @@ import com.rsicarelli.homehunt.R
 import com.rsicarelli.homehunt_kmm.core.model.ProgressBarState
 import com.rsicarelli.homehunt_kmm.core.model.UiEvent.MessageToUser
 import com.rsicarelli.homehunt_kmm.core.model.UiEvent.Navigate
-import com.rsicarelli.homehunt.domain.usecase.SignInUseCase
+import com.rsicarelli.homehunt_kmm.domain.usecase.SignInUseCase
 import com.rsicarelli.homehunt.ui.navigation.Screen
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
 import timber.log.Timber
 import javax.inject.Inject
-import com.rsicarelli.homehunt.domain.usecase.SignInUseCase.Request as SignInRequest
+import com.rsicarelli.homehunt_kmm.domain.usecase.SignInUseCase.Request as SignInRequest
 
 @HiltViewModel
 class LoginViewModel @Inject constructor(
