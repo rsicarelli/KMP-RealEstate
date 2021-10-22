@@ -72,17 +72,9 @@ dependencies {
     implementation(Compose.constraintLayout)
     implementation(Compose.utils)
 
-    androidTestImplementation(ComposeTest.uiTestJunit4)
-    debugImplementation(ComposeTest.uiTestManifest)
-
     implementation(Dependencies.multiplatformSettings)
     implementation(Dependencies.touchImageView)
     implementation(Dependencies.timber)
-
-    implementation(platform(Firebase.bom))
-    implementation((Firebase.firestore))
-    implementation(Firebase.auth)
-    implementation(Firebase.playServicesAuth)
 
     implementation(Google.material)
     implementation(Google.maps)
@@ -94,6 +86,8 @@ dependencies {
 
     implementation(Kotlin.coroutines)
 
+    androidTestImplementation(ComposeTest.uiTestJunit4)
+    debugImplementation(ComposeTest.uiTestManifest)
     androidTestImplementation(HiltTest.hiltAndroidTesting)
     kaptAndroidTest(Hilt.compiler)
 }
