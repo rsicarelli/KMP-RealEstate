@@ -4,10 +4,10 @@ import kotlin.collections.List;
 CREATE TABLE _Property(
     _id TEXT NOT NULL PRIMARY KEY,
     avatarUrl TEXT NOT NULL,
-    bathCount INTEGER AS Int,
+    bathCount INTEGER AS Int NOT NULL,
     characteristics TEXT AS List<String> NOT NULL,
     createdAt TEXT NOT NULL,
-    dormCount INTEGER AS Int,
+    dormCount INTEGER AS Int NOT NULL,
     fullDescription TEXT NOT NULL,
     isActive INTEGER AS Boolean NOT NULL DEFAULT 0,
     isViewed INTEGER AS Boolean NOT NULL DEFAULT 0,
@@ -21,7 +21,7 @@ CREATE TABLE _Property(
     price REAL AS Double NOT NULL,
     propertyUrl TEXT NOT NULL,
     surface INTEGER AS Int NOT NULL,
-    tag TEXT,
+    tag TEXT NOT NULL,
     title TEXT NOT NULL,
     videoUrl TEXT
 );

@@ -46,7 +46,7 @@ fun PropertyList(
                     onFavouriteClick = {
                         onToggleFavourite(
                             property._id,
-                            !property.isFavourited
+                            !property.isUpVoted
                         )
                     },
                     onViewedGallery = { onPropertyViewed(property) }

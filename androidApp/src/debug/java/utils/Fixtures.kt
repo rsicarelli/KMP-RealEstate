@@ -42,7 +42,7 @@ object Fixtures {
         photoGalleryUrls = listOf("https://aimage.com".repeat(40)),
         pdfUrl = "https://apdf.com",
         origin = "",
-        isFavourited = false,
+        isUpVoted = false,
         isActive = true,
         isViewed = false
     )

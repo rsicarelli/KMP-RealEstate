@@ -15,7 +15,7 @@ class GetFavouritedPropertiesUseCase(
     override fun invoke(request: Unit): Flow<Outcome> = propertiesRepository.getActiveProperties()
         .filterNotNull()
         .map { properties ->
-            Outcome(properties.filter { it.isFavourited })
+            Outcome(properties.filter { it.isUpVoted })
         }
 
     data class Outcome(val properties: List<Property>)

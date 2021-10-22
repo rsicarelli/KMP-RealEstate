@@ -58,12 +58,12 @@ private fun PropertyDetailContent(
                 onPlayVideo = actions.onOpenVideoPreview
             )
             PropertyTopBar(
-                isFavourited = property.isFavourited,
+                isFavourited = property.isUpVoted,
                 onBackClicked = actions.onNavigateUp,
                 onFavouriteClick = {
                     actions.onToggleFavourite(
                         property._id,
-                        !property.isFavourited
+                        !property.isUpVoted
                     )
                 }
             )

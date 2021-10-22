@@ -125,7 +125,7 @@ fun MultiplePropertiesPreview(state: MapState, actions: MapActions) {
                         onFavouriteClick = {
                             actions.onToggleFavourite(
                                 property._id,
-                                !property.isFavourited
+                                !property.isUpVoted
                             )
                         },
                         onViewedGallery = { },
@@ -165,7 +165,7 @@ private fun SinglePropertyPreview(
                         onFavouriteClick = {
                             actions.onToggleFavourite(
                                 property._id,
-                                !property.isFavourited
+                                !property.isUpVoted
                             )
                         },
                         onViewedGallery = { },

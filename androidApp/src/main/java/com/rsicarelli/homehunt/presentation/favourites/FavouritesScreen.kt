@@ -67,7 +67,7 @@ private fun FavouriteScreenPreview() {
             state = FavouritesState(
                 properties = Fixtures.aListOfProperty.map {
                     it.copy(
-                        isFavourited = true,
+                        isUpVoted = true,
                         isActive = false
                     )
                 },

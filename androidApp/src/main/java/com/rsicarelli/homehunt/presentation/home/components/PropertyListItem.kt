@@ -79,7 +79,7 @@ fun PropertyListItem(
                     )
                     FavouritableIconButton(
                         onClick = onFavouriteClick,
-                        isFavourited = property.isFavourited
+                        isFavourited = property.isUpVoted
                     )
                 }
             }
