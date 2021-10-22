@@ -8,6 +8,7 @@ import com.rsicarelli.homehunt_kmm.domain.repository.UserRepository
 import com.rsicarelli.homehunt_kmm.domain.usecase.IsLoggedInUseCase
 import com.rsicarelli.homehunt_kmm.domain.usecase.SignInUseCase
 import com.rsicarelli.homehunt_kmm.domain.usecase.SignUpUseCase
+import com.rsicarelli.homehunt_kmm.domain.usecase.VerifyUserCredentialsUseCase
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -25,6 +26,10 @@ object DomainModule {
     @Provides
     @Singleton
     fun providesSignUpUseCase(userRepository: UserRepository) = SignUpUseCase(userRepository)
+
+    @Provides
+    @Singleton
+    fun providesVerifyUserCredentialsUseCase() = VerifyUserCredentialsUseCase()
 
     @Provides
     @Singleton

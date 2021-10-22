@@ -8,8 +8,6 @@ data class LoginState(
     val progressBarState: ProgressBarState = ProgressBarState.Idle,
     val password: String = "",
     val userName: String = "",
-    val invalidUserName: Boolean = false,
-    val invalidPassword: Boolean = false
-) {
-
-}
+    val invalidUsername: Boolean = false,
+    val invalidPassword: Boolean = false,
+)

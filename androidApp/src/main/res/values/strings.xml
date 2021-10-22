@@ -40,8 +40,9 @@
     <string name="enter_username">Enter username</string>
     <string name="sign_in">Sign in</string>
     <string name="sign_up">Sign up</string>
-    <string name="error_username">Invalid username</string>
-    <string name="error_password">Invalid password</string>
+    <string name="error_username">Username must be between %1$s and %2$s</string>
+    <string name="error_password">Password must be between %1$s and %2$s</string>
+    <string name="error">Error</string>
     <plurals name="see_results_plurals">
         <item quantity="one">See %d result</item>
         <item quantity="other">See %d results</item>

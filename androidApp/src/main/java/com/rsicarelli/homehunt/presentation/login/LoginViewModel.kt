@@ -3,12 +3,13 @@ package com.rsicarelli.homehunt.presentation.login
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.rsicarelli.homehunt.R
+import com.rsicarelli.homehunt.ui.navigation.Screen
 import com.rsicarelli.homehunt_kmm.core.model.ProgressBarState
 import com.rsicarelli.homehunt_kmm.core.model.UiEvent.MessageToUser
 import com.rsicarelli.homehunt_kmm.core.model.UiEvent.Navigate
 import com.rsicarelli.homehunt_kmm.domain.usecase.SignInUseCase
-import com.rsicarelli.homehunt.ui.navigation.Screen
 import com.rsicarelli.homehunt_kmm.domain.usecase.SignUpUseCase
+import com.rsicarelli.homehunt_kmm.domain.usecase.VerifyUserCredentialsUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
@@ -19,7 +20,8 @@ import com.rsicarelli.homehunt_kmm.domain.usecase.SignInUseCase.Request as SignI
 @HiltViewModel
 class LoginViewModel @Inject constructor(
     private val signIn: SignInUseCase,
-    private val signUp: SignUpUseCase
+    private val signUp: SignUpUseCase,
+    private val verifyUserCredentials: VerifyUserCredentialsUseCase
 ) : ViewModel() {
 
     private val _state: MutableStateFlow<LoginState> = MutableStateFlow(LoginState())
@@ -72,7 +74,7 @@ class LoginViewModel @Inject constructor(
     }
 
     fun onUserNameChanged(userName: String) {
-        _state.value = state.value.copy(userName = userName, invalidUserName = false)
+        _state.value = state.value.copy(userName = userName, invalidUsername = false)
     }
 
     fun onError(exception: Throwable? = null) {
@@ -80,16 +82,25 @@ class LoginViewModel @Inject constructor(
         _state.value = state.value.copy(uiEvent = MessageToUser(R.string.error_unknown))
     }
 
-    private inline fun withValidCredentials(action: () -> Unit) {
-        val validUserName = state.value.userName.isNotEmpty() || state.value.userName.isNotBlank()
-        val validPassword = state.value.password.isNotEmpty() || state.value.password.isNotBlank()
-
-        if (validUserName && validPassword) {
-            action()
-        } else {
-            _state.value =
-                state.value.copy(invalidPassword = !validPassword, invalidUserName = !validUserName)
+    private inline fun withValidCredentials(crossinline action: () -> Unit) {
+        viewModelScope.launch {
+            verifyUserCredentials(
+                VerifyUserCredentialsUseCase.Request(
+                    userName = state.value.userName,
+                    password = state.value.password
+                )
+            ).collect { outcome ->
+                when (outcome) {
+                    VerifyUserCredentialsUseCase.Outcome.Valid -> action()
+                    is VerifyUserCredentialsUseCase.Outcome.Invalid -> {
+                        _state.value =
+                            state.value.copy(
+                                invalidPassword = outcome.password != null,
+                                invalidUsername = outcome.userName != null
+                            )
+                    }
+                }
+            }
         }
-
     }
 }
