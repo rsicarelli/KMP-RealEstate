@@ -31,9 +31,14 @@ CREATE TABLE UserState (
    token TEXT NOT NULL
 );
 
-insertProperties:
+insertProperty:
 INSERT INTO _Property(_id, avatarUrl, bathCount, characteristics, createdAt, dormCount, fullDescription, isActive, isViewed, isUpVoted, isFavourited, location, locationDescription, origin, pdfUrl, photoGalleryUrls, price, propertyUrl, surface, tag, title, videoUrl)
 VALUES (?, ?, ? ,? ,? ,?, ?,? ,? ,? ,? ,? ,?,? ,?,?, ?, ?, ?, ?, ?,?);
+
+updateProperty:
+UPDATE _Property
+SET avatarUrl= ?, bathCount =?, characteristics= ?, dormCount= ?, fullDescription=?, isActive=?, isViewed=?, isUpVoted=?, isFavourited=?, location=?, locationDescription=?, origin=?, pdfUrl=?, photoGalleryUrls=?, price=?, propertyUrl=?, surface=?, tag=?, title=?, videoUrl=?
+WHERE _id = ?;
 
 updatePropertyVisibility:
 UPDATE _Property

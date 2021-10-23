@@ -25,45 +25,75 @@ class PropertyCacheImpl(homeHuntDatabase: HomeHuntDatabase) : PropertyCache {
     override fun saveAll(properties: List<Property>) {
         queries.transaction {
             properties.forEach { property ->
-                with(property) {
-                    queries.insertProperties(
-                        _id = _id,
-                        avatarUrl = avatarUrl,
-                        bathCount = bathCount,
-                        characteristics = characteristics,
-                        createdAt = avatarUrl,
-                        dormCount = dormCount,
-                        fullDescription = fullDescription,
-                        isActive = isActive,
-                        isViewed = isViewed,
-                        isUpVoted = isUpVoted,
-                        isFavourited = isUpVoted,
-                        location = location,
-                        locationDescription = locationDescription,
-                        origin = origin,
-                        pdfUrl = pdfUrl,
-                        photoGalleryUrls = photoGalleryUrls,
-                        price = price,
-                        propertyUrl = propertyUrl,
-                        surface = surface,
-                        tag = tag,
-                        title = title,
-                        videoUrl = videoUrl
-                    )
-                }
+                get(property._id)
+                    ?.let { updateProperty(property) }
+                    ?: insertProperty(property)
             }
         }
     }
 
     override fun updateVisibility(propertyId: String) {
-        queries.transaction {
-            queries.updatePropertyVisibility(isViewed = true, _id = propertyId)
-        }
+        queries.updatePropertyVisibility(isViewed = true, _id = propertyId)
     }
 
     override fun updateRating(upVoted: Boolean, propertyId: String) {
-        queries.transaction {
-            queries.updatePropertyRating(upVoted, propertyId)
+        queries.updatePropertyRating(upVoted, propertyId)
+    }
+
+    private fun insertProperty(property: Property) {
+        with(property) {
+            queries.insertProperty(
+                _id = _id,
+                avatarUrl = avatarUrl,
+                bathCount = bathCount,
+                characteristics = characteristics,
+                createdAt = avatarUrl,
+                dormCount = dormCount,
+                fullDescription = fullDescription,
+                isActive = isActive,
+                isViewed = isViewed,
+                isUpVoted = isUpVoted,
+                isFavourited = isUpVoted,
+                location = location,
+                locationDescription = locationDescription,
+                origin = origin,
+                pdfUrl = pdfUrl,
+                photoGalleryUrls = photoGalleryUrls,
+                price = price,
+                propertyUrl = propertyUrl,
+                surface = surface,
+                tag = tag,
+                title = title,
+                videoUrl = videoUrl
+            )
+        }
+    }
+
+    private fun updateProperty(property: Property) {
+        with(property) {
+            queries.updateProperty(
+                _id = _id,
+                avatarUrl = avatarUrl,
+                bathCount = bathCount,
+                characteristics = characteristics,
+                dormCount = dormCount,
+                fullDescription = fullDescription,
+                isActive = isActive,
+                isViewed = isViewed,
+                isUpVoted = isUpVoted,
+                isFavourited = isUpVoted,
+                location = location,
+                locationDescription = locationDescription,
+                origin = origin,
+                pdfUrl = pdfUrl,
+                photoGalleryUrls = photoGalleryUrls,
+                price = price,
+                propertyUrl = propertyUrl,
+                surface = surface,
+                tag = tag,
+                title = title,
+                videoUrl = videoUrl
+            )
         }
     }
 
