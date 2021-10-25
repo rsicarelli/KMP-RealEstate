@@ -341,7 +341,7 @@ fun BottomBar(
                 modifier = Modifier
                     .fillMaxSize()
                     .padding(12.dp),
-                tint = if (isUpVoted) rally_green_300 else MaterialTheme.colors.primary,
+                tint = if (isUpVoted) Green_300 else MaterialTheme.colors.primary,
                 contentDescription = "next",
             )
         }

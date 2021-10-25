@@ -69,7 +69,7 @@ private fun SystemBarEffect() {
 }
 
 @Composable
-fun HomeHuntBottomNavigation(navController: NavController) {
+private fun HomeHuntBottomNavigation(navController: NavController) {
     val items: List<BottomNavItem> = listOf(
         BottomNavItem(
             route = Screen.Home.route,

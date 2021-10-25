@@ -14,7 +14,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.sp
 import com.rsicarelli.homehunt.R
 import com.rsicarelli.homehunt.ui.theme.HomeHuntTheme
-import com.rsicarelli.homehunt.ui.theme.rally_blue_100
+import com.rsicarelli.homehunt.ui.theme.Blue
 
 @Composable
 fun CustomClickableText(
@@ -29,7 +29,7 @@ fun CustomClickableText(
         withStyle(
             style = MaterialTheme.typography.overline.copy(
                 fontSize = 14.sp,
-                color = rally_blue_100
+                color = Blue
             ).toSpanStyle()
         ) {
             append(stringResource(id = placeholderRes))

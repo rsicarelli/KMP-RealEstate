@@ -120,7 +120,7 @@ private fun LoginContent(
                             .fillMaxWidth()
                             .height(48.dp),
                         colors = ButtonDefaults.buttonColors(
-                            backgroundColor = rally_green_500,
+                            backgroundColor = Green_500,
                             contentColor = MaterialTheme.colors.background
                         ),
                         onClick = {

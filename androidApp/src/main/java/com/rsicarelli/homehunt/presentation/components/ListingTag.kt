@@ -14,14 +14,14 @@ import com.rsicarelli.homehunt_kmm.domain.model.Property
 import com.rsicarelli.homehunt.ui.theme.HomeHuntTheme
 import com.rsicarelli.homehunt.ui.theme.Size_Regular
 import com.rsicarelli.homehunt.ui.theme.Size_Small
-import com.rsicarelli.homehunt.ui.theme.rally_orange_300
+import com.rsicarelli.homehunt.ui.theme.Orange_300
 
 @Composable
 fun ListingTag(
     modifier: Modifier = Modifier,
     isPropertyActive: Boolean,
     propertyTag: Property.Tag,
-    color: Color = rally_orange_300,
+    color: Color = Orange_300,
     style: TextStyle = MaterialTheme.typography.body1.copy(fontWeight = FontWeight.Bold)
 ) {
     modifier.padding(top = Size_Regular)

@@ -20,8 +20,7 @@ sealed class Screen(val route: String, val arguments: List<NamedNavArgument> = e
             arguments = listOf(navArgument(PROPERTY_DETAIL) {
                 type = NavType.StringType
             })
-        ) {
-    }
+        )
 }
 
 object NavArguments {

@@ -27,7 +27,6 @@ val BorderSizeLarge = Size_Medium
 val IconSizeSmall = 16.dp
 val IconSizeLarge = 32.dp
 
-val BottomBarSize = 64.dp
 val GalleryItemSize = 200.dp
 val GalleryItemSizeLarger = 256.dp
 val MapSize = 150.dp

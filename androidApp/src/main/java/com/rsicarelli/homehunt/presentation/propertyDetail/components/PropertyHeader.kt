@@ -15,7 +15,7 @@ import com.rsicarelli.homehunt.presentation.components.IconText
 import com.rsicarelli.homehunt.ui.theme.Size_Regular
 import com.rsicarelli.homehunt.ui.theme.Size_Small
 import com.rsicarelli.homehunt.ui.theme.Size_X_Small
-import com.rsicarelli.homehunt.ui.theme.rally_blue
+import com.rsicarelli.homehunt.ui.theme.Blue_100
 
 @Composable
 fun PropertyHeader(
@@ -79,7 +79,7 @@ fun PropertyHeader(
                     start.linkTo(barrier, Size_Regular)
                 },
                 text = "${property.price.toCurrency()}",
-                style = MaterialTheme.typography.h4.copy(color = rally_blue),
+                style = MaterialTheme.typography.h4.copy(color = Blue_100),
                 maxLines = 1,
                 overflow = TextOverflow.Ellipsis
             )

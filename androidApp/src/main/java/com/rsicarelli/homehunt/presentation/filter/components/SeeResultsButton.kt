@@ -12,12 +12,11 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.sp
-import com.google.accompanist.insets.systemBarsPadding
 import com.rsicarelli.homehunt.R
 import com.rsicarelli.homehunt.ui.theme.HomeHuntTheme
 import com.rsicarelli.homehunt.ui.theme.Size_2X_Large
 import com.rsicarelli.homehunt.ui.theme.Size_Regular
-import com.rsicarelli.homehunt.ui.theme.rally_green_500
+import com.rsicarelli.homehunt.ui.theme.Green_500
 
 @Composable
 fun SeeResultsButton(
@@ -36,7 +35,7 @@ fun SeeResultsButton(
             shape = MaterialTheme.shapes.large,
             enabled = hasResults,
             colors = ButtonDefaults.buttonColors(
-                backgroundColor = rally_green_500,
+                backgroundColor = Green_500,
                 contentColor = MaterialTheme.colors.background
             ),
             onClick = onClick

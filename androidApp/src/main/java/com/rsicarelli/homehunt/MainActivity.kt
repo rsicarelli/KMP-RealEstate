@@ -46,45 +46,45 @@ private fun MainContent() {
     Surface(
         modifier = Modifier.systemBarsPadding(top = false)
     ) {
-        AppScaffold { scaffoldDelegate ->
+        AppScaffold { appState ->
             NavHost(
-                navController = scaffoldDelegate.navController,
+                navController = appState.navController,
                 startDestination = Screen.Splash.route,
             ) {
                 composable(
                     route = Screen.Splash.route,
-                    content = { SplashScreen(scaffoldDelegate) }
+                    content = { SplashScreen(appState) }
                 )
 
                 composable(
                     route = Screen.Login.route,
-                    content = { LoginScreen(scaffoldDelegate) }
+                    content = { LoginScreen(appState) }
                 )
 
                 composable(
                     route = Screen.Home.route,
-                    content = { HomeScreen(scaffoldDelegate) }
+                    content = { HomeScreen(appState) }
                 )
 
                 composable(
                     route = Screen.PropertyDetail.route + "/{${NavArguments.PROPERTY_DETAIL}}",
                     arguments = Screen.PropertyDetail.arguments,
-                    content = { PropertyDetailScreen(scaffoldDelegate) }
+                    content = { PropertyDetailScreen(appState) }
                 )
 
                 composable(
                     route = Screen.Filter.route,
-                    content = { FilterScreen(scaffoldDelegate) }
+                    content = { FilterScreen(appState) }
                 )
 
                 composable(
                     route = Screen.Favourites.route,
-                    content = { FavouritesScreen(scaffoldDelegate) }
+                    content = { FavouritesScreen(appState) }
                 )
 
                 composable(
                     route = Screen.Map.route,
-                    content = { MapScreen(scaffoldDelegate) }
+                    content = { MapScreen(appState) }
                 )
             }
         }

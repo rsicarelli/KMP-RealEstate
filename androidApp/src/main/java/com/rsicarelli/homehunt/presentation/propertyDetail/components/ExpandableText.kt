@@ -18,7 +18,7 @@ import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.IntSize
 import com.rsicarelli.homehunt.R
-import com.rsicarelli.homehunt.ui.theme.rally_blue
+import com.rsicarelli.homehunt.ui.theme.Blue_100
 import com.rsicarelli.homehunt.ui.theme.Blue_200
 import com.rsicarelli.homehunt.ui.theme.HomeHuntTheme
 
@@ -77,7 +77,7 @@ fun ExpandableText(
                 Text(
                     stringResource(id = R.string.see_more),
                     onTextLayout = { seeMoreSizeState.value = it.size },
-                    style = textStyle.copy(rally_blue),
+                    style = textStyle.copy(Blue_100),
                     modifier = Modifier
                         .then(
                             if (seeMoreOffset != null)

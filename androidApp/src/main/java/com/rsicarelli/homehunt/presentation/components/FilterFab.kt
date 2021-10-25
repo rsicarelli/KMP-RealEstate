@@ -32,7 +32,7 @@ fun FilterFab(isScrollInProgress: Boolean, onClick: () -> Unit) {
             FloatingActionButton(
                 onClick = onClick,
                 elevation = FloatingActionButtonDefaults.elevation(ElevationSize),
-                backgroundColor = rally_blue_700
+                backgroundColor = Blue_700
             ) {
                 Icon(
                     painter = painterResource(id = R.drawable.ic_round_filter),
