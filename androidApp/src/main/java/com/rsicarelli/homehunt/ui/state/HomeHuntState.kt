@@ -10,6 +10,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.currentBackStackEntryAsState
+import androidx.navigation.compose.rememberNavController
 import com.google.accompanist.navigation.animation.rememberAnimatedNavController
 import com.rsicarelli.homehunt.ui.navigation.bottomBarDestinations
 import com.rsicarelli.homehunt_kmm.core.model.UiEvent
@@ -59,7 +60,7 @@ class HomeHuntState(
 @OptIn(ExperimentalAnimationApi::class)
 @Composable
 fun rememberHomeHuntState(
-    navController: NavHostController = rememberAnimatedNavController(),
+    navController: NavHostController = rememberNavController(),
     scaffoldState: ScaffoldState = rememberScaffoldState(),
     coroutineScope: CoroutineScope = rememberCoroutineScope(),
 ): HomeHuntState = remember(navController, scaffoldState, coroutineScope) {
