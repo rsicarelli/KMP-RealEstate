@@ -12,7 +12,7 @@ CREATE TABLE _Property(
     isActive INTEGER AS Boolean NOT NULL DEFAULT 0,
     isViewed INTEGER AS Boolean NOT NULL DEFAULT 0,
     isUpVoted INTEGER AS Boolean NOT NULL DEFAULT 0,
-    isFavourited INTEGER AS Boolean NOT NULL DEFAULT 0,
+    isDownVoted INTEGER AS Boolean NOT NULL DEFAULT 0,
     location TEXT AS Location NOT NULL,
     locationDescription TEXT,
     origin TEXT NOT NULL,
@@ -32,12 +32,12 @@ CREATE TABLE UserState (
 );
 
 insertProperty:
-INSERT INTO _Property(_id, avatarUrl, bathCount, characteristics, createdAt, dormCount, fullDescription, isActive, isViewed, isUpVoted, isFavourited, location, locationDescription, origin, pdfUrl, photoGalleryUrls, price, propertyUrl, surface, tag, title, videoUrl)
+INSERT INTO _Property(_id, avatarUrl, bathCount, characteristics, createdAt, dormCount, fullDescription, isActive, isViewed, isUpVoted, isDownVoted, location, locationDescription, origin, pdfUrl, photoGalleryUrls, price, propertyUrl, surface, tag, title, videoUrl)
 VALUES (?, ?, ? ,? ,? ,?, ?,? ,? ,? ,? ,? ,?,? ,?,?, ?, ?, ?, ?, ?,?);
 
 updateProperty:
 UPDATE _Property
-SET avatarUrl= ?, bathCount =?, characteristics= ?, dormCount= ?, fullDescription=?, isActive=?, isViewed=?, isUpVoted=?, isFavourited=?, location=?, locationDescription=?, origin=?, pdfUrl=?, photoGalleryUrls=?, price=?, propertyUrl=?, surface=?, tag=?, title=?, videoUrl=?
+SET avatarUrl= ?, bathCount =?, characteristics= ?, dormCount= ?, fullDescription=?, isActive=?, isViewed=?, isUpVoted=?, isDownVoted=?, location=?, locationDescription=?, origin=?, pdfUrl=?, photoGalleryUrls=?, price=?, propertyUrl=?, surface=?, tag=?, title=?, videoUrl=?
 WHERE _id = ?;
 
 updatePropertyVisibility:

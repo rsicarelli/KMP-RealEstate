@@ -2,6 +2,7 @@ query GetProperties {
     properties {
         result {
           isUpVoted
+          isDownVoted
           isViewed
           property {
             _id

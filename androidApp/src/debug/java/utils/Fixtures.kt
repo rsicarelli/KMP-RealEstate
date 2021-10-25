@@ -43,6 +43,7 @@ object Fixtures {
         pdfUrl = "https://apdf.com",
         origin = "",
         isUpVoted = false,
+        isDownVoted = false,
         isActive = true,
         isViewed = false
     )

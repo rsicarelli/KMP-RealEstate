@@ -25,7 +25,8 @@ internal fun _Property.toProperty(): Property {
         pdfUrl = pdfUrl,
         origin = origin,
         isViewed = isViewed,
-        isUpVoted = isFavourited,
+        isUpVoted = isUpVoted,
+        isDownVoted = isDownVoted,
         isActive = isActive
     )
 }
@@ -68,5 +69,6 @@ internal fun GetPropertiesQuery.Result.toProperty(): Property =
         origin = property.origin,
         isViewed = isViewed,
         isUpVoted = isUpVoted,
-        isActive = property.isActive
+        isActive = property.isActive,
+        isDownVoted = isDownVoted
     )

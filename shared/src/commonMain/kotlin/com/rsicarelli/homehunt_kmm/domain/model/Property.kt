@@ -20,6 +20,7 @@ data class Property(
     val origin: String,
     val isViewed: Boolean,
     val isUpVoted: Boolean,
+    val isDownVoted: Boolean,
     val isActive: Boolean
 ) {
 
@@ -47,80 +48,3 @@ fun String?.toTag(): Property.Tag = this?.let {
         else -> Property.Tag.EMPTY
     }
 } ?: Property.Tag.EMPTY
-
-fun Map<String, Any?>.toProperty() =
-    Property(
-        _id = asString(Mapper.REFERENCE),
-        price = asDouble(Mapper.PRICE),
-        title = asString(Mapper.TITLE),
-        location = asLocation(Mapper.LOCATION),
-        surface = asInt(Mapper.SURFACE),
-        dormCount = asInt(Mapper.DORM_COUNT),
-        bathCount = asInt(Mapper.BATH_COUNT),
-        avatarUrl = asString(Mapper.AVATAR_URL),
-        tag = asString(Mapper.TAG),
-        propertyUrl = asString(Mapper.PROPERTY_URL),
-        videoUrl = asNullableString(Mapper.VIDEO_URL),
-        fullDescription = asString(Mapper.FULL_DESCRIPTION),
-        characteristics = asStringList(Mapper.CHARACTERISTICS),
-        photoGalleryUrls = asStringList(Mapper.PHOTO_GALLERY_URLS),
-        pdfUrl = asNullableString(Mapper.PDF_URL),
-        locationDescription = asNullableString(Mapper.LOCATION_DESCRIPTION),
-        origin = asString(Mapper.ORIGIN),
-        isUpVoted = asBoolean(Mapper.IS_FAVOURITED),
-        isActive = asBoolean(Mapper.IS_ACTIVE),
-        isViewed = false,
-    )
-
-object Mapper {
-    const val REFERENCE = "reference"
-    const val PRICE = "price"
-    const val TITLE = "title"
-    const val LOCATION = "location"
-    const val SURFACE = "surface"
-    const val DORM_COUNT = "dormCount"
-    const val DESCRIPTION = "description"
-    const val BATH_COUNT = "bathCount"
-    const val AVATAR_URL = "avatarUrl"
-    const val TAG = "tag"
-    const val PROPERTY_URL = "propertyUrl"
-    const val VIDEO_URL = "videoUrl"
-    const val FULL_DESCRIPTION = "fullDescription"
-    const val CHARACTERISTICS = "characteristics"
-    const val PHOTO_GALLERY_URLS = "photoGalleryUrls"
-    const val PDF_URL = "pdfUrl"
-    const val LOCATION_DESCRIPTION = "locationDescription"
-    const val ORIGIN = "origin"
-    const val VIEWED_BY = "viewedBy"
-    const val IS_FAVOURITED = "isFavourited"
-    const val IS_ACTIVE = "isActive"
-    const val LOCATION_LAT = "lat"
-    const val LOCATION_LNG = "lng"
-    const val LOCATION_NAME = "name"
-    const val LOCATION_APPROXIMATED = "approximated"
-    const val LOCATION_UNKNOWN = "unknown"
-}
-
-private fun Map<String, Any?>.asLocation(token: String): Location {
-    val locationMap = this[token] as HashMap<String, Any?>
-    return Location(
-        name = locationMap.asString(Mapper.LOCATION_NAME),
-        lat = locationMap.asDouble(Mapper.LOCATION_LAT),
-        lng = locationMap.asDouble(Mapper.LOCATION_LNG),
-        isApproximated = locationMap.asBoolean(Mapper.LOCATION_APPROXIMATED),
-        isUnknown = locationMap.asBoolean(Mapper.LOCATION_UNKNOWN),
-    )
-}
-
-private fun Map<String, Any?>.asString(token: String) = this[token] as String
-private fun Map<String, Any?>.asNullableString(token: String, default: String? = null) =
-    (this[token] as String?) ?: default
-
-private fun Map<String, Any?>.asDouble(token: String) = this[token] as Double
-private fun Map<String, Any?>.asNullableInt(token: String, default: Int? = null) =
-    (this[token] as Long?)?.toInt() ?: default
-
-private fun Map<String, Any?>.asInt(token: String) = (this[token] as Long).toInt()
-private fun Map<String, Any?>.asBoolean(token: String) = this[token] as Boolean
-
-private fun Map<String, Any?>.asStringList(token: String) = this[token] as List<String>

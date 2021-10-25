@@ -7,6 +7,8 @@ import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material.*
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.rounded.ArrowBack
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
@@ -18,6 +20,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -27,6 +30,7 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.flowWithLifecycle
 import coil.compose.rememberImagePainter
+import com.google.accompanist.insets.statusBarsPadding
 import com.google.accompanist.pager.*
 import com.rsicarelli.homehunt.R
 import com.rsicarelli.homehunt.ui.state.HomeHuntState
@@ -35,6 +39,7 @@ import com.rsicarelli.homehunt.presentation.components.CircularIndeterminateProg
 import com.rsicarelli.homehunt.presentation.components.EmptyContent
 import com.rsicarelli.homehunt.presentation.components.IconText
 import com.rsicarelli.homehunt.presentation.components.rememberOnLifecycle
+import com.rsicarelli.homehunt.presentation.home.components.ResultsHeader
 import com.rsicarelli.homehunt.presentation.propertyDetail.components.PagerIndicator
 import com.rsicarelli.homehunt.presentation.propertyDetail.components.StaticMapView
 import com.rsicarelli.homehunt.ui.theme.*
@@ -88,14 +93,37 @@ private fun HomeContent(
 @OptIn(ExperimentalPagerApi::class, androidx.compose.animation.ExperimentalAnimationApi::class)
 @Composable
 private fun PropertyPager(state: HomeState) {
-    ConstraintLayout(Modifier.fillMaxSize()) {
-        val (properties) = createRefs()
+    Column(Modifier.fillMaxSize()) {
+
+        Row(
+            modifier = Modifier
+                .fillMaxWidth()
+                .background(MaterialTheme.colors.background)
+                .statusBarsPadding()
+                .padding(Size_Large),
+            horizontalArrangement = Arrangement.End,
+            verticalAlignment = Alignment.CenterVertically
+        ) {
+            Text(
+                modifier = Modifier.weight(1.0f),
+                text = "${state.properties.size} ${stringResource(id = R.string.results)}",
+                style = MaterialTheme.typography.h4
+            )
+
+            IconButton(
+                modifier = Modifier.padding(end = 16.dp),
+                onClick = { }
+            ) {
+                Icon(
+                    modifier = Modifier.size(32.dp),
+                    painter = painterResource(id = R.drawable.ic_round_filter),
+                    contentDescription = stringResource(id = R.string.go_back)
+                )
+            }
+        }
 
         HorizontalPager(
-            modifier = Modifier.constrainAs(properties) {
-                end.linkTo(parent.end)
-                start.linkTo(parent.start)
-            },
+            modifier = Modifier.fillMaxWidth(),
             count = state.properties.size,
             contentPadding = PaddingValues(horizontal = 24.dp),
         ) { page ->
@@ -134,7 +162,9 @@ private fun PagerScope.PropertySnapshot(
         val property = state.properties[page]
         Column {
             ConstraintLayout(
-                modifier = Modifier.aspectRatio(0.9f)
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .height(256.dp)
             ) {
                 val (pagerIndicator, photoGallery, propertyDetails) = createRefs()
                 val pagerState = rememberPagerState()
@@ -228,7 +258,7 @@ private fun PagerScope.PropertySnapshot(
                 Surface(
                     modifier = Modifier
                         .fillMaxWidth()
-                        .aspectRatio(2.0f)
+                        .height(130.dp)
                         .clip(shape = MaterialTheme.shapes.medium)
                 ) {
                     StaticMapView(
@@ -308,7 +338,7 @@ private fun HomeScreenPreview() {
     HomeHuntTheme(isPreview = true) {
         HomeContent(
             actions = HomeActions({ _, _ -> }, { }, { }),
-            state = HomeState(properties = Fixtures.aListOfProperty + Fixtures.aListOfProperty),
+            state = HomeState(properties = Fixtures.aListOfProperty),
         )
     }
 }
