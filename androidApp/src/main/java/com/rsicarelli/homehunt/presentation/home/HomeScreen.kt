@@ -35,7 +35,7 @@ import coil.compose.rememberImagePainter
 import com.google.accompanist.insets.statusBarsPadding
 import com.google.accompanist.pager.*
 import com.rsicarelli.homehunt.R
-import com.rsicarelli.homehunt.ui.state.HomeHuntState
+import com.rsicarelli.homehunt.ui.state.AppState
 import com.rsicarelli.homehunt.core.util.toCurrency
 import com.rsicarelli.homehunt.presentation.components.CircularIndeterminateProgressBar
 import com.rsicarelli.homehunt.presentation.components.EmptyContent
@@ -52,7 +52,7 @@ import kotlin.math.absoluteValue
 @OptIn(ExperimentalMaterialApi::class)
 @Composable
 fun HomeScreen(
-    homeHuntState: HomeHuntState,
+    appState: AppState,
     viewModel: HomeViewModel = hiltViewModel()
 
 ) {
@@ -66,7 +66,7 @@ fun HomeScreen(
     val state by stateFlowLifecycleAware.collectAsState(initial = HomeState())
 
     val actions = HomeActions(
-        onNavigate = homeHuntState::navigate,
+        onNavigate = appState::navigate,
         onDownVote = viewModel::onDownVote,
         onUpVote = viewModel::onUpVote,
         onPropertyViewed = viewModel::onPropertyViewed,

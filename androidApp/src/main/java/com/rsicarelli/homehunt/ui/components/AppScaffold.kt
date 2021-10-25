@@ -23,29 +23,29 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.navigation.NavController
 import com.google.accompanist.systemuicontroller.rememberSystemUiController
 import com.rsicarelli.homehunt.R
-import com.rsicarelli.homehunt.ui.state.HomeHuntState
+import com.rsicarelli.homehunt.ui.state.AppState
 import com.rsicarelli.homehunt.ui.navigation.BottomNavItem
 import com.rsicarelli.homehunt.ui.navigation.Screen
-import com.rsicarelli.homehunt.ui.state.rememberHomeHuntState
+import com.rsicarelli.homehunt.ui.state.rememberAppState
 import com.rsicarelli.homehunt.ui.theme.*
 
 @Composable
 fun AppScaffold(
-    homeHuntState: HomeHuntState = rememberHomeHuntState(),
-    content: @Composable (HomeHuntState) -> Unit
+    appState: AppState = rememberAppState(),
+    content: @Composable (AppState) -> Unit
 ) {
     SystemBarEffect()
 
     Scaffold(
         bottomBar = {
-            if (homeHuntState.shouldShowBottomBar) {
-                HomeHuntBottomNavigation(homeHuntState.navController)
+            if (appState.shouldShowBottomBar) {
+                HomeHuntBottomNavigation(appState.navController)
             }
         },
-        scaffoldState = homeHuntState.scaffoldState,
+        scaffoldState = appState.scaffoldState,
     ) { innerPadding ->
         Box(modifier = Modifier.padding(innerPadding)) {
-            content(homeHuntState)
+            content(appState)
         }
     }
 }

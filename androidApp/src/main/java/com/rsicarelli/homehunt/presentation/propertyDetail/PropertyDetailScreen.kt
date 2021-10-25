@@ -9,7 +9,7 @@ import androidx.compose.ui.Modifier
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.flowWithLifecycle
-import com.rsicarelli.homehunt.ui.state.HomeHuntState
+import com.rsicarelli.homehunt.ui.state.AppState
 import com.rsicarelli.homehunt.presentation.components.rememberOnLifecycle
 import com.rsicarelli.homehunt.presentation.propertyDetail.components.GalleryBottomSheet
 import com.rsicarelli.homehunt.presentation.propertyDetail.components.PropertyDetail
@@ -18,7 +18,7 @@ import com.rsicarelli.homehunt.presentation.propertyDetail.components.PropertyVi
 
 @Composable
 fun PropertyDetailScreen(
-    homeHuntState: HomeHuntState
+    appState: AppState
 ) {
     val viewModel: PropertyDetailViewModel = hiltViewModel()
     val stateFlowLifecycleAware = viewModel.rememberOnLifecycle {
@@ -36,7 +36,7 @@ fun PropertyDetailScreen(
         onOpenGallery = viewModel::onOpenGallery,
         onCloseGallery = viewModel::onCloseGallery,
         onToggleFavourite = viewModel::onToggleFavourite,
-        onNavigateUp = homeHuntState::navigateUp
+        onNavigateUp = appState::navigateUp
     )
 
     PropertyDetailContent(

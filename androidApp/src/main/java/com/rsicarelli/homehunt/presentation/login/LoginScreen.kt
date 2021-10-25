@@ -25,7 +25,7 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import com.rsicarelli.homehunt.R
 import com.rsicarelli.homehunt.presentation.components.CircularIndeterminateProgressBar
 import com.rsicarelli.homehunt.presentation.login.components.Welcome
-import com.rsicarelli.homehunt.ui.state.HomeHuntState
+import com.rsicarelli.homehunt.ui.state.AppState
 import com.rsicarelli.homehunt.ui.theme.*
 import com.rsicarelli.homehunt_kmm.core.model.ProgressBarState
 import com.rsicarelli.homehunt_kmm.core.model.UiEvent
@@ -34,7 +34,7 @@ import com.rsicarelli.homehunt_kmm.domain.model.User
 
 @Composable
 fun LoginScreen(
-    homeHuntState: HomeHuntState
+    appState: AppState
 ) {
     val viewModel: LoginViewModel = hiltViewModel()
 
@@ -44,8 +44,8 @@ fun LoginScreen(
         onDoLogin = viewModel::onDoLogin,
         onSignUp = viewModel::onSignUp,
         onError = viewModel::onError,
-        onShowMessageToUser = homeHuntState::showMessageToUser,
-        onNavigateSingleTop = homeHuntState::navigateSingleTop,
+        onShowMessageToUser = appState::showMessageToUser,
+        onNavigateSingleTop = appState::navigateSingleTop,
         onPasswordChanged = viewModel::onPasswordChanged,
         onUserNameChanged = viewModel::onUserNameChanged
     )

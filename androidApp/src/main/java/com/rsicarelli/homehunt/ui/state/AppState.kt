@@ -1,6 +1,5 @@
 package com.rsicarelli.homehunt.ui.state
 
-import androidx.compose.animation.ExperimentalAnimationApi
 import androidx.compose.material.ScaffoldState
 import androidx.compose.material.SnackbarDuration
 import androidx.compose.material.rememberScaffoldState
@@ -17,15 +16,15 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
 
 @Composable
-fun rememberHomeHuntState(
+fun rememberAppState(
     navController: NavHostController = rememberNavController(),
     scaffoldState: ScaffoldState = rememberScaffoldState(),
     coroutineScope: CoroutineScope = rememberCoroutineScope(),
-): HomeHuntState = remember(navController, scaffoldState, coroutineScope) {
-    HomeHuntState(coroutineScope, scaffoldState, navController)
+): AppState = remember(navController, scaffoldState, coroutineScope) {
+    AppState(coroutineScope, scaffoldState, navController)
 }
 
-class HomeHuntState(
+class AppState(
     private val coroutineScope: CoroutineScope,
     val scaffoldState: ScaffoldState,
     val navController: NavHostController

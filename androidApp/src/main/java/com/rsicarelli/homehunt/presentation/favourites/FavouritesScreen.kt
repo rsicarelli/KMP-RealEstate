@@ -8,7 +8,7 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.flowWithLifecycle
 import com.rsicarelli.homehunt.R
-import com.rsicarelli.homehunt.ui.state.HomeHuntState
+import com.rsicarelli.homehunt.ui.state.AppState
 import com.rsicarelli.homehunt.presentation.components.EmptyContent
 import com.rsicarelli.homehunt.presentation.components.rememberOnLifecycle
 import com.rsicarelli.homehunt.presentation.home.components.PropertyList
@@ -17,7 +17,7 @@ import utils.Fixtures
 
 @Composable
 fun FavouritesScreen(
-    homeHuntState: HomeHuntState
+    appState: AppState
 ) {
     val viewModel: FavouritesViewModel = hiltViewModel()
 
@@ -32,7 +32,7 @@ fun FavouritesScreen(
 
     val favouritesActions = FavouriteActions(
         onToggleFavourite = viewModel::onToggleFavourite,
-        onNavigate = homeHuntState::navigate
+        onNavigate = appState::navigate
     )
 
     FavouritesContent(

@@ -17,7 +17,7 @@ import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.flowWithLifecycle
-import com.rsicarelli.homehunt.ui.state.HomeHuntState
+import com.rsicarelli.homehunt.ui.state.AppState
 import com.rsicarelli.homehunt.presentation.components.FilterFab
 import com.rsicarelli.homehunt.presentation.components.rememberOnLifecycle
 import com.rsicarelli.homehunt.presentation.home.components.PropertyListItem
@@ -29,7 +29,7 @@ import com.rsicarelli.homehunt.ui.theme.Size_Small
 
 @Composable
 fun MapScreen(
-    homeHuntState: HomeHuntState,
+    appState: AppState,
     viewModel: MapViewModel = hiltViewModel(),
 ) {
     val stateFlowLifecycleAware = viewModel.rememberOnLifecycle {
@@ -42,7 +42,7 @@ fun MapScreen(
     val state by stateFlowLifecycleAware.collectAsState(initial = MapState())
 
     val actions = MapActions(
-        onNavigate = homeHuntState::navigate,
+        onNavigate = appState::navigate,
         onToggleFavourite = viewModel::toggleFavourite,
         onPropertyViewed = viewModel::onPropertyViewed,
         onMarkerSelected = viewModel::onMarkerSelected,

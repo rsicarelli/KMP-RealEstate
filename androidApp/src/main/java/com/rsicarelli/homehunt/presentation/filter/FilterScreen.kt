@@ -15,7 +15,7 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.flowWithLifecycle
 import com.google.accompanist.insets.statusBarsPadding
-import com.rsicarelli.homehunt.ui.state.HomeHuntState
+import com.rsicarelli.homehunt.ui.state.AppState
 import com.rsicarelli.homehunt_kmm.core.model.UiEvent
 import com.rsicarelli.homehunt.presentation.components.BackButton
 import com.rsicarelli.homehunt.presentation.components.rememberOnLifecycle
@@ -26,7 +26,7 @@ import com.rsicarelli.homehunt.ui.theme.Size_Large
 @OptIn(ExperimentalMaterialApi::class)
 @Composable
 fun FilterScreen(
-    homeHuntState: HomeHuntState,
+    appState: AppState,
 ) {
     val viewModel: FilterViewModel = hiltViewModel()
 
@@ -45,8 +45,8 @@ fun FilterScreen(
         onLongTermRentalSelectionChanged = viewModel::onLongTermRentalSelectionChanged,
         onAvailabilitySelectionChanged = viewModel::onAvailabilitySelectionChanged,
         onSaveFilter = viewModel::onSaveFilter,
-        onNavigateUp = homeHuntState::navigateUp,
-        onNavigateSingleTop = homeHuntState::navigateSingleTop
+        onNavigateUp = appState::navigateUp,
+        onNavigateSingleTop = appState::navigateSingleTop
     )
 
     FilterContent(

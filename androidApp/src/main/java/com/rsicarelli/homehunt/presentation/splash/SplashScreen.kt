@@ -14,19 +14,19 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.rsicarelli.homehunt.R
-import com.rsicarelli.homehunt.ui.state.HomeHuntState
+import com.rsicarelli.homehunt.ui.state.AppState
 import com.rsicarelli.homehunt_kmm.core.model.UiEvent
 
 @Composable
 fun SplashScreen(
-    homeHuntState: HomeHuntState,
+    appState: AppState,
     viewModel: SplashViewModel = hiltViewModel()
 ) {
     val state by viewModel.state.collectAsState(SplashState())
 
     val splashActions = SplashActions(
         onAnimationEnded = viewModel::onAnimationEnded,
-        onNavigateSingleTop = homeHuntState::navigateSingleTop
+        onNavigateSingleTop = appState::navigateSingleTop
     )
 
     SplashContent(
