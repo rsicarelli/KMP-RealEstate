@@ -32,7 +32,7 @@ class HomeViewModel @Inject constructor(
             getFilteredPropertiesUseCase.invoke(Unit)
                 .collectLatest {
                     state.value = state.value.copy(
-                        properties = it.properties.filterNot { it.isDownVoted },
+                        properties = it.properties,
                         progressBarState = ProgressBarState.Idle,
                         isEmpty = it.properties.isEmpty()
                     )

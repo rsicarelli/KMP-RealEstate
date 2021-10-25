@@ -16,7 +16,8 @@ val allFilters = listOf(
     Bath,
     Visibility,
     LongTermOnly,
-    Availability
+    Availability,
+    UpVoted
 )
 
 private object Price : PropertyFilter {
@@ -81,4 +82,15 @@ private object Availability : PropertyFilter {
 
         return true
     }
+}
+
+private object UpVoted : PropertyFilter {
+    override fun apply(searchOption: SearchOption, property: Property): Boolean {
+        if (searchOption.upVotedOnly) {
+            return !property.isDownVoted
+        }
+
+        return true
+    }
+
 }

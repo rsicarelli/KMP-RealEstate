@@ -10,7 +10,8 @@ data class SearchOption(
     val bathCount: Int,
     val showSeen: Boolean,
     val longTermOnly: Boolean,
-    val availableOnly: Boolean
+    val availableOnly: Boolean,
+    val upVotedOnly: Boolean = true
 ) {
     private val propertyFilters: List<PropertyFilter> = allFilters
 
