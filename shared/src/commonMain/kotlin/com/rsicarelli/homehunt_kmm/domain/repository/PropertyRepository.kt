@@ -9,5 +9,6 @@ interface PropertyRepository {
     fun getProperties(): Flow<List<Property>>
     suspend fun getPropertyById(id: String): Property?
     suspend fun markAsViewed(viewedPropertyInput: ViewedPropertyInput)
-    suspend fun toggleRatings(ratingInput: RatingInput)
+    suspend fun upVote(ratingInput: RatingInput)
+    suspend fun downVote(ratingInput: RatingInput)
 }

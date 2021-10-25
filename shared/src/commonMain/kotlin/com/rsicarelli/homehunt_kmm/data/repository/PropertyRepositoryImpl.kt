@@ -15,7 +15,6 @@ class PropertyRepositoryImpl(
 ) : PropertyRepository {
     override fun getProperties(): Flow<List<Property>> {
         return flow {
-            emit(propertyCache.getAll())
             propertyService.getProperties()?.let {
                 propertyCache.saveAll(it)
                 emit(it)
@@ -33,11 +32,27 @@ class PropertyRepositoryImpl(
             }
     }
 
-    override suspend fun toggleRatings(ratingInput: RatingInput) {
+    override suspend fun upVote(ratingInput: RatingInput) {
         propertyService.toggleRatings(ratingInput)
             .takeIf { success -> success }
             ?.let {
-                propertyCache.updateRating(ratingInput.isUpVoted, ratingInput.propertyId)
+                propertyCache.updateRating(
+                    isUpVoted = ratingInput.isUpVoted,
+                    isDownVoted = false,
+                    propertyId = ratingInput.propertyId
+                )
+            }
+    }
+
+    override suspend fun downVote(ratingInput: RatingInput) {
+        propertyService.toggleRatings(ratingInput)
+            .takeIf { success -> success }
+            ?.let {
+                propertyCache.updateRating(
+                    isUpVoted = false,
+                    isDownVoted = ratingInput.isUpVoted,
+                    propertyId = ratingInput.propertyId
+                )
             }
     }
 }

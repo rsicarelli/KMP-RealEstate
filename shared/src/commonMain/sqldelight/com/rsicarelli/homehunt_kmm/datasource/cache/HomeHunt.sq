@@ -50,7 +50,7 @@ WHERE _id = ?;
 
 updatePropertyRating:
 UPDATE _Property
-SET isUpVoted = ?
+SET isUpVoted = ?, isDownVoted = ?
 WHERE _id = ?;
 
 selectAllProperties:

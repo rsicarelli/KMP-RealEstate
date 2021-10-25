@@ -10,7 +10,7 @@ interface PropertyCache {
     fun get(propertyId: String): Property?
     fun saveAll(properties: List<Property>)
     fun updateVisibility(propertyId: String)
-    fun updateRating(upVoted: Boolean, propertyId: String)
+    fun updateRating(isUpVoted: Boolean, isDownVoted: Boolean, propertyId: String)
 }
 
 class PropertyCacheImpl(homeHuntDatabase: HomeHuntDatabase) : PropertyCache {
@@ -33,8 +33,12 @@ class PropertyCacheImpl(homeHuntDatabase: HomeHuntDatabase) : PropertyCache {
         queries.updatePropertyVisibility(isViewed = true, _id = propertyId)
     }
 
-    override fun updateRating(upVoted: Boolean, propertyId: String) {
-        queries.updatePropertyRating(upVoted, propertyId)
+    override fun updateRating(isUpVoted: Boolean, isDownVoted: Boolean, propertyId: String) {
+        queries.updatePropertyRating(
+            isUpVoted = isUpVoted,
+            _id = propertyId,
+            isDownVoted = isDownVoted
+        )
     }
 
     private fun insertProperty(property: Property) {

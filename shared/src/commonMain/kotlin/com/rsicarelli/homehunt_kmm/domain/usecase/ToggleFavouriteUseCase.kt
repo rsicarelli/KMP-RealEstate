@@ -11,12 +11,21 @@ class ToggleFavouriteUseCase(
 
     override operator fun invoke(request: Request) = flow {
         val (referenceId, isUpVoted) = request
-        propertyRepository.toggleRatings(
-            RatingInput(
-                isUpVoted = isUpVoted,
-                propertyId = referenceId
+        if (isUpVoted) {
+            propertyRepository.upVote(
+                RatingInput(
+                    isUpVoted = isUpVoted,
+                    propertyId = referenceId
+                )
             )
-        )
+        } else {
+            propertyRepository.downVote(
+                RatingInput(
+                    isUpVoted = isUpVoted,
+                    propertyId = referenceId
+                )
+            )
+        }
 
         emit(Outcome(true))
     }

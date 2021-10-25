@@ -8,6 +8,7 @@ import com.rsicarelli.homehunt_kmm.domain.usecase.GetFilteredPropertiesUseCase
 import com.rsicarelli.homehunt_kmm.domain.usecase.MarkAsViewedUseCase
 import com.rsicarelli.homehunt_kmm.domain.usecase.ToggleFavouriteUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
@@ -31,21 +32,58 @@ class HomeViewModel @Inject constructor(
         getFilteredPropertiesUseCase.invoke(Unit)
             .onEach {
                 state.value = state.value.copy(
-                    properties = it.properties,
+                    properties = it.properties.filterNot { it.isDownVoted },
                     progressBarState = ProgressBarState.Idle,
                     isEmpty = it.properties.isEmpty()
                 )
             }.launchIn(viewModelScope)
     }
 
-    fun toggleFavourite(referenceId: String, isFavourited: Boolean) {
+    fun onUpVote(referenceId: String) {
         viewModelScope.launch {
+            val newProperties = state.value.properties.toMutableList()
+            val index = newProperties.indexOfFirst { it._id == referenceId }
+
+            if (newProperties[index].isUpVoted) {
+                newProperties[index] = newProperties[index].copy(isUpVoted = false)
+            } else {
+                newProperties[index] = newProperties[index].copy(isUpVoted = true)
+            }
+
+            state.value = state.value.copy(
+                properties = newProperties,
+            )
+
             toggleFavourite(
                 request = ToggleFavouriteUseCase.Request(
                     referenceId,
-                    isFavourited
+                    true
                 )
             ).single()
+        }
+    }
+
+    fun onDownVote(referenceId: String) {
+        viewModelScope.launch {
+            val newProperties = state.value.properties.toMutableList()
+            val index = newProperties.indexOfFirst { it._id == referenceId }
+
+            newProperties[index] = newProperties[index].copy(isDownVoted = true)
+
+            state.value = state.value.copy(properties = newProperties)
+
+            toggleFavourite(
+                request = ToggleFavouriteUseCase.Request(
+                    referenceId,
+                    false
+                )
+            ).single()
+
+            delay(120)
+
+            state.value = state.value.copy(
+                properties = newProperties.filterNot { it._id == referenceId },
+            )
         }
     }
 
