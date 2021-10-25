@@ -272,7 +272,7 @@ private fun PagerScope.PropertySnapshot(
                         isLiteMode = true
                     )
                 }
-                BottomBar()
+                BottomBar(isUpVoted = property.isUpVoted)
             }
         }
     }
@@ -280,7 +280,8 @@ private fun PagerScope.PropertySnapshot(
 
 @Composable
 fun BottomBar(
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
+    isUpVoted: Boolean,
 ) {
     Row(
         modifier = modifier
@@ -292,19 +293,18 @@ fun BottomBar(
         IconButton(
             onClick = { },
             modifier = Modifier
-                .then(Modifier.size(60.dp))
+                .then(Modifier.size(52.dp))
                 .border(
                     BorderSizeSmallest,
-                    color = MaterialTheme.colors.primary.copy(alpha = 0.8f),
+                    color = MaterialTheme.colors.primary.copy(alpha = 0.3f),
                     shape = CircleShape
                 )
         ) {
             Icon(
-                painter = painterResource(id = R.drawable.ic_round_thumb_down_24),
+                painter = painterResource(id = R.drawable.ic_round_close),
                 modifier = Modifier
                     .fillMaxSize()
-                    .padding(16.dp),
-                tint = rally_orange,
+                    .padding(12.dp),
                 contentDescription = "next",
             )
         }
@@ -313,19 +313,19 @@ fun BottomBar(
         IconButton(
             onClick = { },
             modifier = Modifier
-                .then(Modifier.size(60.dp))
+                .then(Modifier.size(52.dp))
                 .border(
                     BorderSizeSmallest,
-                    color = MaterialTheme.colors.primary.copy(alpha = 0.8f),
+                    color = MaterialTheme.colors.primary.copy(alpha = 0.3f),
                     shape = CircleShape
                 ),
         ) {
             Icon(
-                painter = painterResource(id = R.drawable.ic_round_thumb_up_24),
+                painter = painterResource(id = R.drawable.ic_round_favorite),
                 modifier = Modifier
                     .fillMaxSize()
-                    .padding(16.dp),
-                tint = rally_green_300,
+                    .padding(12.dp),
+                tint = if (isUpVoted) rally_green_300 else MaterialTheme.colors.primary,
                 contentDescription = "next",
             )
         }
