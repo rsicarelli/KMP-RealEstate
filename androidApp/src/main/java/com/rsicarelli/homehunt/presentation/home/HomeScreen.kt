@@ -42,6 +42,7 @@ import com.rsicarelli.homehunt.presentation.components.rememberOnLifecycle
 import com.rsicarelli.homehunt.presentation.home.components.ResultsHeader
 import com.rsicarelli.homehunt.presentation.propertyDetail.components.PagerIndicator
 import com.rsicarelli.homehunt.presentation.propertyDetail.components.StaticMapView
+import com.rsicarelli.homehunt.ui.navigation.Screen
 import com.rsicarelli.homehunt.ui.theme.*
 import utils.Fixtures
 import kotlin.math.absoluteValue
@@ -81,7 +82,7 @@ private fun HomeContent(
     actions: HomeActions,
 ) {
     if (state.properties.isNotEmpty()) {
-        PropertyPager(state)
+        PropertyPager(state, actions)
     } else if (state.isEmpty) {
         EmptyContent()
     }
@@ -92,7 +93,7 @@ private fun HomeContent(
 
 @OptIn(ExperimentalPagerApi::class, androidx.compose.animation.ExperimentalAnimationApi::class)
 @Composable
-private fun PropertyPager(state: HomeState) {
+private fun PropertyPager(state: HomeState, actions: HomeActions) {
     Column(Modifier.fillMaxSize()) {
 
         Row(
@@ -111,13 +112,12 @@ private fun PropertyPager(state: HomeState) {
             )
 
             IconButton(
-                modifier = Modifier.padding(end = 16.dp),
-                onClick = { }
+                onClick = { actions.onNavigate(Screen.Filter.route) }
             ) {
                 Icon(
                     modifier = Modifier.size(32.dp),
                     painter = painterResource(id = R.drawable.ic_round_filter),
-                    contentDescription = stringResource(id = R.string.go_back)
+                    contentDescription = stringResource(id = R.string.filter)
                 )
             }
         }
