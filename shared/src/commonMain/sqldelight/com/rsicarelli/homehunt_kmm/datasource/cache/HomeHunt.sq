@@ -40,6 +40,9 @@ UPDATE _Property
 SET avatarUrl= ?, bathCount =?, characteristics= ?, dormCount= ?, fullDescription=?, isActive=?, isViewed=?, isUpVoted=?, isDownVoted=?, location=?, locationDescription=?, origin=?, pdfUrl=?, photoGalleryUrls=?, price=?, propertyUrl=?, surface=?, tag=?, title=?, videoUrl=?
 WHERE _id = ?;
 
+deleteAll:
+DELETE FROM _Property;
+
 updatePropertyVisibility:
 UPDATE _Property
 SET isViewed = ?

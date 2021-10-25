@@ -24,11 +24,8 @@ class PropertyCacheImpl(homeHuntDatabase: HomeHuntDatabase) : PropertyCache {
 
     override fun saveAll(properties: List<Property>) {
         queries.transaction {
-            properties.forEach { property ->
-                get(property._id)
-                    ?.let { updateProperty(property) }
-                    ?: insertProperty(property)
-            }
+            queries.deleteAll()
+            properties.forEach { insertProperty(it) }
         }
     }
 
@@ -68,35 +65,6 @@ class PropertyCacheImpl(homeHuntDatabase: HomeHuntDatabase) : PropertyCache {
             )
         }
     }
-
-    private fun updateProperty(property: Property) {
-        with(property) {
-            queries.updateProperty(
-                _id = _id,
-                avatarUrl = avatarUrl,
-                bathCount = bathCount,
-                characteristics = characteristics,
-                dormCount = dormCount,
-                fullDescription = fullDescription,
-                isActive = isActive,
-                isViewed = isViewed,
-                isUpVoted = isUpVoted,
-                isDownVoted = isDownVoted,
-                location = location,
-                locationDescription = locationDescription,
-                origin = origin,
-                pdfUrl = pdfUrl,
-                photoGalleryUrls = photoGalleryUrls,
-                price = price,
-                propertyUrl = propertyUrl,
-                surface = surface,
-                tag = tag,
-                title = title,
-                videoUrl = videoUrl
-            )
-        }
-    }
-
 }
 
 
