@@ -9,11 +9,13 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material.*
-import androidx.compose.runtime.Composable
-import androidx.compose.runtime.collectAsState
-import androidx.compose.runtime.getValue
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.rounded.Close
+import androidx.compose.material.icons.rounded.Menu
+import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -23,9 +25,11 @@ import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import androidx.compose.ui.util.lerp
 import androidx.constraintlayout.compose.ConstraintLayout
 import androidx.hilt.navigation.compose.hiltViewModel
@@ -41,11 +45,15 @@ import com.rsicarelli.homehunt.presentation.components.CircularIndeterminateProg
 import com.rsicarelli.homehunt.presentation.components.EmptyContent
 import com.rsicarelli.homehunt.presentation.components.IconText
 import com.rsicarelli.homehunt.presentation.components.rememberOnLifecycle
+import com.rsicarelli.homehunt.presentation.favourites.FavouritesScreen
+import com.rsicarelli.homehunt.presentation.map.MapScreen
 import com.rsicarelli.homehunt.presentation.propertyDetail.components.PagerIndicator
 import com.rsicarelli.homehunt.presentation.propertyDetail.components.StaticMapView
 import com.rsicarelli.homehunt.ui.navigation.Screen
 import com.rsicarelli.homehunt.ui.theme.*
 import com.rsicarelli.homehunt_kmm.domain.model.Property
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.launch
 import utils.Fixtures
 import kotlin.math.absoluteValue
 
@@ -56,6 +64,7 @@ fun HomeScreen(
     viewModel: HomeViewModel = hiltViewModel()
 
 ) {
+
     val stateFlowLifecycleAware = viewModel.rememberOnLifecycle {
         viewModel.init().flowWithLifecycle(
             lifecycle = it.lifecycle,
@@ -75,61 +84,168 @@ fun HomeScreen(
     HomeContent(
         state = state,
         actions = actions,
+        favouritesScreen = {
+            FavouritesScreen(appState = appState)
+        },
+        mapScreen = {
+            MapScreen(appState = appState)
+        }
     )
 }
 
-@OptIn(ExperimentalPagerApi::class)
+@OptIn(ExperimentalPagerApi::class, ExperimentalMaterialApi::class)
 @Composable
 private fun HomeContent(
     state: HomeState,
     actions: HomeActions,
+    favouritesScreen: @Composable () -> Unit,
+    mapScreen: @Composable () -> Unit
 ) {
-    if (state.properties.isNotEmpty()) {
-        PropertyPager(state, actions)
-    } else if (state.isEmpty) {
-        EmptyContent()
+
+    val backdropState = rememberBackdropScaffoldState(initialValue = BackdropValue.Concealed)
+    val selectedScreen = remember { mutableStateOf<Screen>(Screen.Home) }
+    val coroutinesScope = rememberCoroutineScope()
+
+    BackdropScaffold(
+        modifier = Modifier.statusBarsPadding(),
+        scaffoldState = backdropState,
+        backLayerBackgroundColor = Green_500,
+        appBar = {
+            HomeTopBar(
+                coroutinesScope = coroutinesScope,
+                backdropState = backdropState,
+                currentDestination = selectedScreen.value,
+                onFilterClick = {
+                    //TODO
+                }
+            )
+        },
+        backLayerContent = {
+            NavigationOptions(selectedScreen.value) {
+                selectedScreen.value = it
+                coroutinesScope.launch {
+                    backdropState.conceal()
+                }
+            }
+        },
+        frontLayerContent = {
+            when (selectedScreen.value) {
+                Screen.Home -> {
+                    if (state.properties.isNotEmpty()) {
+                        PropertyPager(state, actions)
+                    } else if (state.isEmpty) {
+                        EmptyContent()
+                    }
+
+                    CircularIndeterminateProgressBar(state.progressBarState)
+                }
+                Screen.Map -> {
+                    mapScreen()
+                }
+                Screen.Favourites -> {
+                    favouritesScreen()
+                }
+            }
+        }
+    )
+}
+
+@Composable
+private fun NavigationOptions(selectedScreen: Screen, onScreenSelected: (screen: Screen) -> Unit) {
+    Column(
+        modifier = Modifier.padding(start = 72.dp, bottom = 16.dp),
+    ) {
+        listOf(Screen.Home, Screen.Favourites, Screen.Map)
+            .minus(selectedScreen)
+            .forEach {
+                Text(
+                    text = stringResource(id = it.titleRes),
+                    style = MaterialTheme.typography.h6,
+                    modifier = Modifier.clickable {
+                        onScreenSelected(it)
+                    })
+            }
     }
+}
 
-    CircularIndeterminateProgressBar(state.progressBarState)
-
+@OptIn(ExperimentalMaterialApi::class)
+@Composable
+private fun HomeTopBar(
+    coroutinesScope: CoroutineScope = rememberCoroutineScope(),
+    backdropState: BackdropScaffoldState,
+    currentDestination: Screen,
+    onFilterClick: () -> Unit,
+) {
+    TopAppBar(
+        backgroundColor = Color.Transparent,
+        elevation = 0.dp,
+        title = { Text(stringResource(id = currentDestination.titleRes)) },
+        navigationIcon = {
+            IconButton(onClick = {
+                coroutinesScope.launch {
+                    if (backdropState.isConcealed) {
+                        backdropState.reveal()
+                    } else {
+                        backdropState.conceal()
+                    }
+                }
+            }) {
+                if (backdropState.isRevealed) {
+                    Icon(
+                        imageVector = Icons.Rounded.Close,
+                        contentDescription = stringResource(id = R.string.close_menu)
+                    )
+                } else {
+                    Icon(
+                        imageVector = Icons.Rounded.Menu,
+                        contentDescription = stringResource(id = R.string.open_menu)
+                    )
+                }
+            }
+        },
+        actions = {
+            IconButton(onClick = onFilterClick) {
+                Icon(
+                    painter = painterResource(id = R.drawable.ic_round_filter),
+                    contentDescription = stringResource(id = R.string.filter)
+                )
+            }
+        })
 }
 
 @OptIn(ExperimentalPagerApi::class, androidx.compose.animation.ExperimentalAnimationApi::class)
 @Composable
 private fun PropertyPager(state: HomeState, actions: HomeActions) {
-    Column(Modifier.fillMaxSize()) {
-        Row(
-            modifier = Modifier
-                .fillMaxWidth()
-                .background(MaterialTheme.colors.background)
-                .statusBarsPadding()
-                .padding(Size_Large),
-            horizontalArrangement = Arrangement.End,
-            verticalAlignment = Alignment.CenterVertically
-        ) {
-            Text(
-                modifier = Modifier.weight(1.0f),
-                text = "${state.properties.size} ${stringResource(id = R.string.results)}",
-                style = MaterialTheme.typography.h4
-            )
-
-            IconButton(
-                onClick = { actions.onNavigate(Screen.Filter.route) }
+    LazyColumn(
+        verticalArrangement = Arrangement.SpaceEvenly
+    ) {
+        item {
+            Row(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(start = Size_Large, top = Size_Regular),
+                horizontalArrangement = Arrangement.End,
+                verticalAlignment = Alignment.CenterVertically
             ) {
-                Icon(
-                    modifier = Modifier.size(32.dp),
-                    painter = painterResource(id = R.drawable.ic_round_filter),
-                    contentDescription = stringResource(id = R.string.filter)
+                Text(
+                    modifier = Modifier.weight(1.0f),
+                    text = "${state.properties.size} ${stringResource(id = R.string.properties)}",
+                    style = MaterialTheme.typography.h6
                 )
             }
         }
-
-        HorizontalPager(
-            modifier = Modifier.fillMaxWidth(),
-            count = state.properties.size,
-            contentPadding = PaddingValues(horizontal = 24.dp),
-        ) { page ->
-            PropertySnapshot(page, state.properties[page], actions)
+        item {
+            Spacer(modifier = Modifier.height(24.dp))
+        }
+        item {
+            HorizontalPager(
+                modifier = Modifier
+                    .fillMaxWidth(),
+                count = state.properties.size,
+                contentPadding = PaddingValues(horizontal = 24.dp),
+            ) { page ->
+                PropertySnapshot(page, state.properties[page], actions)
+            }
         }
     }
 }
@@ -166,7 +282,8 @@ private fun PagerScope.PropertySnapshot(
                         fraction = 1f - pageOffset.coerceIn(0f, 1f)
                     )
                 }
-                .fillMaxWidth()
+                .fillMaxWidth(),
+            backgroundColor = MaterialTheme.colors.background
         ) {
             Column {
                 ConstraintLayout(
@@ -355,6 +472,8 @@ private fun HomeScreenPreview() {
         HomeContent(
             actions = HomeActions({ }, { }, { }, { }),
             state = HomeState(properties = Fixtures.aListOfProperty),
+            favouritesScreen = {},
+            mapScreen = {},
         )
     }
 }

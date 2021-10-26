@@ -38,9 +38,9 @@ fun AppScaffold(
 
     Scaffold(
         bottomBar = {
-            if (appState.shouldShowBottomBar) {
-                HomeHuntBottomNavigation(appState.navController)
-            }
+//            if (appState.shouldShowBottomBar) {
+//                HomeHuntBottomNavigation(appState.navController)
+//            }
         },
         scaffoldState = appState.scaffoldState,
     ) { innerPadding ->
