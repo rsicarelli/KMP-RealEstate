@@ -1,38 +1,65 @@
-query GetProperties {
-    properties {
-        results {
-            _id
-            avatarUrl
-            bathCount
-            characteristics
-            dormCount
-            fullDescription
-            isActive
-            location {
-              isApproximated
-              isUnknown
-              lat
-              lng
-              name
-            }
-            locationDescription
-            origin
-            pdfUrl
-            photoGalleryUrls
-            price
-            propertyUrl
-            surface
-            tag
-            title
-            videoUrl
-          }
-        pagingInfo {
-          count
-          next
-          pages
-          prev
-        }
+query GetRecommendedProperties{
+  recommendedProperties {
+    count
+    results {
+      _id
+      avatarUrl
+      bathCount
+      characteristics
+      dormCount
+      fullDescription
+      isActive
+      location {
+        isApproximated
+        isUnknown
+        lat
+        lng
+        name
       }
+      locationDescription
+      origin
+      pdfUrl
+      photoGalleryUrls
+      price
+      propertyUrl
+      surface
+      tag
+      title
+      videoUrl
+    }
+  }
+}
+
+query GetAllProperties{
+  properties {
+    count
+    results {
+      _id
+      avatarUrl
+      bathCount
+      characteristics
+      dormCount
+      fullDescription
+      isActive
+      location {
+        isApproximated
+        isUnknown
+        lat
+        lng
+        name
+      }
+      locationDescription
+      origin
+      pdfUrl
+      photoGalleryUrls
+      price
+      propertyUrl
+      surface
+      tag
+      title
+      videoUrl
+    }
+  }
 }
 
 query GetRatings {

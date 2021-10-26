@@ -1,10 +1,7 @@
 package com.rsicarelli.homehunt_kmm.data.network
 
 import com.apollographql.apollo.api.ApolloExperimental
-import com.rsicarelli.homehunt_kmm.DownVotePropertyMutation
-import com.rsicarelli.homehunt_kmm.GetPropertiesQuery
-import com.rsicarelli.homehunt_kmm.MarkAsViewedMutation
-import com.rsicarelli.homehunt_kmm.UpVotePropertyMutation
+import com.rsicarelli.homehunt_kmm.*
 import com.rsicarelli.homehunt_kmm.data.cache.mappers.toPropertyList
 import com.rsicarelli.homehunt_kmm.domain.model.Property
 import com.rsicarelli.homehunt_kmm.type.DownVoteInput
@@ -14,7 +11,8 @@ import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.single
 
 interface PropertyService {
-    suspend fun getProperties(): List<Property>?
+    suspend fun getAllProperties(): List<Property>?
+    suspend fun getRecommendations(): List<Property>?
     suspend fun getPropertyById(id: String): Property?
     suspend fun markAsViewed(viewedPropertyInput: ViewedPropertyInput): Boolean
     suspend fun upVote(upVoteInput: UpVoteInput): Boolean
@@ -25,9 +23,15 @@ interface PropertyService {
 class PropertyServiceImpl constructor(
     private val apolloProvider: ApolloProvider
 ) : PropertyService {
-    override suspend fun getProperties(): List<Property>? {
-        val response = apolloProvider.apolloClient.query(GetPropertiesQuery()).execute().single()
+    override suspend fun getAllProperties(): List<Property>? {
+        val response = apolloProvider.apolloClient.query(GetAllPropertiesQuery()).execute().single()
         return response.data?.properties?.toPropertyList()
+    }
+
+    override suspend fun getRecommendations(): List<Property>? {
+        val response =
+            apolloProvider.apolloClient.query(GetRecommendedPropertiesQuery()).execute().single()
+        return response.data?.recommendedProperties?.toPropertyList()
     }
 
     override suspend fun getPropertyById(id: String): Property? {

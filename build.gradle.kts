@@ -9,7 +9,6 @@ buildscript {
         classpath(Build.androidBuildTools)
         classpath(Build.kotlinGradlePlugin)
         classpath(Build.hiltAndroid)
-        classpath(Build.googleServicesPlugin)
         classpath(Build.googleSecretesPlugin)
         classpath(Build.sqlDelightGradlePlugin)
     }

@@ -7,8 +7,10 @@ import com.rsicarelli.homehunt_kmm.domain.repository.PropertyRepository
 import com.rsicarelli.homehunt_kmm.type.DownVoteInput
 import com.rsicarelli.homehunt_kmm.type.UpVoteInput
 import com.rsicarelli.homehunt_kmm.type.ViewedPropertyInput
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
+import kotlinx.coroutines.flow.flowOn
 
 class PropertyRepositoryImpl(
     private val propertyCache: PropertyCache,
@@ -16,11 +18,20 @@ class PropertyRepositoryImpl(
 ) : PropertyRepository {
     override fun getProperties(): Flow<List<Property>> {
         return flow {
-            propertyService.getProperties()?.let {
+            emit(propertyCache.getAll())
+            propertyService.getAllProperties()?.let {
                 propertyCache.saveAll(it)
                 emit(it)
             }
-        }
+        }.flowOn(Dispatchers.Default)
+    }
+
+    override fun getRecommendations(): Flow<List<Property>> {
+        return flow {
+            propertyService.getRecommendations()?.let {
+                emit(it)
+            }
+        }.flowOn(Dispatchers.Default)
     }
 
     override suspend fun getPropertyById(id: String): Property? = propertyCache.get(id)

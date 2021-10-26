@@ -7,17 +7,17 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.FlowPreview
 import kotlinx.coroutines.flow.*
 
-class GetFilteredPropertiesUseCase(
+class GetRecommendationsUseCase(
     private val propertyRepository: PropertyRepository,
     private val getFilterPreferences: GetSearchOptionSettings,
     private val filterProperties: FilterPropertiesUseCase,
-) : UseCase<Unit, GetFilteredPropertiesUseCase.Outcome> {
+) : UseCase<Unit, GetRecommendationsUseCase.Outcome> {
 
     data class Outcome(val properties: List<Property>)
 
     @OptIn(FlowPreview::class)
     override fun invoke(request: Unit): Flow<Outcome> =
-        propertyRepository.getProperties()
+        propertyRepository.getRecommendations()
             .combine(getFilterPreferences(request)) { properties, filterOutcome ->
                 Pair(filterOutcome.searchOption, properties)
             }

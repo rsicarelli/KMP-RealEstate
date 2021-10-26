@@ -86,4 +86,15 @@ object DomainModule {
         getFilterPreferences = getFilterPreferences,
         filterProperties = filterProperties
     )
+
+    @Provides
+    fun provideGetRecommendationsUseCase(
+        propertyRepository: PropertyRepository,
+        getFilterPreferences: GetSearchOptionSettings,
+        filterProperties: FilterPropertiesUseCase,
+    ) = GetRecommendationsUseCase(
+        propertyRepository = propertyRepository,
+        getFilterPreferences = getFilterPreferences,
+        filterProperties = filterProperties
+    )
 }

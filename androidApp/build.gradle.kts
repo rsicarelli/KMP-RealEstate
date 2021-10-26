@@ -4,7 +4,6 @@ plugins {
     id(Plugins.androidApplication)
     id(Plugins.kotlinKapt)
     id(Plugins.hilt)
-    id(Plugins.googleServices)
     id(Plugins.secretsGradle)
     kotlin(Plugins.android)
 }

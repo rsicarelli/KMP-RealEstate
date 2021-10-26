@@ -8,6 +8,7 @@ import kotlinx.coroutines.flow.Flow
 
 interface PropertyRepository {
     fun getProperties(): Flow<List<Property>>
+    fun getRecommendations(): Flow<List<Property>>
     suspend fun getPropertyById(id: String): Property?
     suspend fun markAsViewed(viewedPropertyInput: ViewedPropertyInput)
     suspend fun upVote(upVoteInput: UpVoteInput)
