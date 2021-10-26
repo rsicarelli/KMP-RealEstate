@@ -38,7 +38,7 @@ class PropertyRepositoryImpl(
 
     override suspend fun fetchFavourites(): List<Property> {
         propertyService.fetchFavourites()?.let {
-            propertyCache.updateFavourites(it0)
+            propertyCache.updateFavourites(it)
         }.also { return getFavourites() }
     }
 
