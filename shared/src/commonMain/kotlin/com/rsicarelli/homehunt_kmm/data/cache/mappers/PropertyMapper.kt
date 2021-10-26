@@ -37,7 +37,7 @@ internal fun List<_Property>.toPropertyList(): List<Property> {
 
 
 internal fun GetPropertiesQuery.Properties.toPropertyList(): List<Property> =
-    this.result.map { it.toProperty() }
+    this.results.map { it.toProperty() }
 
 internal fun GetPropertiesQuery.Location.toLocation(): Location =
     Location(
@@ -50,25 +50,22 @@ internal fun GetPropertiesQuery.Location.toLocation(): Location =
 
 internal fun GetPropertiesQuery.Result.toProperty(): Property =
     Property(
-        _id = property._id,
-        price = property.price,
-        title = property.title,
-        location = property.location.toLocation(),
-        surface = property.surface,
-        dormCount = property.dormCount,
-        bathCount = property.dormCount,
-        avatarUrl = property.avatarUrl,
-        tag = property.tag,
-        propertyUrl = property.propertyUrl,
-        videoUrl = property.videoUrl,
-        fullDescription = property.fullDescription,
-        locationDescription = property.locationDescription,
-        characteristics = property.characteristics,
-        photoGalleryUrls = property.photoGalleryUrls,
-        pdfUrl = property.pdfUrl,
-        origin = property.origin,
-        isViewed = isViewed,
-        isUpVoted = isUpVoted,
-        isActive = property.isActive,
-        isDownVoted = isDownVoted
+        _id = _id,
+        price = price,
+        title = title,
+        location = location.toLocation(),
+        surface = surface,
+        dormCount = dormCount,
+        bathCount = dormCount,
+        avatarUrl = avatarUrl,
+        tag = tag,
+        propertyUrl = propertyUrl,
+        videoUrl = videoUrl,
+        fullDescription = fullDescription,
+        locationDescription = locationDescription,
+        characteristics = characteristics,
+        photoGalleryUrls = photoGalleryUrls,
+        pdfUrl = pdfUrl,
+        origin = origin,
+        isActive = isActive
     )

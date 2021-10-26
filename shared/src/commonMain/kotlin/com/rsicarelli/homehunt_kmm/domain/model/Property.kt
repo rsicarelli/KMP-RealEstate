@@ -18,10 +18,10 @@ data class Property(
     val photoGalleryUrls: List<String>,
     val pdfUrl: String?,
     val origin: String,
-    val isViewed: Boolean,
-    val isUpVoted: Boolean,
-    val isDownVoted: Boolean,
-    val isActive: Boolean
+    val isActive: Boolean,
+    val isViewed: Boolean = false,
+    val isUpVoted: Boolean = false,
+    val isDownVoted: Boolean = false
 ) {
 
     sealed class Tag(val identifier: String) {

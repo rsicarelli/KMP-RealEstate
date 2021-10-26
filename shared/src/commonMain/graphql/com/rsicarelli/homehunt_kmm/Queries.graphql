@@ -1,10 +1,6 @@
 query GetProperties {
     properties {
-        result {
-          isUpVoted
-          isDownVoted
-          isViewed
-          property {
+        results {
             _id
             avatarUrl
             bathCount
@@ -30,7 +26,18 @@ query GetProperties {
             title
             videoUrl
           }
+        pagingInfo {
+          count
+          next
+          pages
+          prev
         }
-        totalItems
-    }
+      }
+}
+
+query GetRatings {
+  getRatings {
+    upVoted
+    downVoted
+  }
 }

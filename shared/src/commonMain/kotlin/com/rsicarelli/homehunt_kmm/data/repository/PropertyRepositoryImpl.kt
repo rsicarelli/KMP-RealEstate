@@ -4,7 +4,8 @@ import com.rsicarelli.homehunt_kmm.data.cache.PropertyCache
 import com.rsicarelli.homehunt_kmm.data.network.PropertyService
 import com.rsicarelli.homehunt_kmm.domain.model.Property
 import com.rsicarelli.homehunt_kmm.domain.repository.PropertyRepository
-import com.rsicarelli.homehunt_kmm.type.RatingInput
+import com.rsicarelli.homehunt_kmm.type.DownVoteInput
+import com.rsicarelli.homehunt_kmm.type.UpVoteInput
 import com.rsicarelli.homehunt_kmm.type.ViewedPropertyInput
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
@@ -32,27 +33,19 @@ class PropertyRepositoryImpl(
             }
     }
 
-    override suspend fun upVote(ratingInput: RatingInput) {
-        propertyService.toggleRatings(ratingInput)
+    override suspend fun upVote(upVoteInput: UpVoteInput) {
+        propertyService.upVote(upVoteInput)
             .takeIf { success -> success }
             ?.let {
-                propertyCache.updateRating(
-                    isUpVoted = ratingInput.isUpVoted,
-                    isDownVoted = false,
-                    propertyId = ratingInput.propertyId
-                )
+                propertyCache.upVote(upVoteInput.propertyId)
             }
     }
 
-    override suspend fun downVote(ratingInput: RatingInput) {
-        propertyService.toggleRatings(ratingInput)
+    override suspend fun downVote(downVoteInput: DownVoteInput) {
+        propertyService.downVote(downVoteInput)
             .takeIf { success -> success }
             ?.let {
-                propertyCache.updateRating(
-                    isUpVoted = false,
-                    isDownVoted = ratingInput.isUpVoted,
-                    propertyId = ratingInput.propertyId
-                )
+                propertyCache.downVote(downVoteInput.propertyId)
             }
     }
 }

@@ -4,9 +4,17 @@ mutation MarkAsViewed($viewedPropertyInput: ViewedPropertyInput!) {
   }
 }
 
-mutation ToggleRatings($ratingInput:RatingInput!) {
-  toggleRating(ratingInput:$ratingInput) {
-    propertyId
+mutation UpVoteProperty($upVoteInput:UpVoteInput!) {
+  upVote(upVoteInput:$upVoteInput) {
+    upVoted
+    downVoted
+  }
+}
+
+mutation DownVoteProperty($downVoteInput:DownVoteInput!) {
+  downVote(downVoteInput:$downVoteInput) {
+    upVoted
+    downVoted
   }
 }
 

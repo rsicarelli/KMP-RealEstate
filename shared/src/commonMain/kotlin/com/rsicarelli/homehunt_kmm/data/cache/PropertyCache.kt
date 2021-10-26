@@ -10,7 +10,8 @@ interface PropertyCache {
     fun get(propertyId: String): Property?
     fun saveAll(properties: List<Property>)
     fun updateVisibility(propertyId: String)
-    fun updateRating(isUpVoted: Boolean, isDownVoted: Boolean, propertyId: String)
+    fun upVote(propertyId: String)
+    fun downVote(propertyId: String)
 }
 
 class PropertyCacheImpl(homeHuntDatabase: HomeHuntDatabase) : PropertyCache {
@@ -33,12 +34,24 @@ class PropertyCacheImpl(homeHuntDatabase: HomeHuntDatabase) : PropertyCache {
         queries.updatePropertyVisibility(isViewed = true, _id = propertyId)
     }
 
-    override fun updateRating(isUpVoted: Boolean, isDownVoted: Boolean, propertyId: String) {
-        queries.updatePropertyRating(
-            isUpVoted = isUpVoted,
-            _id = propertyId,
-            isDownVoted = isDownVoted
-        )
+    override fun upVote(propertyId: String) {
+        queries.selectPropertyById(propertyId).executeAsOneOrNull()?.let {
+            queries.updatePropertyRating(
+                _id = propertyId,
+                isUpVoted = !it.isUpVoted, //if upvoted, toggle
+                isDownVoted = false
+            )
+        }
+    }
+
+    override fun downVote(propertyId: String) {
+        queries.selectPropertyById(propertyId).executeAsOneOrNull()?.let {
+            queries.updatePropertyRating(
+                _id = propertyId,
+                isUpVoted = false,
+                isDownVoted = true
+            )
+        }
     }
 
     private fun insertProperty(property: Property) {
