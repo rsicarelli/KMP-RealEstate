@@ -136,21 +136,19 @@ private fun PropertyPager(
             PropertySnapshot(page, properties[page], actions)
         }
 
-        if (properties.isNotEmpty()) {
-            val property = properties[pagerState.currentPage]
+        val property = properties[pagerState.currentPage]
 
-            BottomBar(
-                modifier = Modifier.constrainAs(bottomBar) {
-                    top.linkTo(pager.bottom)
-                    bottom.linkTo(parent.bottom)
-                    start.linkTo(parent.start)
-                    end.linkTo(parent.end)
-                },
-                isUpVoted = property.isUpVoted,
-                onDownVoted = { actions.onDownVote(property._id) },
-                onUpVoted = { actions.onUpVote(property._id) }
-            )
-        }
+        BottomBar(
+            modifier = Modifier.constrainAs(bottomBar) {
+                bottom.linkTo(parent.bottom, Size_Large)
+                start.linkTo(parent.start)
+                end.linkTo(parent.end)
+            },
+            isUpVoted = property.isUpVoted,
+            onDownVoted = { actions.onDownVote(property._id) },
+            onUpVoted = { actions.onUpVote(property._id) }
+        )
+
     }
 }
 
@@ -404,7 +402,7 @@ fun BottomBar(
         IconButton(
             onClick = onDownVoted,
             modifier = Modifier
-                .then(Modifier.size(52.dp))
+                .then(Modifier.size(60.dp))
                 .border(
                     BorderSizeSmallest,
                     color = MaterialTheme.colors.primary.copy(alpha = 0.3f),
@@ -416,6 +414,7 @@ fun BottomBar(
                 modifier = Modifier
                     .fillMaxSize()
                     .padding(12.dp),
+                tint = Color.Red,
                 contentDescription = "next",
             )
         }
@@ -424,7 +423,7 @@ fun BottomBar(
         IconButton(
             onClick = onUpVoted,
             modifier = Modifier
-                .then(Modifier.size(52.dp))
+                .then(Modifier.size(60.dp))
                 .border(
                     BorderSizeSmallest,
                     color = MaterialTheme.colors.primary.copy(alpha = 0.3f),
@@ -436,7 +435,7 @@ fun BottomBar(
                 modifier = Modifier
                     .fillMaxSize()
                     .padding(12.dp),
-                tint = if (isUpVoted) Green_300 else MaterialTheme.colors.primary,
+                tint = Green_300,
                 contentDescription = "next",
             )
         }
