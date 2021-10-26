@@ -25,6 +25,7 @@ import com.google.android.gms.maps.model.MarkerOptions
 import com.google.maps.android.ktx.awaitMap
 import com.rsicarelli.homehunt.R
 import com.rsicarelli.homehunt.core.util.getBitmapDescriptor
+import com.rsicarelli.homehunt_kmm.domain.model.Location
 import com.rsicarelli.homehunt_kmm.domain.model.Property
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -38,10 +39,7 @@ import kotlinx.coroutines.launch
 @Composable
 fun StaticMapView(
     modifier: Modifier = Modifier,
-    property: Property? = null,
-    lat: Double,
-    lng: Double,
-    drawRadius: Boolean,
+    location: Location,
     isLiteMode: Boolean = false
 ) {
     val mapView = rememberMapViewWithLifecycle(isLiteMode)
@@ -52,7 +50,7 @@ fun StaticMapView(
         CoroutineScope(Dispatchers.Main).launch {
             map.awaitMap().apply {
                 if (!mapReady) {
-                    val propertyLocation = LatLng(lat, lng)
+                    val propertyLocation = LatLng(location.lat, location.lng)
 
                     val customInfoWindow = CustomInfoWindowAdapter(context)
                     setInfoWindowAdapter(customInfoWindow)
@@ -66,14 +64,13 @@ fun StaticMapView(
 
                     val markerOptions = MarkerOptions()
                         .icon(context.getBitmapDescriptor(R.drawable.ic_round_marker_blue))
-                        .title(property?.location?.name)
+                        .title(location.name)
                         .position(propertyLocation)
 
                     val marker = addMarker(markerOptions)
-                    marker?.tag = property
                     marker?.showInfoWindow()
 
-                    if (drawRadius) {
+                    if (location.isApproximated) {
                         addCircle(getCircleOptions(propertyLocation))
                     }
                     mapReady = true

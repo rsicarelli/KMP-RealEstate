@@ -13,17 +13,14 @@ import androidx.compose.ui.draw.clip
 import coil.annotation.ExperimentalCoilApi
 import com.rsicarelli.homehunt.ui.theme.Size_Regular
 import com.rsicarelli.homehunt.ui.theme.MapSize
+import com.rsicarelli.homehunt_kmm.domain.model.Location
 
 @OptIn(ExperimentalCoilApi::class)
 @Composable
 fun PropertyMap(
-    lat: Double?,
-    lng: Double?,
-    isApproximated: Boolean,
+    location: Location,
     onMapClick: () -> Unit
 ) {
-    if (lat == null || lng == null || lat == 0.0 || lng == 0.0) return
-
     Surface(
         modifier = Modifier
             .fillMaxWidth()
@@ -39,9 +36,7 @@ fun PropertyMap(
                 modifier = Modifier
                     .fillMaxWidth()
                     .clickable { onMapClick() },
-                lat = lat,
-                lng = lng,
-                drawRadius = isApproximated,
+                location = location,
                 isLiteMode = true
             )
         }

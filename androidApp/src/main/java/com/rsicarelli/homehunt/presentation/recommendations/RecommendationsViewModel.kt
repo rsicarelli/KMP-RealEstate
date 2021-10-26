@@ -1,4 +1,4 @@
-package com.rsicarelli.homehunt.presentation.home
+package com.rsicarelli.homehunt.presentation.recommendations
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -17,13 +17,13 @@ import javax.inject.Inject
 import com.rsicarelli.homehunt_kmm.domain.usecase.MarkAsViewedUseCase.Request as MarkAsViewedRequest
 
 @HiltViewModel
-class HomeViewModel @Inject constructor(
+class RecommendationsViewModel @Inject constructor(
     private val getRecommendations: GetRecommendationsUseCase,
     private val toggleFavourite: ToggleFavouriteUseCase,
     private val markAsViewed: MarkAsViewedUseCase,
 ) : ViewModel() {
 
-    private val state: MutableStateFlow<HomeState> = MutableStateFlow(HomeState())
+    private val state: MutableStateFlow<RecommendationsState> = MutableStateFlow(RecommendationsState())
 
     fun init() = state.also { loadProperties() }
 
