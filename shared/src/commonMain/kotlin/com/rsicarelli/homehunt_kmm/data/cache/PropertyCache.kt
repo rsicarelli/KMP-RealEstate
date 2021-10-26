@@ -11,7 +11,9 @@ interface PropertyCache {
     fun saveAll(properties: List<Property>)
     fun updateVisibility(propertyId: String)
     fun upVote(propertyId: String)
+    fun upVoteMany(ids: List<String>)
     fun downVote(propertyId: String)
+    fun updateFavourites(ids: List<String>)
 }
 
 class PropertyCacheImpl(homeHuntDatabase: HomeHuntDatabase) : PropertyCache {
@@ -41,6 +43,29 @@ class PropertyCacheImpl(homeHuntDatabase: HomeHuntDatabase) : PropertyCache {
                 isUpVoted = !it.isUpVoted, //if upvoted, toggle
                 isDownVoted = false
             )
+        }
+    }
+
+    override fun upVoteMany(ids: List<String>) {
+        queries.transaction {
+            ids.forEach {
+                upVote(it)
+            }
+        }
+    }
+
+    override fun updateFavourites(ids: List<String>) {
+        with(queries) {
+            transaction {
+                resetFavourites()
+                ids.forEach { propertyId ->
+                    updatePropertyRating(
+                        _id = propertyId,
+                        isUpVoted = true,
+                        isDownVoted = false
+                    )
+                }
+            }
         }
     }
 

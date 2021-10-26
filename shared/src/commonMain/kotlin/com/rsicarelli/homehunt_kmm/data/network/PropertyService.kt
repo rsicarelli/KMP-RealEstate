@@ -17,6 +17,7 @@ interface PropertyService {
     suspend fun markAsViewed(viewedPropertyInput: ViewedPropertyInput): Boolean
     suspend fun upVote(upVoteInput: UpVoteInput): Boolean
     suspend fun downVote(downVoteInput: DownVoteInput): Boolean
+    suspend fun fetchFavourites(): List<String>?
 }
 
 @OptIn(ApolloExperimental::class, ExperimentalCoroutinesApi::class)
@@ -50,6 +51,11 @@ class PropertyServiceImpl constructor(
             apolloProvider.apolloClient.mutate(DownVotePropertyMutation(downVoteInput)).execute()
                 .single()
         return !response.hasErrors()
+    }
+
+    override suspend fun fetchFavourites(): List<String>? {
+        val response = apolloProvider.apolloClient.query(GetRatingsQuery()).execute().single()
+        return response.data?.getRatings?.upVoted
     }
 
     override suspend fun upVote(upVoteInput: UpVoteInput): Boolean {

@@ -19,7 +19,7 @@ class PreviewFilterResultUseCase(
 
     @OptIn(FlowPreview::class)
     override fun invoke(request: Request): Flow<Outcome> {
-        return propertyRepository.getProperties().filterNotNull().flatMapConcat {
+        return propertyRepository.fetchProperties().filterNotNull().flatMapConcat {
             filterPropertiesUseCase.invoke(
                 FilterPropertiesUseCase.Request(
                     request.searchOption,
