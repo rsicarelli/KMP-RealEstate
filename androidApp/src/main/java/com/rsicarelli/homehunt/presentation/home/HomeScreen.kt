@@ -75,7 +75,6 @@ private fun HomeContent(
                 coroutinesScope.launch {
                     contentVisibility.value = false
                     backdropState.conceal()
-                    delay(50)
                     selectedScreen.value = it
                     contentVisibility.value = true
                 }
