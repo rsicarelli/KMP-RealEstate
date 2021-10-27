@@ -114,7 +114,7 @@ fun PagerScope.PropertySnapshot(
 
     AnimatedVisibility(
         visible = isVisible,
-        exit =  fadeOut(),
+        exit = fadeOut(),
         enter = fadeIn()
     ) {
         Card(
@@ -200,9 +200,9 @@ fun PropertyMap(
         ) {
             StaticMapView(
                 location = location,
-                modifier = Modifier
-                    .clickable { },
-                isLiteMode = true
+                modifier = Modifier.clickable { },
+                isLiteMode = true,
+                showRadius = false
             )
         }
     }

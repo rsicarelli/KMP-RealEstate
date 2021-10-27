@@ -40,7 +40,8 @@ import kotlinx.coroutines.launch
 fun StaticMapView(
     modifier: Modifier = Modifier,
     location: Location,
-    isLiteMode: Boolean = false
+    isLiteMode: Boolean = false,
+    showRadius: Boolean = true,
 ) {
     val mapView = rememberMapViewWithLifecycle(isLiteMode)
     var mapReady by remember { mutableStateOf(false) }
@@ -52,7 +53,7 @@ fun StaticMapView(
                 if (!mapReady) {
                     val propertyLocation = LatLng(location.lat, location.lng)
 
-                    val customInfoWindow = CustomInfoWindowAdapter(context)
+                    val customInfoWindow = CustomInfoWindowAdapter(context, location)
                     setInfoWindowAdapter(customInfoWindow)
 
                     setPadding(0, 180, 0, 0)
@@ -64,13 +65,12 @@ fun StaticMapView(
 
                     val markerOptions = MarkerOptions()
                         .icon(context.getBitmapDescriptor(R.drawable.ic_round_marker_blue))
-                        .title(location.name)
                         .position(propertyLocation)
 
                     val marker = addMarker(markerOptions)
                     marker?.showInfoWindow()
 
-                    if (location.isApproximated) {
+                    if (location.isApproximated && showRadius) {
                         addCircle(getCircleOptions(propertyLocation))
                     }
                     mapReady = true
@@ -90,15 +90,15 @@ private fun getCircleOptions(point: LatLng): CircleOptions {
     }
 }
 
-internal class CustomInfoWindowAdapter(val context: Context) : GoogleMap.InfoWindowAdapter {
+internal class CustomInfoWindowAdapter(val context: Context, val location: Location) :
+    GoogleMap.InfoWindowAdapter {
 
     override fun getInfoWindow(marker: Marker?): View {
 
         val infoView =
             (context as Activity).layoutInflater.inflate(R.layout.map_infow_window, null)
-        val property: Property? = marker?.tag as Property?
 
-        infoView.findViewById<TextView>(R.id.infoAddress).text = property?.location?.name
+        infoView.findViewById<TextView>(R.id.infoAddress).text = location.name
 
         return infoView
     }
