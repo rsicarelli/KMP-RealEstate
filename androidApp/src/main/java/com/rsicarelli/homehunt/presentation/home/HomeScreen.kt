@@ -61,6 +61,7 @@ private fun HomeContent(
         modifier = Modifier.statusBarsPadding(),
         scaffoldState = backdropState,
         backLayerBackgroundColor = Green_500,
+        gesturesEnabled = selectedScreen.value != Screen.Map,
         appBar = {
             HomeTopBar(
                 coroutinesScope = coroutinesScope,
