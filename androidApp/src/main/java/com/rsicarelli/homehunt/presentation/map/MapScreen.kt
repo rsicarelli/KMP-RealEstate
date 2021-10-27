@@ -18,7 +18,6 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.flowWithLifecycle
 import com.rsicarelli.homehunt.ui.state.AppState
-import com.rsicarelli.homehunt.presentation.components.FilterFab
 import com.rsicarelli.homehunt.presentation.components.rememberOnLifecycle
 import com.rsicarelli.homehunt.presentation.components.PropertyListItem
 import com.rsicarelli.homehunt.presentation.map.components.PropertiesMapView
@@ -62,7 +61,6 @@ private fun MapContent(
     state: MapState,
     actions: MapActions,
 ) {
-
     Box(
         modifier = Modifier
             .fillMaxSize(),
@@ -81,10 +79,6 @@ private fun MapContent(
         SinglePropertyPreview(state, actions)
 
         MultiplePropertiesPreview(state, actions)
-
-        FilterFab(false) {
-            actions.onNavigate(Screen.Filter.route)
-        }
     }
 }
 

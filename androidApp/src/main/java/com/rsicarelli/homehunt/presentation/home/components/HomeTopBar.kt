@@ -1,5 +1,9 @@
 package com.rsicarelli.homehunt.presentation.home.components
 
+import androidx.compose.animation.AnimatedVisibility
+import androidx.compose.animation.ExperimentalAnimationApi
+import androidx.compose.animation.fadeIn
+import androidx.compose.animation.fadeOut
 import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.rounded.Close
@@ -14,7 +18,7 @@ import com.rsicarelli.homehunt.ui.navigation.Screen
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
 
-@OptIn(ExperimentalMaterialApi::class)
+@OptIn(ExperimentalMaterialApi::class, ExperimentalAnimationApi::class)
 @Composable
 fun HomeTopBar(
     coroutinesScope: CoroutineScope = rememberCoroutineScope(),
@@ -50,11 +54,17 @@ fun HomeTopBar(
             }
         },
         actions = {
-            IconButton(onClick = onFilterClick) {
-                Icon(
-                    painter = painterResource(id = R.drawable.ic_round_filter),
-                    contentDescription = stringResource(id = R.string.filter)
-                )
+            AnimatedVisibility(
+                visible = currentDestination != Screen.Favourites,
+                enter = fadeIn(),
+                exit = fadeOut()
+            ) {
+                IconButton(onClick = onFilterClick) {
+                    Icon(
+                        painter = painterResource(id = R.drawable.ic_round_filter),
+                        contentDescription = stringResource(id = R.string.filter)
+                    )
+                }
             }
         })
 }
