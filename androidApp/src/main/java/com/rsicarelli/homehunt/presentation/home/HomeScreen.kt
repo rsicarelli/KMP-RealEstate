@@ -19,7 +19,7 @@ import com.rsicarelli.homehunt.presentation.favourites.FavouritesScreen
 import com.rsicarelli.homehunt.presentation.home.components.HomeTopBar
 import com.rsicarelli.homehunt.presentation.home.components.NavigationOptions
 import com.rsicarelli.homehunt.presentation.map.MapScreen
-import com.rsicarelli.homehunt.presentation.recommendations.RecommendationsScreen
+import com.rsicarelli.homehunt.presentation.discover.DiscoverScreen
 import com.rsicarelli.homehunt.ui.navigation.Screen
 import com.rsicarelli.homehunt.ui.state.AppState
 import com.rsicarelli.homehunt.ui.theme.Green_500
@@ -36,7 +36,7 @@ fun HomeScreen(appState: AppState) {
         },
         favouritesScreen = { FavouritesScreen(appState = appState) },
         mapScreen = { MapScreen(appState = appState) },
-        recommendationsScreen = { RecommendationsScreen(appState = appState) }
+        discoverScreen = { DiscoverScreen(appState = appState) }
     )
 }
 
@@ -47,13 +47,13 @@ fun HomeScreen(appState: AppState) {
 @Composable
 private fun HomeContent(
     onFilterClick: () -> Unit,
-    recommendationsScreen: @Composable () -> Unit,
+    discoverScreen: @Composable () -> Unit,
     favouritesScreen: @Composable () -> Unit,
     mapScreen: @Composable () -> Unit
 ) {
 
     val backdropState = rememberBackdropScaffoldState(initialValue = BackdropValue.Concealed)
-    val selectedScreen = remember { mutableStateOf<Screen>(Screen.Recommendations) }
+    val selectedScreen = remember { mutableStateOf<Screen>(Screen.Discover) }
     val coroutinesScope = rememberCoroutineScope()
     val contentVisibility = remember { mutableStateOf(true) }
 
@@ -87,7 +87,7 @@ private fun HomeContent(
                 exit = fadeOut()
             ) {
                 when (selectedScreen.value) {
-                    Screen.Recommendations -> recommendationsScreen()
+                    Screen.Discover -> discoverScreen()
                     Screen.Map -> mapScreen()
                     Screen.Favourites -> favouritesScreen()
                 }
@@ -104,7 +104,7 @@ private fun HomeScreenPreview() {
             onFilterClick = {},
             favouritesScreen = {},
             mapScreen = {},
-            recommendationsScreen = {}
+            discoverScreen = {}
         )
     }
 }

@@ -44,7 +44,7 @@ sealed class Screen(
         titleRes = R.string.map
     )
 
-    object Recommendations : Screen(
+    object Discover : Screen(
         route = "discover",
         titleRes = R.string.discover
     )

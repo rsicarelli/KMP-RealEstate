@@ -1,8 +1,7 @@
-package com.rsicarelli.homehunt.presentation.recommendations.components
+package com.rsicarelli.homehunt.presentation.discover.components
 
 import androidx.annotation.DrawableRes
 import androidx.annotation.StringRes
-import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material.ButtonDefaults
