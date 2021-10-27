@@ -9,6 +9,7 @@ import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import com.google.accompanist.insets.statusBarsPadding
+import com.rsicarelli.homehunt.R
 import com.rsicarelli.homehunt.presentation.favourites.FavouritesScreen
 import com.rsicarelli.homehunt.presentation.home.components.HomeTopBar
 import com.rsicarelli.homehunt.presentation.home.components.NavigationOptions
@@ -25,9 +26,6 @@ import kotlinx.coroutines.launch
 @Composable
 fun HomeScreen(appState: AppState) {
     HomeContent(
-        onFilterClick = {
-            appState.navigate(Screen.Filter.route)
-        },
         favouritesScreen = { FavouritesScreen(appState = appState) },
         mapScreen = { MapScreen(appState = appState) },
         discoverScreen = { DiscoverScreen(appState = appState) },
@@ -41,7 +39,6 @@ fun HomeScreen(appState: AppState) {
 )
 @Composable
 private fun HomeContent(
-    onFilterClick: () -> Unit,
     filterScreen: @Composable () -> Unit,
     discoverScreen: @Composable () -> Unit,
     favouritesScreen: @Composable () -> Unit,
@@ -53,6 +50,9 @@ private fun HomeContent(
     var filterVisible by remember { mutableStateOf(false) }
     val coroutinesScope = rememberCoroutineScope()
     val contentVisibility = remember { mutableStateOf(true) }
+    var isMenuShown by remember { mutableStateOf(false) }
+
+    isMenuShown = backdropState.isRevealed
 
     BackdropScaffold(
         modifier = Modifier.statusBarsPadding(),
@@ -61,20 +61,33 @@ private fun HomeContent(
         gesturesEnabled = selectedScreen.value != Screen.Map,
         appBar = {
             HomeTopBar(
-                coroutinesScope = coroutinesScope,
-                backdropState = backdropState,
+                titleRes = if (filterVisible) R.string.filter else selectedScreen.value.titleRes,
                 currentDestination = selectedScreen.value,
                 onFilterClick = {
                     coroutinesScope.launch {
                         if (filterVisible) {
+                            isMenuShown = false
                             backdropState.conceal()
                             filterVisible = false
                         } else {
+                            isMenuShown = true
                             filterVisible = true
                             backdropState.reveal()
                         }
                     }
-                }
+                }, onNavigationClick = {
+                    coroutinesScope.launch {
+                        if (backdropState.isRevealed) {
+                            isMenuShown = false
+                            backdropState.conceal()
+                            filterVisible = false
+                        } else {
+                            isMenuShown = true
+                            filterVisible = false
+                            backdropState.reveal()
+                        }
+                    }
+                }, isMenuShown = isMenuShown
             )
         },
         backLayerContent = {
@@ -84,6 +97,7 @@ private fun HomeContent(
                 NavigationOptions(selectedScreen.value) {
                     coroutinesScope.launch {
                         contentVisibility.value = false
+                        isMenuShown = false
                         backdropState.conceal()
                         selectedScreen.value = it
                         contentVisibility.value = true

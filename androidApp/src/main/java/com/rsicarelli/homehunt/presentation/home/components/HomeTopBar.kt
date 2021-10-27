@@ -1,11 +1,13 @@
 package com.rsicarelli.homehunt.presentation.home.components
 
+import androidx.annotation.StringRes
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.ExperimentalAnimationApi
 import androidx.compose.animation.fadeIn
 import androidx.compose.animation.fadeOut
 import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.rounded.ArrowBack
 import androidx.compose.material.icons.rounded.Close
 import androidx.compose.material.icons.rounded.Menu
 import androidx.compose.runtime.*
@@ -21,26 +23,19 @@ import kotlinx.coroutines.launch
 @OptIn(ExperimentalMaterialApi::class, ExperimentalAnimationApi::class)
 @Composable
 fun HomeTopBar(
-    coroutinesScope: CoroutineScope = rememberCoroutineScope(),
-    backdropState: BackdropScaffoldState,
+    @StringRes titleRes: Int,
     currentDestination: Screen,
     onFilterClick: () -> Unit,
+    onNavigationClick: () -> Unit,
+    isMenuShown: Boolean
 ) {
     TopAppBar(
         backgroundColor = Color.Transparent,
         elevation = 0.dp,
-        title = { Text(stringResource(id = currentDestination.titleRes)) },
+        title = { Text(stringResource(id = titleRes)) },
         navigationIcon = {
-            IconButton(onClick = {
-                coroutinesScope.launch {
-                    if (backdropState.isConcealed) {
-                        backdropState.reveal()
-                    } else {
-                        backdropState.conceal()
-                    }
-                }
-            }) {
-                if (backdropState.isRevealed) {
+            IconButton(onClick = onNavigationClick) {
+                if (isMenuShown) {
                     Icon(
                         imageVector = Icons.Rounded.Close,
                         contentDescription = stringResource(id = R.string.close_menu)
