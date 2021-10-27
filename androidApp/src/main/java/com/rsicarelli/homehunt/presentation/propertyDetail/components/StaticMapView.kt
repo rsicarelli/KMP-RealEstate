@@ -61,7 +61,7 @@ fun StaticMapView(
                     uiSettings.isMapToolbarEnabled = false
                     uiSettings.setAllGesturesEnabled(false)
 
-                    moveCamera(CameraUpdateFactory.newLatLngZoom(propertyLocation, 14f))
+                    moveCamera(CameraUpdateFactory.newLatLngZoom(propertyLocation, 13f))
 
                     val markerOptions = MarkerOptions()
                         .icon(context.getBitmapDescriptor(R.drawable.ic_round_marker_blue))

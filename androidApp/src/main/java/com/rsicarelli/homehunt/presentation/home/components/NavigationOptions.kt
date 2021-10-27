@@ -8,6 +8,7 @@ import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import com.rsicarelli.homehunt.ui.navigation.Screen
 
@@ -21,7 +22,7 @@ fun NavigationOptions(selectedScreen: Screen, onScreenSelected: (screen: Screen)
             .forEach {
                 Text(
                     text = stringResource(id = it.titleRes),
-                    style = MaterialTheme.typography.h6,
+                    style = MaterialTheme.typography.h6.copy(fontWeight = FontWeight.Medium),
                     modifier = Modifier.clickable {
                         onScreenSelected(it)
                     })

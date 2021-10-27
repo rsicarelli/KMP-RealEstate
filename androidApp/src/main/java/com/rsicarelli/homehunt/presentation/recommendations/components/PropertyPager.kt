@@ -1,8 +1,9 @@
 package com.rsicarelli.homehunt.presentation.recommendations.components
 
-import androidx.compose.animation.*
-import androidx.compose.animation.core.FastOutLinearInEasing
-import androidx.compose.animation.core.TweenSpec
+import androidx.compose.animation.AnimatedVisibility
+import androidx.compose.animation.ExperimentalAnimationApi
+import androidx.compose.animation.fadeIn
+import androidx.compose.animation.fadeOut
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
@@ -142,7 +143,7 @@ fun PagerScope.PropertySnapshot(
             ConstraintLayout(
                 modifier = Modifier.fillMaxWidth()
             ) {
-                val (mainPhoto, propertyDetails, photoGallery, map) = createRefs()
+                val (mainPhoto, propertyDetails, photoGallery) = createRefs()
 
                 MainPicture(
                     modifier = Modifier.constrainAs(mainPhoto) {
@@ -165,20 +166,11 @@ fun PagerScope.PropertySnapshot(
 
                 PropertyGallery(
                     photoGallery = property.photoGalleryUrls,
+                    location = property.location,
                     modifier = Modifier.constrainAs(photoGallery) {
                         top.linkTo(mainPhoto.bottom)
                         end.linkTo(parent.end)
                         start.linkTo(parent.start)
-                    },
-                )
-
-                PropertyMap(
-                    location = property.location,
-                    modifier = Modifier.constrainAs(map) {
-                        top.linkTo(photoGallery.bottom, Size_Small)
-                        end.linkTo(parent.end, Size_Small)
-                        start.linkTo(parent.start, Size_Small)
-                        bottom.linkTo(parent.bottom, Size_Regular)
                     },
                 )
             }
@@ -186,39 +178,33 @@ fun PagerScope.PropertySnapshot(
     }
 }
 
-
-@Composable
-fun PropertyMap(
-    modifier: Modifier,
-    location: Location
-) {
-    Box(modifier = modifier.padding(8.dp)) {
-        Surface(
-            modifier = Modifier
-                .height(130.dp)
-                .clip(shape = MaterialTheme.shapes.medium)
-        ) {
-            StaticMapView(
-                location = location,
-                modifier = Modifier.clickable { },
-                isLiteMode = true,
-                showRadius = false
-            )
-        }
-    }
-}
-
 @Composable
 fun PropertyGallery(
     modifier: Modifier,
-    photoGallery: List<String>
+    photoGallery: List<String>,
+    location: Location,
 ) {
     LazyRow(
         modifier = modifier.fillMaxWidth(),
         contentPadding = PaddingValues(8.dp),
         horizontalArrangement = Arrangement.spacedBy(8.dp)
     ) {
-        items(photoGallery) {
+        item {
+            Surface(
+                modifier = Modifier
+                    .height(100.dp)
+                    .width(172.dp)
+                    .clip(shape = MaterialTheme.shapes.medium)
+            ) {
+                StaticMapView(
+                    location = location,
+                    modifier = Modifier.clickable { },
+                    isLiteMode = true,
+                    showRadius = false
+                )
+            }
+        }
+        items(photoGallery.drop(1)) {
             Box(
                 modifier = Modifier
                     .height(100.dp)
