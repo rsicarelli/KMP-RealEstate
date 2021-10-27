@@ -127,12 +127,10 @@ private fun HomeContent(
 private fun HomeScreenPreview() {
     HomeHuntTheme(isPreview = true) {
         HomeContent(
-
-            onFilterClick = {},
             favouritesScreen = {},
             mapScreen = {},
-            discoverScreen = {}, filterScreen = {
-
+            discoverScreen = {},
+            filterScreen = {
             }
         )
     }
