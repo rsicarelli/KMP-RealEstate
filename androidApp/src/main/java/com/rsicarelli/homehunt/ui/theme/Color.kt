@@ -15,6 +15,8 @@ val OnBackground = Color(0xFFffffff)
 val OnSurface = Color(0xFFffffff)
 val OnError = Color(0xFFffffff)
 
+val Light_Grey = Color(0xFF565A5F)
+
 val Green_300 = Color(0xFF36F0AB)
 val Green_500 = Color(0xFF21AF6C)
 
