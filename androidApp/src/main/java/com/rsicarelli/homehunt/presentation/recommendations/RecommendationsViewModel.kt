@@ -23,7 +23,8 @@ class RecommendationsViewModel @Inject constructor(
     private val markAsViewed: MarkAsViewedUseCase,
 ) : ViewModel() {
 
-    private val state: MutableStateFlow<RecommendationsState> = MutableStateFlow(RecommendationsState())
+    private val state: MutableStateFlow<RecommendationsState> =
+        MutableStateFlow(RecommendationsState())
 
     fun init() = state.also { loadProperties() }
 
@@ -41,46 +42,31 @@ class RecommendationsViewModel @Inject constructor(
     }
 
     fun onUpVote(referenceId: String) {
-        viewModelScope.launch {
-            val newProperties = state.value.properties.toMutableList()
-            val index = newProperties.indexOfFirst { it._id == referenceId }
-
-            newProperties[index] = newProperties[index].copy(isUpVoted = true)
-
-            state.value = state.value.copy(
-                properties = newProperties.filterNot { it._id == referenceId },
-            )
-
-            toggleFavourite(
-                request = ToggleFavouriteUseCase.Request(
-                    referenceId,
-                    true
-                )
-            ).single()
-        }
+        toggleRatings(referenceId = referenceId, isUpVoted = true)
     }
 
     fun onDownVote(referenceId: String) {
+        toggleRatings(referenceId = referenceId, isUpVoted = false)
+    }
+
+    private fun toggleRatings(referenceId: String, isUpVoted: Boolean) {
         viewModelScope.launch {
-            val newProperties = state.value.properties.toMutableList()
-            val index = newProperties.indexOfFirst { it._id == referenceId }
+            state.value = state.value.copy(itemRemoved = referenceId)
 
-            newProperties[index] = newProperties[index].copy(isDownVoted = true)
+            delay(400)
 
-            state.value = state.value.copy(properties = newProperties)
+            state.value = state.value.copy(
+                itemRemoved = null,
+                properties = state.value.properties.toMutableList()
+                    .filterNot { it._id == referenceId },
+            )
 
             toggleFavourite(
                 request = ToggleFavouriteUseCase.Request(
                     referenceId,
-                    false
+                    isUpVoted
                 )
             ).single()
-
-            delay(120)
-
-            state.value = state.value.copy(
-                properties = newProperties.filterNot { it._id == referenceId },
-            )
         }
     }
 

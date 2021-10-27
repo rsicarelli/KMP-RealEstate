@@ -57,8 +57,9 @@ private fun RecommendationsContent(state: RecommendationsState, actions: Recomme
         state.properties.isNotEmpty() -> PropertyPager(
             state.properties,
             onNavigate = { actions.onNavigate("${Screen.PropertyDetail.route}/${it}") },
-            onUpVote = { actions.onDownVote(it) },
-            onDownVote = { actions.onUpVote(it) },
+            onUpVote = { actions.onUpVote(it) },
+            onDownVote = { actions.onDownVote(it) },
+            itemRemoved = state.itemRemoved
         )
         state.progressBarState != ProgressBarState.Loading -> EmptyContent()
         else -> CircularIndeterminateProgressBar(progressBarState = state.progressBarState)

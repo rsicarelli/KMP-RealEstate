@@ -7,4 +7,5 @@ data class RecommendationsState(
     val properties: List<Property> = emptyList(),
     val progressBarState: ProgressBarState = ProgressBarState.Loading,
     val isEmpty: Boolean = false,
+    val itemRemoved: String? = null,
 )

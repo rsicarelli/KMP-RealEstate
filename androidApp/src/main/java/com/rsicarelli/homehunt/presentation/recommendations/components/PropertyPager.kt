@@ -1,10 +1,8 @@
 package com.rsicarelli.homehunt.presentation.recommendations.components
 
-import androidx.compose.animation.AnimatedVisibility
-import androidx.compose.animation.ExperimentalAnimationApi
+import androidx.compose.animation.*
 import androidx.compose.animation.core.FastOutLinearInEasing
 import androidx.compose.animation.core.TweenSpec
-import androidx.compose.animation.fadeOut
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
@@ -46,7 +44,8 @@ fun PropertyPager(
     properties: List<Property>,
     onNavigate: (id: String) -> Unit,
     onUpVote: (id: String) -> Unit,
-    onDownVote: (id: String) -> Unit
+    onDownVote: (id: String) -> Unit,
+    itemRemoved: String?,
 ) {
     val pagerState = rememberPagerState()
 
@@ -83,7 +82,7 @@ fun PropertyPager(
             count = properties.size,
             contentPadding = PaddingValues(horizontal = 24.dp),
         ) { page ->
-            PropertySnapshot(page, properties[page], onNavigate)
+            PropertySnapshot(page, properties[page], onNavigate, itemRemoved)
         }
 
         val property = properties[pagerState.currentPage]
@@ -106,13 +105,17 @@ fun PropertyPager(
 fun PagerScope.PropertySnapshot(
     page: Int,
     property: Property,
-    onNavigate: (String) -> Unit
+    onNavigate: (String) -> Unit,
+    itemRemoved: String?
 ) {
+    val isVisible = itemRemoved?.let {
+        it != property._id
+    } ?: true
+
     AnimatedVisibility(
-        visible = !property.isDownVoted,
-        exit = fadeOut(
-            animationSpec = TweenSpec(200, 200, FastOutLinearInEasing)
-        )
+        visible = isVisible,
+        exit =  fadeOut(),
+        enter = fadeIn()
     ) {
         Card(
             Modifier
