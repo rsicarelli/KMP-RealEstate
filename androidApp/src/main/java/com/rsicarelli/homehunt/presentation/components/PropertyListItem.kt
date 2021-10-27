@@ -1,4 +1,4 @@
-package com.rsicarelli.homehunt.presentation.home.components
+package com.rsicarelli.homehunt.presentation.components
 
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.ExperimentalAnimationApi
@@ -25,10 +25,6 @@ import com.rsicarelli.homehunt.R
 import com.rsicarelli.homehunt.core.util.toCurrency
 import com.rsicarelli.homehunt_kmm.domain.model.Property
 import com.rsicarelli.homehunt_kmm.domain.model.toTag
-import com.rsicarelli.homehunt.presentation.components.FavouritableIconButton
-import com.rsicarelli.homehunt.presentation.components.GalleryCarousel
-import com.rsicarelli.homehunt.presentation.components.IconText
-import com.rsicarelli.homehunt.presentation.components.ListingTag
 import com.rsicarelli.homehunt.ui.theme.*
 import utils.Fixtures
 

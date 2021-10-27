@@ -11,7 +11,7 @@ import com.rsicarelli.homehunt.R
 import com.rsicarelli.homehunt.ui.state.AppState
 import com.rsicarelli.homehunt.presentation.components.EmptyContent
 import com.rsicarelli.homehunt.presentation.components.rememberOnLifecycle
-import com.rsicarelli.homehunt.presentation.home.components.PropertyList
+import com.rsicarelli.homehunt.presentation.components.PropertyList
 import com.rsicarelli.homehunt.ui.theme.HomeHuntTheme
 import utils.Fixtures
 

@@ -20,7 +20,7 @@ import androidx.lifecycle.flowWithLifecycle
 import com.rsicarelli.homehunt.ui.state.AppState
 import com.rsicarelli.homehunt.presentation.components.FilterFab
 import com.rsicarelli.homehunt.presentation.components.rememberOnLifecycle
-import com.rsicarelli.homehunt.presentation.home.components.PropertyListItem
+import com.rsicarelli.homehunt.presentation.components.PropertyListItem
 import com.rsicarelli.homehunt.presentation.map.components.PropertiesMapView
 import com.rsicarelli.homehunt.ui.navigation.Screen
 import com.rsicarelli.homehunt.ui.theme.Size_Regular

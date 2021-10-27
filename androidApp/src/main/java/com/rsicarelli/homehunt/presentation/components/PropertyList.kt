@@ -1,4 +1,4 @@
-package com.rsicarelli.homehunt.presentation.home.components
+package com.rsicarelli.homehunt.presentation.components
 
 import androidx.annotation.StringRes
 import androidx.compose.foundation.layout.*
@@ -13,7 +13,6 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
-import com.google.accompanist.insets.statusBarsPadding
 import com.rsicarelli.homehunt.R
 import com.rsicarelli.homehunt_kmm.domain.model.Property
 import com.rsicarelli.homehunt.ui.navigation.Screen
