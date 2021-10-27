@@ -38,7 +38,16 @@ data class Location(
     val name: String,
     val isApproximated: Boolean,
     val isUnknown: Boolean
-)
+) {
+    fun toStaticMap(
+        key: String,
+        zoom: Int = 13,
+        width: Int = 2000,
+        height: Int = 140
+    ): String {
+        return "https://maps.googleapis.com/maps/api/staticmap?center=$lat,$lng&zoom=$zoom&size=${width}x${height}&markers=%7C${lat},${lng}&scale=2&maptype=roadmap&key=${key}"
+    }
+}
 
 fun String?.toTag(): Property.Tag = this?.let {
     return@let when (it) {

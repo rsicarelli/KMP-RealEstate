@@ -9,11 +9,10 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyRow
-import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Card
 import androidx.compose.material.MaterialTheme
-import androidx.compose.material.Surface
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -30,10 +29,10 @@ import androidx.compose.ui.util.lerp
 import androidx.constraintlayout.compose.ConstraintLayout
 import coil.compose.rememberImagePainter
 import com.google.accompanist.pager.*
+import com.rsicarelli.homehunt.BuildConfig
 import com.rsicarelli.homehunt.R
 import com.rsicarelli.homehunt.core.util.toCurrency
 import com.rsicarelli.homehunt.presentation.components.IconText
-import com.rsicarelli.homehunt.presentation.propertyDetail.components.StaticMapView
 import com.rsicarelli.homehunt.ui.theme.*
 import com.rsicarelli.homehunt_kmm.domain.model.Location
 import com.rsicarelli.homehunt_kmm.domain.model.Property
@@ -143,7 +142,7 @@ fun PagerScope.PropertySnapshot(
             ConstraintLayout(
                 modifier = Modifier.fillMaxWidth()
             ) {
-                val (mainPhoto, propertyDetails, photoGallery) = createRefs()
+                val (mainPhoto, propertyDetails, photoGallery, map) = createRefs()
 
                 MainPicture(
                     modifier = Modifier.constrainAs(mainPhoto) {
@@ -166,11 +165,20 @@ fun PagerScope.PropertySnapshot(
 
                 PropertyGallery(
                     photoGallery = property.photoGalleryUrls,
-                    location = property.location,
                     modifier = Modifier.constrainAs(photoGallery) {
                         top.linkTo(mainPhoto.bottom)
                         end.linkTo(parent.end)
                         start.linkTo(parent.start)
+                    },
+                )
+
+                PropertyMap(
+                    location = property.location,
+                    modifier = Modifier.constrainAs(map) {
+                        top.linkTo(photoGallery.bottom)
+                        end.linkTo(parent.end)
+                        start.linkTo(parent.start)
+                        bottom.linkTo(parent.bottom)
                     },
                 )
             }
@@ -179,42 +187,57 @@ fun PagerScope.PropertySnapshot(
 }
 
 @Composable
+private fun PropertyMap(
+    modifier: Modifier,
+    location: Location
+) {
+    Box(
+        modifier = modifier
+            .height(140.dp)
+            .padding(8.dp)
+            .fillMaxWidth()
+            .clip(MaterialTheme.shapes.medium)
+    ) {
+        Image(
+            modifier = Modifier.fillMaxSize(),
+            painter = rememberImagePainter(
+                data = location.toStaticMap(BuildConfig.GOOGLE_MAPS_API_KEY),
+                builder = {
+                    crossfade(true)
+                }
+            ),
+            contentDescription = null,
+            contentScale = ContentScale.Crop
+        )
+    }
+}
+
+@Composable
 fun PropertyGallery(
     modifier: Modifier,
     photoGallery: List<String>,
-    location: Location,
 ) {
     LazyRow(
-        modifier = modifier.fillMaxWidth(),
-        contentPadding = PaddingValues(8.dp),
+        modifier = modifier
+            .fillMaxWidth()
+            .padding(top = 8.dp),
         horizontalArrangement = Arrangement.spacedBy(8.dp)
     ) {
-        item {
-            Surface(
-                modifier = Modifier
-                    .height(100.dp)
-                    .width(172.dp)
-                    .clip(shape = MaterialTheme.shapes.medium)
-            ) {
-                StaticMapView(
-                    location = location,
-                    modifier = Modifier.clickable { },
-                    isLiteMode = true,
-                    showRadius = false
-                )
-            }
-        }
-        items(photoGallery.drop(1)) {
+        itemsIndexed(photoGallery.drop(1)) { index, url ->
+            val startPadding = if (index == 0) 8.dp else 0.dp
+            val endPadding = if (index == photoGallery.size - 2) 8.dp else 0.dp
+
             Box(
                 modifier = Modifier
                     .height(100.dp)
                     .width(140.dp)
+                    .padding(start = startPadding, end = endPadding)
                     .clip(MaterialTheme.shapes.medium)
             ) {
                 Image(
                     modifier = Modifier.fillMaxSize(),
                     painter = rememberImagePainter(
-                        data = it,
+                        data = url,
                         builder = {
                             crossfade(true)
                         }

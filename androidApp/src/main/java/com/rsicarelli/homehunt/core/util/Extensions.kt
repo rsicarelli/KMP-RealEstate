@@ -6,6 +6,8 @@ import android.graphics.Canvas
 import androidx.core.content.ContextCompat
 import com.google.android.gms.maps.model.BitmapDescriptor
 import com.google.android.gms.maps.model.BitmapDescriptorFactory
+import com.rsicarelli.homehunt.BuildConfig
+import com.rsicarelli.homehunt_kmm.domain.model.Location
 import java.text.NumberFormat
 import java.util.*
 
