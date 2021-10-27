@@ -43,7 +43,7 @@
     <string name="error_username">Username must be between %1$s and %2$s</string>
     <string name="error_password">Password must be between %1$s and %2$s</string>
     <string name="error">Error</string>
-    <string name="recommendations">Recommendations</string>
+    <string name="discover">Discover</string>
     <string name="property_details">Property details</string>
     <string name="close_menu">Close menu</string>
     <string name="open_menu">Open menu</string>

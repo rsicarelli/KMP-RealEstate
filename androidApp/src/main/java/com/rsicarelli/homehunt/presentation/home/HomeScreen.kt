@@ -1,5 +1,8 @@
 package com.rsicarelli.homehunt.presentation.home
 
+import androidx.compose.animation.AnimatedVisibility
+import androidx.compose.animation.fadeIn
+import androidx.compose.animation.fadeOut
 import androidx.compose.material.BackdropScaffold
 import androidx.compose.material.BackdropValue
 import androidx.compose.material.ExperimentalMaterialApi
@@ -21,6 +24,7 @@ import com.rsicarelli.homehunt.ui.navigation.Screen
 import com.rsicarelli.homehunt.ui.state.AppState
 import com.rsicarelli.homehunt.ui.theme.Green_500
 import com.rsicarelli.homehunt.ui.theme.HomeHuntTheme
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 
 @OptIn(ExperimentalMaterialApi::class)
@@ -33,7 +37,10 @@ fun HomeScreen(appState: AppState) {
     )
 }
 
-@OptIn(ExperimentalPagerApi::class, ExperimentalMaterialApi::class)
+@OptIn(
+    ExperimentalPagerApi::class, ExperimentalMaterialApi::class,
+    androidx.compose.animation.ExperimentalAnimationApi::class
+)
 @Composable
 private fun HomeContent(
     recommendationsScreen: @Composable () -> Unit,
@@ -42,8 +49,9 @@ private fun HomeContent(
 ) {
 
     val backdropState = rememberBackdropScaffoldState(initialValue = BackdropValue.Concealed)
-    val selectedScreen = remember { mutableStateOf<Screen>(Screen.Home) }
+    val selectedScreen = remember { mutableStateOf<Screen>(Screen.Recommendations) }
     val coroutinesScope = rememberCoroutineScope()
+    val animateContent = remember { mutableStateOf(true) }
 
     BackdropScaffold(
         modifier = Modifier.statusBarsPadding(),
@@ -61,17 +69,26 @@ private fun HomeContent(
         },
         backLayerContent = {
             NavigationOptions(selectedScreen.value) {
-                selectedScreen.value = it
                 coroutinesScope.launch {
                     backdropState.conceal()
+                    animateContent.value = false
+                    delay(50)
+                    selectedScreen.value = it
+                    animateContent.value = true
                 }
             }
         },
         frontLayerContent = {
-            when (selectedScreen.value) {
-                Screen.Home -> recommendationsScreen()
-                Screen.Map -> mapScreen()
-                Screen.Favourites -> favouritesScreen()
+            AnimatedVisibility(
+                visible = animateContent.value,
+                enter = fadeIn(),
+                exit = fadeOut()
+            ) {
+                when (selectedScreen.value) {
+                    Screen.Recommendations -> recommendationsScreen()
+                    Screen.Map -> mapScreen()
+                    Screen.Favourites -> favouritesScreen()
+                }
             }
         }
     )

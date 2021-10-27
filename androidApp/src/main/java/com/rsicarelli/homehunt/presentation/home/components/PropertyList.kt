@@ -6,8 +6,12 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.LazyListState
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.lazy.rememberLazyListState
+import androidx.compose.material.MaterialTheme
+import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import com.google.accompanist.insets.statusBarsPadding
 import com.rsicarelli.homehunt.R
@@ -27,18 +31,34 @@ fun PropertyList(
 ) {
     if (properties.isEmpty()) return
 
-    Box(
-        modifier = Modifier
-            .statusBarsPadding()
-            .padding(
-                start = Size_Regular,
-                end = Size_Regular
-            )
-    ) {
+    Box {
         LazyColumn(
+            modifier = Modifier.padding(
+                start = Size_Regular,
+                end = Size_Regular,
+            ),
             state = scrollState
         ) {
-            item { Spacer(modifier = Modifier.height(Size_4X_Large)) }
+            item { Spacer(modifier = Modifier.height(Size_Regular)) }
+            item {
+                Row(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(
+                            start = Size_Small,
+                            end = Size_Small,
+                        ),
+                    horizontalArrangement = Arrangement.End,
+                    verticalAlignment = Alignment.CenterVertically
+                ) {
+                    Text(
+                        modifier = Modifier.weight(1.0f),
+                        text = "${properties.size} ${stringResource(id = R.string.properties)}",
+                        style = MaterialTheme.typography.h6
+                    )
+                }
+            }
+            item { Spacer(modifier = Modifier.height(Size_Medium)) }
             items(properties) { property ->
                 PropertyListItem(
                     property = property,
@@ -54,8 +74,6 @@ fun PropertyList(
             }
             item { Spacer(modifier = Modifier.height(Size_Medium)) }
         }
-
-        ResultsHeader(scrollState.isScrollInProgress, properties.size, headerPrefixRes)
     }
 }
 

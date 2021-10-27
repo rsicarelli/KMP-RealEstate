@@ -16,7 +16,7 @@ fun NavigationOptions(selectedScreen: Screen, onScreenSelected: (screen: Screen)
     Column(
         modifier = Modifier.padding(start = 72.dp, bottom = 16.dp),
     ) {
-        listOf(Screen.Home, Screen.Favourites, Screen.Map)
+        listOf(Screen.Recommendations, Screen.Favourites, Screen.Map)
             .minus(selectedScreen)
             .forEach {
                 Text(
