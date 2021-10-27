@@ -13,12 +13,10 @@ import com.rsicarelli.homehunt.ui.theme.HomeHuntTheme
 import com.rsicarelli.homehunt.ui.theme.Size_Small
 
 @Composable
-fun ColumnScope.AvailabilitySelector(
+fun AvailabilitySelector(
     isChecked: Boolean,
     onChange: (Boolean) -> Unit
 ) {
-    Spacer(modifier = Modifier.height(Size_Small))
-
     CheckboxItem(
         title = stringResource(id = R.string.show_only_available),
         isChecked = isChecked,
@@ -27,7 +25,7 @@ fun ColumnScope.AvailabilitySelector(
 }
 
 @Composable
-@Preview
+@Preview(showBackground = true, backgroundColor = 0xFF21AF6C)
 private fun AvailabilitySelectorCheckedPreview() {
     HomeHuntTheme(isPreview = true) {
         Column {
@@ -37,7 +35,7 @@ private fun AvailabilitySelectorCheckedPreview() {
 }
 
 @Composable
-@Preview
+@Preview(showBackground = true, backgroundColor = 0xFF21AF6C)
 private fun AvailabilitySelectorUncheckedPreview() {
     HomeHuntTheme(isPreview = true) {
         Column {

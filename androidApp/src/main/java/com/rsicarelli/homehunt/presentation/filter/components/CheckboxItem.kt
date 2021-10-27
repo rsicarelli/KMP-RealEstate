@@ -11,6 +11,7 @@ import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import com.rsicarelli.homehunt.ui.theme.HomeHuntTheme
@@ -35,7 +36,10 @@ fun CheckboxItem(
         Text(
             modifier = Modifier.weight(1.0f),
             text = title,
-            style = MaterialTheme.typography.subtitle1.copy(fontWeight = FontWeight.W400),
+            style = MaterialTheme.typography.subtitle1.copy(
+                fontWeight = FontWeight.W400,
+                color = Color.White
+            ),
         )
         Checkbox(
             checked = isChecked,

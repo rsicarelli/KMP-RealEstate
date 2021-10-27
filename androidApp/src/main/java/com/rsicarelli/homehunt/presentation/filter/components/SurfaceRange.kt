@@ -11,7 +11,7 @@ import com.rsicarelli.homehunt.ui.theme.HomeHuntTheme
 private val valueRange = 0F..300F
 
 @Composable
-fun ColumnScope.SurfaceRange(
+fun SurfaceRange(
     range: ClosedFloatingPointRange<Float>,
     onValueChange: (ClosedFloatingPointRange<Float>) -> Unit,
 ) {
@@ -28,7 +28,7 @@ fun ColumnScope.SurfaceRange(
 }
 
 @Composable
-@Preview
+@Preview(showBackground = true, backgroundColor = 0xFF21AF6C)
 private fun SurfaceRangeMaxValuePreview() {
     HomeHuntTheme(isPreview = true) {
         Column {
@@ -38,7 +38,7 @@ private fun SurfaceRangeMaxValuePreview() {
 }
 
 @Composable
-@Preview
+@Preview(showBackground = true, backgroundColor = 0xFF21AF6C)
 private fun SurfaceRangeValuePreview() {
     HomeHuntTheme(isPreview = true) {
         Column {

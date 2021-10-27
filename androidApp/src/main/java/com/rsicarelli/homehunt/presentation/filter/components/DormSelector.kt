@@ -21,7 +21,7 @@ fun DormSelector(
 
 
 @Composable
-@Preview
+@Preview(showBackground = true, backgroundColor = 0xFF21AF6C)
 private fun DormSelectorPreview() {
     HomeHuntTheme(isPreview = true) {
         DormSelector(dormCount = 4, onValueChanged = {})

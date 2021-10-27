@@ -1,9 +1,7 @@
 package com.rsicarelli.homehunt.presentation.filter
 
 import androidx.compose.foundation.ExperimentalFoundationApi
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.material.ExperimentalMaterialApi
 import androidx.compose.runtime.Composable
@@ -22,6 +20,7 @@ import com.rsicarelli.homehunt.presentation.components.rememberOnLifecycle
 import com.rsicarelli.homehunt.presentation.filter.components.*
 import com.rsicarelli.homehunt.ui.theme.HomeHuntTheme
 import com.rsicarelli.homehunt.ui.theme.Size_Large
+import com.rsicarelli.homehunt.ui.theme.Size_Small
 
 @OptIn(ExperimentalMaterialApi::class)
 @Composable
@@ -63,77 +62,60 @@ private fun FilterContent(
 ) {
     if (state.uiEvent is UiEvent.Navigate) actions.onNavigateUp()
 
-    Column(
-        modifier = Modifier
+    LazyColumn(
+        Modifier
             .fillMaxWidth()
-            .statusBarsPadding()
+            .padding(start = Size_Large, end = Size_Large),
     ) {
-        BackButton(
-            modifier = Modifier,
-            onBackClick = actions.onNavigateUp
-        )
-
-        LazyColumn(
-            Modifier
-                .fillMaxWidth()
-                .weight(1.0f)
-                .padding(start = Size_Large, end = Size_Large),
-        ) {
-            item {
-                PriceRange(
-                    range = state.priceRange,
-                    onValueChange = actions.onPriceRangeChanged
-                )
-            }
-            item {
-                SurfaceRange(
-                    range = state.surfaceRange,
-                    onValueChange = actions.onSurfaceRangeChanged
-                )
-            }
-            item {
-                DormSelector(
-                    dormCount = state.dormCount,
-                    onValueChanged = actions.onDormsSelectionChanged
-                )
-            }
-            item {
-                BathSelector(
-                    bathCount = state.bathCount,
-                    onValueChanged = actions.onBathSelectionChanged
-                )
-            }
-            item {
-                VisibilitySelector(
-                    isChecked = state.showSeen,
-                    onChange = actions.onVisibilitySelectionChanged
-                )
-            }
-            item {
-                LongTermRentalSelector(
-                    isChecked = state.longTermOnly,
-                    onChange = actions.onLongTermRentalSelectionChanged
-                )
-            }
-            item {
-                AvailabilitySelector(
-                    isChecked = state.availableOnly,
-                    onChange = actions.onAvailabilitySelectionChanged
-                )
-            }
+        item {
+            PriceRange(
+                range = state.priceRange,
+                onValueChange = actions.onPriceRangeChanged
+            )
         }
-
-        SeeResultsButton(
-            previewResultCount = state.previewResultCount,
-            onClick = actions.onSaveFilter
-        )
+        item {
+            SurfaceRange(
+                range = state.surfaceRange,
+                onValueChange = actions.onSurfaceRangeChanged
+            )
+        }
+        item {
+            DormSelector(
+                dormCount = state.dormCount,
+                onValueChanged = actions.onDormsSelectionChanged
+            )
+        }
+        item {
+            BathSelector(
+                bathCount = state.bathCount,
+                onValueChanged = actions.onBathSelectionChanged
+            )
+        }
+        item {
+            LongTermRentalSelector(
+                isChecked = state.longTermOnly,
+                onChange = actions.onLongTermRentalSelectionChanged
+            )
+        }
+        item {
+            AvailabilitySelector(
+                isChecked = state.availableOnly,
+                onChange = actions.onAvailabilitySelectionChanged
+            )
+        }
+        item {
+            SeeResultsButton(
+                previewResultCount = state.previewResultCount,
+                onClick = actions.onSaveFilter
+            )
+        }
     }
 }
 
+@Preview(showBackground = true, backgroundColor = 0xFF21AF6C, group = "test")
 @Composable
-@Preview
 private fun FilterContentPreview() {
-    HomeHuntTheme(isPreview = true) {
+    HomeHuntTheme() {
         FilterContent(
             state = FilterState(),
             actions = FilterActions(

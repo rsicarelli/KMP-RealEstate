@@ -4,14 +4,8 @@ import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.ExperimentalAnimationApi
 import androidx.compose.animation.fadeIn
 import androidx.compose.animation.fadeOut
-import androidx.compose.material.BackdropScaffold
-import androidx.compose.material.BackdropValue
-import androidx.compose.material.ExperimentalMaterialApi
-import androidx.compose.material.rememberBackdropScaffoldState
-import androidx.compose.runtime.Composable
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.rememberCoroutineScope
+import androidx.compose.material.*
+import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import com.google.accompanist.insets.statusBarsPadding
@@ -20,11 +14,11 @@ import com.rsicarelli.homehunt.presentation.home.components.HomeTopBar
 import com.rsicarelli.homehunt.presentation.home.components.NavigationOptions
 import com.rsicarelli.homehunt.presentation.map.MapScreen
 import com.rsicarelli.homehunt.presentation.discover.DiscoverScreen
+import com.rsicarelli.homehunt.presentation.filter.FilterScreen
 import com.rsicarelli.homehunt.ui.navigation.Screen
 import com.rsicarelli.homehunt.ui.state.AppState
 import com.rsicarelli.homehunt.ui.theme.Green_500
 import com.rsicarelli.homehunt.ui.theme.HomeHuntTheme
-import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 
 @OptIn(ExperimentalMaterialApi::class)
@@ -36,7 +30,8 @@ fun HomeScreen(appState: AppState) {
         },
         favouritesScreen = { FavouritesScreen(appState = appState) },
         mapScreen = { MapScreen(appState = appState) },
-        discoverScreen = { DiscoverScreen(appState = appState) }
+        discoverScreen = { DiscoverScreen(appState = appState) },
+        filterScreen = { FilterScreen(appState = appState) }
     )
 }
 
@@ -47,6 +42,7 @@ fun HomeScreen(appState: AppState) {
 @Composable
 private fun HomeContent(
     onFilterClick: () -> Unit,
+    filterScreen: @Composable () -> Unit,
     discoverScreen: @Composable () -> Unit,
     favouritesScreen: @Composable () -> Unit,
     mapScreen: @Composable () -> Unit
@@ -54,6 +50,7 @@ private fun HomeContent(
 
     val backdropState = rememberBackdropScaffoldState(initialValue = BackdropValue.Concealed)
     val selectedScreen = remember { mutableStateOf<Screen>(Screen.Discover) }
+    var filterVisible by remember { mutableStateOf(false) }
     val coroutinesScope = rememberCoroutineScope()
     val contentVisibility = remember { mutableStateOf(true) }
 
@@ -67,18 +64,33 @@ private fun HomeContent(
                 coroutinesScope = coroutinesScope,
                 backdropState = backdropState,
                 currentDestination = selectedScreen.value,
-                onFilterClick = onFilterClick
+                onFilterClick = {
+                    coroutinesScope.launch {
+                        if (filterVisible) {
+                            backdropState.conceal()
+                            filterVisible = false
+                        } else {
+                            filterVisible = true
+                            backdropState.reveal()
+                        }
+                    }
+                }
             )
         },
         backLayerContent = {
-            NavigationOptions(selectedScreen.value) {
-                coroutinesScope.launch {
-                    contentVisibility.value = false
-                    backdropState.conceal()
-                    selectedScreen.value = it
-                    contentVisibility.value = true
+            if (filterVisible) {
+                filterScreen()
+            } else {
+                NavigationOptions(selectedScreen.value) {
+                    coroutinesScope.launch {
+                        contentVisibility.value = false
+                        backdropState.conceal()
+                        selectedScreen.value = it
+                        contentVisibility.value = true
+                    }
                 }
             }
+
         },
         frontLayerContent = {
             AnimatedVisibility(
@@ -101,10 +113,13 @@ private fun HomeContent(
 private fun HomeScreenPreview() {
     HomeHuntTheme(isPreview = true) {
         HomeContent(
+
             onFilterClick = {},
             favouritesScreen = {},
             mapScreen = {},
-            discoverScreen = {}
+            discoverScreen = {}, filterScreen = {
+
+            }
         )
     }
 }

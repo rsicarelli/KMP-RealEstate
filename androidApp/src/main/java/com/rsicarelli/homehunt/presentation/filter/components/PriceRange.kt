@@ -11,7 +11,7 @@ import com.rsicarelli.homehunt.ui.theme.HomeHuntTheme
 private val valueRange = 0F..2000F
 
 @Composable
-fun ColumnScope.PriceRange(
+fun PriceRange(
     range: ClosedFloatingPointRange<Float>,
     onValueChange: (ClosedFloatingPointRange<Float>) -> Unit,
 ) {
@@ -27,9 +27,9 @@ fun ColumnScope.PriceRange(
 }
 
 @Composable
-@Preview
+@Preview(showBackground = true, backgroundColor = 0xFF21AF6C)
 private fun PriceRangeMaxValuePreview() {
-    HomeHuntTheme(isPreview = true) {
+    HomeHuntTheme() {
         Column {
             PriceRange(range = valueRange, onValueChange = {})
         }
@@ -37,9 +37,9 @@ private fun PriceRangeMaxValuePreview() {
 }
 
 @Composable
-@Preview
+@Preview(showBackground = true, backgroundColor = 0xFF21AF6C)
 private fun PriceRangeValuePreview() {
-    HomeHuntTheme(isPreview = true) {
+    HomeHuntTheme() {
         Column {
             PriceRange(range = 500F..1500F, onValueChange = {})
         }

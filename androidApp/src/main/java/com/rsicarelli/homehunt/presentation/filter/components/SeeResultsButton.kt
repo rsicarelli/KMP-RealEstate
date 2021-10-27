@@ -1,22 +1,18 @@
 package com.rsicarelli.homehunt.presentation.filter.components
 
 import androidx.compose.foundation.layout.*
-import androidx.compose.material.Button
-import androidx.compose.material.ButtonDefaults
-import androidx.compose.material.MaterialTheme
-import androidx.compose.material.Text
+import androidx.compose.material.*
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.rsicarelli.homehunt.R
-import com.rsicarelli.homehunt.ui.theme.HomeHuntTheme
-import com.rsicarelli.homehunt.ui.theme.Size_2X_Large
-import com.rsicarelli.homehunt.ui.theme.Size_Regular
-import com.rsicarelli.homehunt.ui.theme.Green_500
+import com.rsicarelli.homehunt.ui.theme.*
 
 @Composable
 fun SeeResultsButton(
@@ -31,14 +27,13 @@ fun SeeResultsButton(
         val hasResults = previewResultCount != null
         Button(
             modifier = Modifier
-                .height(Size_2X_Large),
+                .height(40.dp),
             shape = MaterialTheme.shapes.large,
             enabled = hasResults,
+            onClick = onClick,
             colors = ButtonDefaults.buttonColors(
-                backgroundColor = Green_500,
-                contentColor = MaterialTheme.colors.background
-            ),
-            onClick = onClick
+                disabledContentColor = Color.White
+            )
         )
         {
             val resources = LocalContext.current.resources
@@ -51,13 +46,11 @@ fun SeeResultsButton(
                 } else {
                     stringResource(id = R.string.no_results)
                 }
-
-
             } ?: stringResource(id = R.string.calculating_results)
 
             Text(
                 text = text,
-                style = MaterialTheme.typography.button.copy(fontSize = 16.sp)
+                style = MaterialTheme.typography.button.copy(fontSize = 16.sp, color = Surface)
             )
         }
         Spacer(modifier = Modifier.height(Size_Regular))

@@ -20,7 +20,7 @@ fun BathSelector(
 }
 
 @Composable
-@Preview
+@Preview(showBackground = true, backgroundColor = 0xFF21AF6C)
 private fun BathSelectorPreview() {
     HomeHuntTheme(isPreview = true) {
         BathSelector(bathCount = 2, onValueChanged = {})

@@ -10,7 +10,7 @@ import com.rsicarelli.homehunt.ui.theme.*
 
 @OptIn(ExperimentalMaterialApi::class)
 @Composable
-fun ColumnScope.FilterRange(
+fun FilterRange(
     title: String,
     range: ClosedFloatingPointRange<Float>,
     rangeText: String,
@@ -20,15 +20,10 @@ fun ColumnScope.FilterRange(
     Spacer(modifier = Modifier.height(Size_Regular))
 
     Text(
-        text = title,
-        style = MaterialTheme.typography.h6
-    )
-
-    Spacer(modifier = Modifier.height(Size_X_Small))
-
-    Text(
         text = rangeText,
-        style = MaterialTheme.typography.subtitle1
+        style = MaterialTheme.typography.subtitle1.copy(
+            color = MaterialTheme.colors.primary
+        )
     )
 
     RangeSlider(
@@ -41,13 +36,16 @@ fun ColumnScope.FilterRange(
 
     Spacer(modifier = Modifier.height(Size_Small))
 
-    Divider(thickness = DividerSize)
+    Divider(
+        thickness = DividerSize,
+        color = MaterialTheme.colors.primary.copy(alpha = 0.12f),
+    )
 }
 
 @Composable
-@Preview
+@Preview(showBackground = true, backgroundColor = 0xFF21AF6C)
 private fun FilterRangePreview() {
-    HomeHuntTheme(isPreview = true) {
+    HomeHuntTheme {
         val range = 400f..1500f
         val valueRange = 0f..3000f
 

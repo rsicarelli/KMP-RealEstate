@@ -10,6 +10,7 @@ val Background = Color(0xFF33333D)
 val Error = Color(0xFFEF5350)
 val Surface = Color(0xFF373741)
 
+val OnPrimary = Color(0xFF2A2931)
 val OnSecondary = Color(0xFFffffff)
 val OnBackground = Color(0xFFffffff)
 val OnSurface = Color(0xFFffffff)

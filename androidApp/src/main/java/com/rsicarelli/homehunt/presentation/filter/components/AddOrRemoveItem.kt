@@ -6,12 +6,16 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
+import androidx.compose.material.contentColorFor
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
+import com.rsicarelli.homehunt.ui.theme.Green_500
 import com.rsicarelli.homehunt.ui.theme.HomeHuntTheme
+import com.rsicarelli.homehunt.ui.theme.Size_Medium
 import com.rsicarelli.homehunt.ui.theme.Size_Regular
 
 @Composable
@@ -21,7 +25,7 @@ fun AddOrRemoveItem(
     onIncrease: () -> Unit,
     onDecrease: () -> Unit
 ) {
-    Spacer(modifier = Modifier.height(Size_Regular))
+    Spacer(modifier = Modifier.height(Size_Medium))
 
     Row(
         modifier = Modifier.fillMaxWidth(),
@@ -30,7 +34,10 @@ fun AddOrRemoveItem(
         Text(
             modifier = Modifier.weight(1.0f),
             text = text,
-            style = MaterialTheme.typography.subtitle1.copy(fontWeight = FontWeight.W400),
+            style = MaterialTheme.typography.subtitle1.copy(
+                fontWeight = FontWeight.W400,
+                color = Color.White
+            ),
         )
         Counter(
             value,
@@ -42,9 +49,9 @@ fun AddOrRemoveItem(
 }
 
 @Composable
-@Preview
+@Preview(showBackground = true, backgroundColor = 0xFF21AF6C)
 private fun AddOrRemovePreview() {
-    HomeHuntTheme(isPreview = true) {
+    HomeHuntTheme {
         AddOrRemoveItem(
             text = "Hello world",
             value = 2,

@@ -13,7 +13,7 @@ import com.rsicarelli.homehunt.ui.theme.HomeHuntTheme
 import com.rsicarelli.homehunt.ui.theme.Size_X_Small
 
 @Composable
-fun ColumnScope.LongTermRentalSelector(
+fun LongTermRentalSelector(
     isChecked: Boolean,
     onChange: (Boolean) -> Unit,
 ) {
@@ -27,7 +27,7 @@ fun ColumnScope.LongTermRentalSelector(
 }
 
 @Composable
-@Preview
+@Preview(showBackground = true, backgroundColor = 0xFF21AF6C)
 private fun LongTermRentalSelectorCheckedPreview() {
     HomeHuntTheme(isPreview = true) {
         Column {
@@ -37,7 +37,7 @@ private fun LongTermRentalSelectorCheckedPreview() {
 }
 
 @Composable
-@Preview
+@Preview(showBackground = true, backgroundColor = 0xFF21AF6C)
 private fun LongTermRentalSelectorUncheckedPreview() {
     HomeHuntTheme(isPreview = true) {
         Column {
