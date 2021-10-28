@@ -7,16 +7,40 @@ import com.rsicarelli.homehunt_kmm.domain.repository.PropertyRepository
 import com.rsicarelli.homehunt_kmm.type.DownVoteInput
 import com.rsicarelli.homehunt_kmm.type.UpVoteInput
 import com.rsicarelli.homehunt_kmm.type.ViewedPropertyInput
+import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.asFlow
-import kotlinx.coroutines.flow.flow
-import kotlinx.coroutines.flow.flowOn
+import kotlinx.coroutines.ExperimentalCoroutinesApi
+import kotlinx.coroutines.channels.BufferOverflow
+import kotlinx.coroutines.flow.*
+import kotlinx.coroutines.launch
 
+
+@OptIn(ExperimentalCoroutinesApi::class)
 class PropertyRepositoryImpl(
     private val propertyCache: PropertyCache,
     private val propertyService: PropertyService
 ) : PropertyRepository {
+
+    private val _properties = MutableSharedFlow<List<Property>>(
+        replay = 1,
+        extraBufferCapacity = 1,
+        onBufferOverflow = BufferOverflow.DROP_OLDEST
+    )
+
+    init {
+        propertyCache.properties.onEach {
+            _properties.tryEmit(it)
+        }.launchIn(CoroutineScope(Dispatchers.Default))
+
+        CoroutineScope(Dispatchers.Default).launch {
+            propertyService.getAllProperties()?.let {
+                propertyCache.saveAll(it)
+            }
+        }
+    }
+
+    override val properties: Flow<List<Property>> = _properties.distinctUntilChanged()
+
     override fun fetchProperties(): Flow<List<Property>> = flow {
         emit(propertyCache.getAll())
         propertyService.getAllProperties()?.let {

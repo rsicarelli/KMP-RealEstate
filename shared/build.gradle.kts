@@ -76,6 +76,7 @@ kotlin {
                 implementation(Kotlin.coroutinesCore)
                 implementation(Dependencies.multiplatformSettings)
                 implementation(SQLDelight.runtime)
+                implementation(SQLDelight.coroutinesExtensions)
             }
         }
         val commonTest by getting {

@@ -4,6 +4,10 @@ import com.rsicarelli.homehunt_kmm.data.cache.mappers.toProperty
 import com.rsicarelli.homehunt_kmm.data.cache.mappers.toPropertyList
 import com.rsicarelli.homehunt_kmm.datasource.cache.HomeHuntDatabase
 import com.rsicarelli.homehunt_kmm.domain.model.Property
+import com.squareup.sqldelight.runtime.coroutines.asFlow
+import com.squareup.sqldelight.runtime.coroutines.mapToList
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.map
 
 interface PropertyCache {
     fun getAll(): List<Property>
@@ -14,10 +18,19 @@ interface PropertyCache {
     fun upVoteMany(ids: List<String>)
     fun downVote(propertyId: String)
     fun updateFavourites(ids: List<String>)
+    val properties: Flow<List<Property>>
 }
 
 class PropertyCacheImpl(homeHuntDatabase: HomeHuntDatabase) : PropertyCache {
     private val queries = homeHuntDatabase.homeHuntQueries
+
+    override val properties: Flow<List<Property>>
+        get() = queries.selectAllProperties()
+            .asFlow()
+            .mapToList()
+            .map {
+                it.toPropertyList()
+            }
 
     override fun getAll(): List<Property> =
         queries.selectAllProperties().executeAsList().toPropertyList()

@@ -17,7 +17,7 @@ class GetRecommendationsUseCase(
 
     @OptIn(FlowPreview::class)
     override fun invoke(request: Unit): Flow<Outcome> =
-        propertyRepository.getRecommendations()
+        propertyRepository.properties
             .combine(getFilterPreferences(request)) { properties, filterOutcome ->
                 Pair(filterOutcome.searchOption, properties)
             }

@@ -16,4 +16,5 @@ interface PropertyRepository {
     suspend fun markAsViewed(viewedPropertyInput: ViewedPropertyInput)
     suspend fun upVote(upVoteInput: UpVoteInput)
     suspend fun downVote(downVoteInput: DownVoteInput)
+    val properties: Flow<List<Property>>
 }
