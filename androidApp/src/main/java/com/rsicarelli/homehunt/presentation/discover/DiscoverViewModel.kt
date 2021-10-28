@@ -28,7 +28,7 @@ class DiscoverViewModel @Inject constructor(
 
     fun init() = state.also { loadProperties() }
 
-    private fun loadProperties() {
+    fun loadProperties() {
         viewModelScope.launch {
             getRecommendations.invoke(Unit)
                 .collectLatest {

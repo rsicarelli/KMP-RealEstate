@@ -10,6 +10,4 @@ data class FilterActions(
     val onLongTermRentalSelectionChanged: (Boolean) -> Unit,
     val onAvailabilitySelectionChanged: (Boolean) -> Unit,
     val onSaveFilter: () -> Unit,
-    val onNavigateUp: () -> Unit,
-    val onNavigateSingleTop: (String) -> Unit
 )

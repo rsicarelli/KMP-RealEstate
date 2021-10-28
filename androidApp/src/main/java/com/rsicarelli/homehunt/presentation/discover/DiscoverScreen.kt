@@ -19,9 +19,10 @@ import utils.Fixtures
 
 @Composable
 fun DiscoverScreen(
-    appState: AppState,
-    viewModel: DiscoverViewModel = hiltViewModel()
+    onNavigateToProperty: (propertyId: String) -> Unit,
+    filterApplied: Boolean
 ) {
+    val viewModel: DiscoverViewModel = hiltViewModel()
 
     val stateFlowLifecycleAware = viewModel.rememberOnLifecycle {
         viewModel.init().flowWithLifecycle(
@@ -32,8 +33,12 @@ fun DiscoverScreen(
 
     val state by stateFlowLifecycleAware.collectAsState(initial = DiscoverState())
 
+    if (filterApplied) {
+        viewModel.loadProperties()
+    }
+
     val actions = DiscoverActions(
-        onNavigate = appState::navigate,
+        onNavigate = onNavigateToProperty,
         onDownVote = viewModel::onDownVote,
         onUpVote = viewModel::onUpVote,
         onPropertyViewed = viewModel::onPropertyViewed,

@@ -25,7 +25,7 @@ import com.rsicarelli.homehunt.ui.theme.Size_Small
 @OptIn(ExperimentalMaterialApi::class)
 @Composable
 fun FilterScreen(
-    appState: AppState,
+    onFilterApplied: () -> Unit
 ) {
     val viewModel: FilterViewModel = hiltViewModel()
 
@@ -43,9 +43,10 @@ fun FilterScreen(
         onVisibilitySelectionChanged = viewModel::onVisibilitySelectionChanged,
         onLongTermRentalSelectionChanged = viewModel::onLongTermRentalSelectionChanged,
         onAvailabilitySelectionChanged = viewModel::onAvailabilitySelectionChanged,
-        onSaveFilter = viewModel::onSaveFilter,
-        onNavigateUp = appState::navigateUp,
-        onNavigateSingleTop = appState::navigateSingleTop
+        onSaveFilter = {
+            viewModel.onSaveFilter()
+            onFilterApplied()
+        },
     )
 
     FilterContent(
@@ -60,8 +61,6 @@ private fun FilterContent(
     state: FilterState,
     actions: FilterActions,
 ) {
-    if (state.uiEvent is UiEvent.Navigate) actions.onNavigateUp()
-
     LazyColumn(
         Modifier
             .fillMaxWidth()
@@ -127,8 +126,6 @@ private fun FilterContentPreview() {
                 onLongTermRentalSelectionChanged = {},
                 onAvailabilitySelectionChanged = {},
                 onSaveFilter = {},
-                onNavigateUp = {},
-                onNavigateSingleTop = {}
             )
         )
     }

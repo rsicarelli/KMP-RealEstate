@@ -1,49 +1,61 @@
 package com.rsicarelli.homehunt_kmm.data.cache
 
+import com.rsicarelli.homehunt_kmm.data.cache.settings.*
 import com.rsicarelli.homehunt_kmm.domain.model.SearchOption
 import com.russhwolf.settings.*
+import kotlinx.coroutines.Job
 
+@OptIn(ExperimentalSettingsApi::class)
 interface SearchOptionCache {
     fun save(searchOption: SearchOption)
     fun get(): SearchOption
+    fun listen(callback: () -> Unit): SettingsListener
 }
 
 class SearchOptionCacheImpl(
     private val settings: Settings
 ) : SearchOptionCache {
+
+    var minPrice by DoubleSettingConfig(settings, Keys.MIN_PRICE, 0.0)
+    var maxPrice by DoubleSettingConfig(settings, Keys.MAX_PRICE, 2000.0)
+    var minSurface by IntSettingConfig(settings, Keys.MIN_SURFACE, 0)
+    var maxSurface by IntSettingConfig(settings, Keys.MAX_SURFACE, 300)
+    var dormCount by IntSettingConfig(settings, Keys.DORM_COUNT, 0)
+    var bathCount by IntSettingConfig(settings, Keys.BATH_COUNT, 0)
+    var showSeen by BooleanSettingConfig(settings, Keys.SHOW_SEEN, false)
+    var longTermOnly by BooleanSettingConfig(settings, Keys.LONG_TERM_ONLY, false)
+    var availableOnly by BooleanSettingConfig(settings, Keys.AVAILABLE_ONLY, false)
+    var upVotedOnly by BooleanSettingConfig(settings, Keys.UP_VOTED_ONLY, true)
+
     override fun save(searchOption: SearchOption) {
-        with(searchOption) {
-            settings[Keys.MIN_PRICE] = priceRange.first
-            settings[Keys.MAX_PRICE] = priceRange.second
-            settings[Keys.MIN_SURFACE] = surfaceRange.first
-            settings[Keys.MAX_SURFACE] = surfaceRange.second
-            settings[Keys.DORM_COUNT] = dormCount
-            settings[Keys.BATH_COUNT] = bathCount
-            settings[Keys.SHOW_SEEN] = showSeen
-            settings[Keys.LONG_TERM_ONLY] = longTermOnly
-            settings[Keys.AVAILABLE_ONLY] = availableOnly
-            settings[Keys.UP_VOTED_ONLY] = upVotedOnly
-        }
+        minPrice = searchOption.priceRange.first
+        maxPrice = searchOption.priceRange.second
+        minSurface = searchOption.surfaceRange.first
+        maxSurface = searchOption.surfaceRange.second
+        dormCount = searchOption.dormCount
+        bathCount = searchOption.bathCount
+        showSeen = searchOption.showSeen
+        longTermOnly = searchOption.longTermOnly
+        availableOnly = searchOption.availableOnly
+        upVotedOnly = searchOption.upVotedOnly
     }
 
     override fun get(): SearchOption =
         SearchOption(
-            dormCount = settings.getInt(Keys.DORM_COUNT, 0),
-            bathCount = settings.getInt(Keys.BATH_COUNT, 0),
-            showSeen = settings.getBoolean(Keys.SHOW_SEEN, false),
-            longTermOnly = settings.getBoolean(Keys.LONG_TERM_ONLY, false),
-            availableOnly = settings.getBoolean(Keys.AVAILABLE_ONLY, false),
-
-            priceRange = Pair(
-                settings.getDouble(Keys.MIN_PRICE, 0.0),
-                settings.getDouble(Keys.MAX_PRICE, 2000.0)
-            ),
-            surfaceRange = Pair(
-                settings.getInt(Keys.MIN_SURFACE, 0),
-                settings.getInt(Keys.MAX_SURFACE, 300)
-            ),
-            upVotedOnly = settings.getBoolean(Keys.UP_VOTED_ONLY, true)
+            priceRange = Pair(minPrice, maxPrice),
+            surfaceRange = Pair(minSurface, maxSurface),
+            dormCount = dormCount,
+            bathCount = bathCount,
+            showSeen = showSeen,
+            longTermOnly = longTermOnly,
+            availableOnly = availableOnly,
+            upVotedOnly = upVotedOnly
         )
+
+    @OptIn(ExperimentalSettingsApi::class)
+    override fun listen(callback: () -> Unit): SettingsListener {
+        return settings.listen(Keys.MIN_PRICE, callback)
+    }
 
     private object Keys {
         const val MIN_PRICE = "PREF_MIN_PRICE"

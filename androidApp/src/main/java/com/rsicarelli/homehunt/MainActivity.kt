@@ -72,20 +72,6 @@ private fun MainContent() {
                     content = { PropertyDetailScreen(appState) }
                 )
 
-                composable(
-                    route = Screen.Filter.route,
-                    content = { FilterScreen(appState) }
-                )
-
-                composable(
-                    route = Screen.Favourites.route,
-                    content = { FavouritesScreen(appState) }
-                )
-
-                composable(
-                    route = Screen.Map.route,
-                    content = { MapScreen(appState) }
-                )
             }
         }
     }

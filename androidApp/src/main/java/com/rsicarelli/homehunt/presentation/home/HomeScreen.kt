@@ -26,10 +26,7 @@ import kotlinx.coroutines.launch
 @Composable
 fun HomeScreen(appState: AppState) {
     HomeContent(
-        favouritesScreen = { FavouritesScreen(appState = appState) },
-        mapScreen = { MapScreen(appState = appState) },
-        discoverScreen = { DiscoverScreen(appState = appState) },
-        filterScreen = { FilterScreen(appState = appState) }
+        onNavigateToProperty = appState::navigate,
     )
 }
 
@@ -39,18 +36,15 @@ fun HomeScreen(appState: AppState) {
 )
 @Composable
 private fun HomeContent(
-    filterScreen: @Composable () -> Unit,
-    discoverScreen: @Composable () -> Unit,
-    favouritesScreen: @Composable () -> Unit,
-    mapScreen: @Composable () -> Unit
+    onNavigateToProperty: (propertyId: String) -> Unit
 ) {
-
     val backdropState = rememberBackdropScaffoldState(initialValue = BackdropValue.Concealed)
     val selectedScreen = remember { mutableStateOf<Screen>(Screen.Discover) }
     var filterVisible by remember { mutableStateOf(false) }
     val coroutinesScope = rememberCoroutineScope()
     val contentVisibility = remember { mutableStateOf(true) }
     var isMenuShown by remember { mutableStateOf(false) }
+    var filterApplied by remember { mutableStateOf(false) }
 
     isMenuShown = backdropState.isRevealed
 
@@ -64,7 +58,7 @@ private fun HomeContent(
                 titleRes = if (filterVisible) R.string.filter else selectedScreen.value.titleRes,
                 currentDestination = selectedScreen.value,
                 onFilterClick = {
-                    coroutinesScope.launch {
+                    coroutinesScope.launch { //TODO: simplify
                         if (filterVisible) {
                             isMenuShown = false
                             backdropState.conceal()
@@ -76,13 +70,13 @@ private fun HomeContent(
                         }
                     }
                 }, onNavigationClick = {
-                    coroutinesScope.launch {
+                    coroutinesScope.launch { //TODO: simplify
                         if (backdropState.isRevealed) {
                             isMenuShown = false
                             backdropState.conceal()
                             filterVisible = false
                         } else {
-                            isMenuShown = true
+                            isMenuShown = !isMenuShown
                             filterVisible = false
                             backdropState.reveal()
                         }
@@ -92,7 +86,11 @@ private fun HomeContent(
         },
         backLayerContent = {
             if (filterVisible) {
-                filterScreen()
+                FilterScreen(
+                    onFilterApplied = {
+                        filterApplied = true //force recomposition
+                        filterApplied = false
+                    })
             } else {
                 NavigationOptions(selectedScreen.value) {
                     coroutinesScope.launch {
@@ -113,9 +111,9 @@ private fun HomeContent(
                 exit = fadeOut()
             ) {
                 when (selectedScreen.value) {
-                    Screen.Discover -> discoverScreen()
-                    Screen.Map -> mapScreen()
-                    Screen.Favourites -> favouritesScreen()
+                    Screen.Discover -> DiscoverScreen(onNavigateToProperty, filterApplied)
+                    Screen.Map -> MapScreen(onNavigateToProperty)
+                    Screen.Favourites -> FavouritesScreen(onNavigateToProperty)
                 }
             }
         }
@@ -123,15 +121,11 @@ private fun HomeContent(
 }
 
 @Composable
-@Preview()
+@Preview
 private fun HomeScreenPreview() {
     HomeHuntTheme(isPreview = true) {
         HomeContent(
-            favouritesScreen = {},
-            mapScreen = {},
-            discoverScreen = {},
-            filterScreen = {
-            }
+            onNavigateToProperty = {},
         )
     }
 }

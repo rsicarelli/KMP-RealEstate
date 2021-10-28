@@ -28,9 +28,10 @@ import com.rsicarelli.homehunt.ui.theme.Size_Small
 
 @Composable
 fun MapScreen(
-    appState: AppState,
-    viewModel: MapViewModel = hiltViewModel(),
+    onNavigateToProperty: (propertyId: String) -> Unit
 ) {
+    val viewModel: MapViewModel = hiltViewModel()
+
     val stateFlowLifecycleAware = viewModel.rememberOnLifecycle {
         viewModel.init().flowWithLifecycle(
             lifecycle = it.lifecycle,
@@ -41,7 +42,7 @@ fun MapScreen(
     val state by stateFlowLifecycleAware.collectAsState(initial = MapState())
 
     val actions = MapActions(
-        onNavigate = appState::navigate,
+        onNavigate = onNavigateToProperty,
         onToggleFavourite = viewModel::toggleFavourite,
         onPropertyViewed = viewModel::onPropertyViewed,
         onMarkerSelected = viewModel::onMarkerSelected,
