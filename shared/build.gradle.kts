@@ -73,6 +73,7 @@ kotlin {
         val commonMain by getting {
             dependencies {
                 api(Apollo.runtime)
+                implementation(Kotlin.coroutinesCore)
                 implementation(Dependencies.multiplatformSettings)
                 implementation(SQLDelight.runtime)
             }
