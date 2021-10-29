@@ -24,8 +24,9 @@ class GetRecommendationsUseCase(
             .flatMapConcat {
                 filterProperties(FilterPropertiesUseCase.Request(it.first, it.second))
             }
+            .map { list -> list.properties.filterNot { it.isUpVoted }.filterNot { it.isDownVoted } }
             .map {
-                Outcome(it.properties)
+                Outcome(it)
             }.flowOn(Dispatchers.Default)
 
 }

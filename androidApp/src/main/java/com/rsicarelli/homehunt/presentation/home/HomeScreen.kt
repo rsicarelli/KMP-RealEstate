@@ -88,8 +88,11 @@ private fun HomeContent(
             if (filterVisible) {
                 FilterScreen(
                     onFilterApplied = {
-                        filterApplied = true //force recomposition
-                        filterApplied = false
+                        coroutinesScope.launch {
+                            isMenuShown = false
+                            backdropState.conceal()
+                            filterVisible = false
+                        }
                     })
             } else {
                 NavigationOptions(selectedScreen.value) {

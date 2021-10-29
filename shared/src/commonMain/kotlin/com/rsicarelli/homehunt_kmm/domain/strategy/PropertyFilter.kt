@@ -16,8 +16,7 @@ val allFilters = listOf(
     Bath,
     Visibility,
     LongTermOnly,
-    Availability,
-    UpVoted
+    Availability
 )
 
 private object Price : PropertyFilter {

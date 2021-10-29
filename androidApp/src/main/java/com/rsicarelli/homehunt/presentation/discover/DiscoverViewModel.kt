@@ -53,14 +53,6 @@ class DiscoverViewModel @Inject constructor(
         viewModelScope.launch {
             state.value = state.value.copy(itemRemoved = referenceId)
 
-            delay(400)
-
-            state.value = state.value.copy(
-                itemRemoved = null,
-                properties = state.value.properties.toMutableList()
-                    .filterNot { it._id == referenceId },
-            )
-
             toggleFavourite(
                 request = ToggleFavouriteUseCase.Request(
                     referenceId,
