@@ -37,7 +37,7 @@ VALUES (?, ?, ? ,? ,? ,?, ?,? ,? ,? ,? ,? ,?,? ,?,?, ?, ?, ?, ?, ?,?);
 
 updateProperty:
 UPDATE _Property
-SET avatarUrl= ?, bathCount =?, characteristics= ?, dormCount= ?, fullDescription=?, isActive=?, isViewed=?, isUpVoted=?, isDownVoted=?, location=?, locationDescription=?, origin=?, pdfUrl=?, photoGalleryUrls=?, price=?, propertyUrl=?, surface=?, tag=?, title=?, videoUrl=?
+SET avatarUrl= ?, bathCount =?, characteristics= ?, dormCount= ?, fullDescription=?, isActive=?, location=?, locationDescription=?, origin=?, pdfUrl=?, photoGalleryUrls=?, price=?, propertyUrl=?, surface=?, tag=?, title=?, videoUrl=?
 WHERE _id = ?;
 
 resetFavourites:
@@ -46,6 +46,10 @@ SET isUpVoted = 0;
 
 deleteAll:
 DELETE FROM _Property;
+
+deleteById:
+DELETE FROM _Property
+WHERE _id = ?;
 
 updatePropertyVisibility:
 UPDATE _Property

@@ -17,7 +17,7 @@ class GetFilteredPropertiesUseCase(
 
     @OptIn(FlowPreview::class)
     override fun invoke(request: Unit): Flow<Outcome> =
-        propertyRepository.getAll()
+        propertyRepository.properties
             .combine(getFilterPreferences(request)) { properties, filterOutcome ->
                 Pair(filterOutcome.searchOption, properties)
             }

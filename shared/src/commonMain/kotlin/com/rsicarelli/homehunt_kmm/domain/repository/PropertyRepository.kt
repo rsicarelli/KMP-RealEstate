@@ -7,8 +7,6 @@ import com.rsicarelli.homehunt_kmm.type.ViewedPropertyInput
 import kotlinx.coroutines.flow.Flow
 
 interface PropertyRepository {
-    fun fetchProperties(): Flow<List<Property>>
-    fun getRecommendations(): Flow<List<Property>>
     fun getAll(): Flow<List<Property>>
     suspend fun getFavourites(): List<Property>
     suspend fun fetchFavourites(): List<Property>

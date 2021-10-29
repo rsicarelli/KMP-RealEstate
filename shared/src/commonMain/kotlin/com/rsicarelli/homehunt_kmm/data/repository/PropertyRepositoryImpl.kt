@@ -41,20 +41,6 @@ class PropertyRepositoryImpl(
 
     override val properties: Flow<List<Property>> = _properties.distinctUntilChanged()
 
-    override fun fetchProperties(): Flow<List<Property>> = flow {
-        emit(propertyCache.getAll())
-        propertyService.getAllProperties()?.let {
-            propertyCache.saveAll(it)
-            emit(it)
-        }
-    }.flowOn(Dispatchers.Default)
-
-    override fun getRecommendations(): Flow<List<Property>> = flow {
-        propertyService.getRecommendations()?.let {
-            emit(it)
-        }
-    }.flowOn(Dispatchers.Default)
-
     override fun getAll(): Flow<List<Property>> = flow { emit(propertyCache.getAll()) }
 
     override suspend fun getFavourites(): List<Property> =
