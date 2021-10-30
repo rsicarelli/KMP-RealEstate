@@ -49,6 +49,7 @@
     <string name="open_menu">Open menu</string>
     <string name="properties">properties</string>
     <string name="down_vote">Down vote</string>
+    <string name="apply">Apply</string>
     <plurals name="see_results_plurals">
         <item quantity="one">See %d result</item>
         <item quantity="other">See %d results</item>

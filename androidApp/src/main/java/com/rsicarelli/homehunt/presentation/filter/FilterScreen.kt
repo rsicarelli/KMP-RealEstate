@@ -104,7 +104,6 @@ private fun FilterContent(
         }
         item {
             SeeResultsButton(
-                previewResultCount = state.previewResultCount,
                 onClick = actions.onSaveFilter
             )
         }

@@ -2,21 +2,18 @@ package com.rsicarelli.homehunt.presentation.filter
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.rsicarelli.homehunt.ui.navigation.Screen
 import com.rsicarelli.homehunt_kmm.core.model.UiEvent
 import com.rsicarelli.homehunt_kmm.domain.usecase.GetSearchOptionSettings
-import com.rsicarelli.homehunt_kmm.domain.usecase.PreviewFilterResultUseCase
 import com.rsicarelli.homehunt_kmm.domain.usecase.SaveSearchOptionsUseCase
-import com.rsicarelli.homehunt.ui.navigation.Screen
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.FlowPreview
-import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
 class FilterViewModel @Inject constructor(
-    private val previewFilterResult: PreviewFilterResultUseCase,
     private val getFilter: GetSearchOptionSettings,
     private val saveFilter: SaveSearchOptionsUseCase
 ) : ViewModel() {
@@ -27,7 +24,6 @@ class FilterViewModel @Inject constructor(
     fun init(): Flow<FilterState> = getFilter.invoke(Unit)
         .onEach { state.value = it.searchOption.toState() }
         .flatMapConcat { state }
-        .onEach { previewResults() }
 
     fun onAvailabilitySelectionChanged(newValue: Boolean) {
         state.value = state.value.copy(availableOnly = newValue)
@@ -55,17 +51,6 @@ class FilterViewModel @Inject constructor(
 
     fun onPriceRangeChanged(newRange: ClosedFloatingPointRange<Float>) {
         state.value = state.value.copy(priceRange = newRange)
-    }
-
-    private fun previewResults() {
-        viewModelScope.launch {
-            delay(1000)
-            previewFilterResult(
-                request = PreviewFilterResultUseCase.Request(state.value.toSearchOption())
-            ).first().run {
-                state.value = state.value.copy(previewResultCount = properties.size)
-            }
-        }
     }
 
     fun onSaveFilter() {

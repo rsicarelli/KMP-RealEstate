@@ -12,7 +12,6 @@ data class FilterState(
     val showSeen: Boolean = false,
     val longTermOnly: Boolean = false,
     val availableOnly: Boolean = false,
-    val previewResultCount: Int? = null,
 ) {
 
     fun toSearchOption() = SearchOption(
