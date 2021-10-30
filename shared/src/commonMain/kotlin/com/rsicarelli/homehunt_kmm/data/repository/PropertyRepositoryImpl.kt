@@ -34,9 +34,6 @@ class PropertyRepositoryImpl(
 
         CoroutineScope(Dispatchers.Default).launch {
             propertyService.getAllProperties()?.let { properties ->
-                propertyService.fetchFavourites()?.let {
-                    propertyCache.updateFavourites(it)
-                }
                 propertyCache.saveAll(properties)
             }
         }
