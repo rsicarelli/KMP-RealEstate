@@ -28,14 +28,23 @@ class PropertyRepositoryImpl(
     )
 
     init {
-        propertyCache.properties.onEach {
+        propertyCache.properties.distinctUntilChanged().onEach {
             _properties.tryEmit(it)
         }.launchIn(CoroutineScope(Dispatchers.Default))
 
         CoroutineScope(Dispatchers.Default).launch {
-            propertyService.getAllProperties()?.let {
-                propertyCache.saveAll(it)
+            propertyService.getAllProperties()?.let { properties ->
+                propertyService.fetchFavourites()?.let {
+                    propertyCache.updateFavourites(it)
+                }
+                propertyCache.saveAll(properties)
             }
+        }
+    }
+
+    override fun getDiscover(): Flow<List<Property>> = flow {
+        propertyService.getRecommendations()?.let {
+            emit(it)
         }
     }
 
@@ -47,9 +56,7 @@ class PropertyRepositoryImpl(
         propertyCache.getAll().filter { it.isUpVoted }
 
     override suspend fun fetchFavourites(): List<Property> {
-        propertyService.fetchFavourites()?.let {
-            propertyCache.updateFavourites(it)
-        }.also { return getFavourites() }
+        return getFavourites()
     }
 
     override suspend fun getPropertyById(id: String): Property? = propertyCache.get(id)
@@ -57,24 +64,18 @@ class PropertyRepositoryImpl(
     override suspend fun markAsViewed(viewedPropertyInput: ViewedPropertyInput) {
         propertyService.markAsViewed(viewedPropertyInput)
             .takeIf { success -> success }
-            ?.let {
-                propertyCache.updateVisibility(viewedPropertyInput.propertyId)
-            }
+            ?.let { propertyCache.updateVisibility(viewedPropertyInput.propertyId) }
     }
 
     override suspend fun upVote(upVoteInput: UpVoteInput) {
         propertyService.upVote(upVoteInput)
             .takeIf { success -> success }
-            ?.let {
-                propertyCache.upVote(upVoteInput.propertyId)
-            }
+            ?.let { propertyCache.upVote(upVoteInput.propertyId) }
     }
 
     override suspend fun downVote(downVoteInput: DownVoteInput) {
         propertyService.downVote(downVoteInput)
             .takeIf { success -> success }
-            ?.let {
-                propertyCache.downVote(downVoteInput.propertyId)
-            }
+            ?.let { propertyCache.downVote(downVoteInput.propertyId) }
     }
 }

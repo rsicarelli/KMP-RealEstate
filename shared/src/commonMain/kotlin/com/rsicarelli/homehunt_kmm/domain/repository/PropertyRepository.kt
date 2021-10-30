@@ -8,6 +8,7 @@ import kotlinx.coroutines.flow.Flow
 
 interface PropertyRepository {
     fun getAll(): Flow<List<Property>>
+    fun getDiscover(): Flow<List<Property>>
     suspend fun getFavourites(): List<Property>
     suspend fun fetchFavourites(): List<Property>
     suspend fun getPropertyById(id: String): Property?

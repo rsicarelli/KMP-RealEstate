@@ -5,6 +5,7 @@ import com.rsicarelli.homehunt_kmm.domain.model.Property
 import com.rsicarelli.homehunt_kmm.domain.model.SearchOption
 import com.rsicarelli.homehunt_kmm.domain.repository.SearchOptionRepository
 import com.russhwolf.settings.ExperimentalSettingsApi
+import com.russhwolf.settings.SettingsListener
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.channels.BufferOverflow
@@ -24,9 +25,14 @@ class SearchOptionRepositoryImpl(
                 _searchOptions.tryEmit(searchOptionCache.get())
             }
 
-            awaitClose { listen.deactivate() }
-        }.flatMapLatest { _searchOptions }
-            .launchIn(CoroutineScope(Dispatchers.Default))
+            awaitClose {
+                listen.deactivate()
+            }
+        }.launchIn(CoroutineScope(Dispatchers.Main))
+    }
+
+    override fun listen(callback: () -> Unit): SettingsListener {
+        return searchOptionCache.listen(callback)
     }
 
     private val _searchOptions = MutableSharedFlow<SearchOption>(
@@ -35,7 +41,7 @@ class SearchOptionRepositoryImpl(
         onBufferOverflow = BufferOverflow.DROP_OLDEST
     )
 
-    override val searchOptions = _searchOptions.distinctUntilChanged()
+    override val searchOptions = _searchOptions
 
     override fun get() = searchOptionCache.get()
 

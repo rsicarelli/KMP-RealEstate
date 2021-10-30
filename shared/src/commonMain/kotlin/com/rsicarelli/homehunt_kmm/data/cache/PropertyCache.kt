@@ -3,7 +3,6 @@ package com.rsicarelli.homehunt_kmm.data.cache
 import com.rsicarelli.homehunt_kmm.data.cache.mappers.toProperty
 import com.rsicarelli.homehunt_kmm.data.cache.mappers.toPropertyList
 import com.rsicarelli.homehunt_kmm.datasource.cache.HomeHuntDatabase
-import com.rsicarelli.homehunt_kmm.domain.model.Location
 import com.rsicarelli.homehunt_kmm.domain.model.Property
 import com.squareup.sqldelight.runtime.coroutines.asFlow
 import com.squareup.sqldelight.runtime.coroutines.mapToList
@@ -41,9 +40,6 @@ class PropertyCacheImpl(homeHuntDatabase: HomeHuntDatabase) : PropertyCache {
 
     override fun saveAll(properties: List<Property>) {
         queries.transaction {
-            (getAll().minus(properties)).forEach {
-                queries.deleteById(it._id)
-            }
             properties.forEach { newProperty ->
                 get(newProperty._id)?.let {
                     queries.updateProperty(
@@ -67,6 +63,10 @@ class PropertyCacheImpl(homeHuntDatabase: HomeHuntDatabase) : PropertyCache {
                         videoUrl = newProperty.videoUrl
                     )
                 } ?: insertProperty(newProperty)
+            }
+
+            (getAll().minus(properties.toHashSet())).forEach {
+                queries.deleteById(it._id)
             }
         }
     }

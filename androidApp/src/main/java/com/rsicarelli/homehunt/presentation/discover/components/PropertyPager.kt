@@ -42,12 +42,15 @@ import kotlin.math.absoluteValue
 @Composable
 fun PropertyPager(
     properties: List<Property>,
+    onPropertyViewed: (Property) -> Unit,
     onNavigate: (id: String) -> Unit,
     onUpVote: (id: String) -> Unit,
     onDownVote: (id: String) -> Unit,
     itemRemoved: String?,
 ) {
     val pagerState = rememberPagerState()
+
+    onPropertyViewed(properties[pagerState.currentPage])
 
     ConstraintLayout(modifier = Modifier.fillMaxSize()) {
         val (header, pager, bottomBar) = createRefs()
@@ -68,6 +71,7 @@ fun PropertyPager(
                 style = MaterialTheme.typography.h6
             )
         }
+
 
         HorizontalPager(
             modifier = Modifier

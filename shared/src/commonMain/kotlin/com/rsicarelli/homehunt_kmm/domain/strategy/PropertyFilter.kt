@@ -14,7 +14,6 @@ val allFilters = listOf(
     Surface,
     Dorm,
     Bath,
-    Visibility,
     LongTermOnly,
     Availability
 )

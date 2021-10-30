@@ -4,27 +4,46 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.rsicarelli.homehunt_kmm.core.model.ProgressBarState
 import com.rsicarelli.homehunt_kmm.domain.model.Property
+import com.rsicarelli.homehunt_kmm.domain.repository.SearchOptionRepository
 import com.rsicarelli.homehunt_kmm.domain.usecase.GetRecommendationsUseCase
+import com.rsicarelli.homehunt_kmm.domain.usecase.GetSearchOptionSettings
 import com.rsicarelli.homehunt_kmm.domain.usecase.MarkAsViewedUseCase
 import com.rsicarelli.homehunt_kmm.domain.usecase.ToggleFavouriteUseCase
+import com.russhwolf.settings.ExperimentalSettingsApi
+import com.russhwolf.settings.SettingsListener
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.delay
-import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.collectLatest
-import kotlinx.coroutines.flow.single
+import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 import com.rsicarelli.homehunt_kmm.domain.usecase.MarkAsViewedUseCase.Request as MarkAsViewedRequest
 
+@OptIn(ExperimentalSettingsApi::class)
 @HiltViewModel
 class DiscoverViewModel @Inject constructor(
     private val getRecommendations: GetRecommendationsUseCase,
+    private val searchOptionRepository: SearchOptionRepository,
     private val toggleFavourite: ToggleFavouriteUseCase,
     private val markAsViewed: MarkAsViewedUseCase,
 ) : ViewModel() {
 
+    private var listen: SettingsListener? = null
+
     private val state: MutableStateFlow<DiscoverState> =
         MutableStateFlow(DiscoverState())
+
+    init {
+        viewModelScope.launch {
+            listen = searchOptionRepository.listen {
+                loadProperties()
+            }
+        }
+    }
+
+    override fun onCleared() {
+        listen?.deactivate()
+        super.onCleared()
+    }
 
     fun init() = state.also { loadProperties() }
 

@@ -4,6 +4,8 @@ import android.app.Application
 import android.content.Context
 import android.content.SharedPreferences
 import com.russhwolf.settings.AndroidSettings
+import com.russhwolf.settings.ExperimentalSettingsApi
+import com.russhwolf.settings.ObservableSettings
 import com.russhwolf.settings.Settings
 import dagger.Module
 import dagger.Provides
@@ -21,6 +23,7 @@ object AppModule {
         return application.getSharedPreferences("home_hunt", Context.MODE_PRIVATE)
     }
 
+    @OptIn(ExperimentalSettingsApi::class)
     @Provides
     @Singleton
     fun providesSettings(sharedPreferences: SharedPreferences): Settings =

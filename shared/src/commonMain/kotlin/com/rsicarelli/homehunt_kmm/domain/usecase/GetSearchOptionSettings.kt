@@ -10,7 +10,9 @@ class GetSearchOptionSettings(
     private val searchOptionRepository: SearchOptionRepository
 ) : UseCase<Unit, GetSearchOptionSettings.Outcome> {
 
-    override fun invoke(request: Unit) = searchOptionRepository.searchOptions.map { Outcome(it) }
+    override fun invoke(request: Unit) = flow {
+        emit(Outcome(searchOptionRepository.get()))
+    }
 
     class Outcome(val searchOption: SearchOption)
 }

@@ -17,16 +17,15 @@ class GetRecommendationsUseCase(
 
     @OptIn(FlowPreview::class)
     override fun invoke(request: Unit): Flow<Outcome> =
-        propertyRepository.properties
-            .combine(getFilterPreferences(request)) { properties, filterOutcome ->
+        getFilterPreferences(request)
+            .combine(propertyRepository.getDiscover()) { filterOutcome, properties ->
                 Pair(filterOutcome.searchOption, properties)
             }
             .flatMapConcat {
                 filterProperties(FilterPropertiesUseCase.Request(it.first, it.second))
             }
-            .map { list -> list.properties.filterNot { it.isUpVoted }.filterNot { it.isDownVoted } }
             .map {
-                Outcome(it)
+                Outcome(it.properties)
             }.flowOn(Dispatchers.Default)
 
 }

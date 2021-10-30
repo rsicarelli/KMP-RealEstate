@@ -12,7 +12,6 @@ import com.rsicarelli.homehunt.presentation.components.EmptyContent
 import com.rsicarelli.homehunt.presentation.components.rememberOnLifecycle
 import com.rsicarelli.homehunt.presentation.discover.components.PropertyPager
 import com.rsicarelli.homehunt.ui.navigation.Screen
-import com.rsicarelli.homehunt.ui.state.AppState
 import com.rsicarelli.homehunt.ui.theme.HomeHuntTheme
 import com.rsicarelli.homehunt_kmm.core.model.ProgressBarState
 import utils.Fixtures
@@ -58,7 +57,8 @@ private fun DiscoverContent(state: DiscoverState, actions: DiscoverActions) {
             onNavigate = { actions.onNavigate("${Screen.PropertyDetail.route}/${it}") },
             onUpVote = { actions.onUpVote(it) },
             onDownVote = { actions.onDownVote(it) },
-            itemRemoved = state.itemRemoved
+            itemRemoved = state.itemRemoved,
+            onPropertyViewed = actions.onPropertyViewed
         )
         state.progressBarState != ProgressBarState.Loading -> EmptyContent()
         else -> CircularIndeterminateProgressBar(progressBarState = state.progressBarState)
