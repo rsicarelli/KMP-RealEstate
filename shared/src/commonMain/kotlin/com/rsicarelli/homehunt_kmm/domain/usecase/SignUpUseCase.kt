@@ -18,8 +18,8 @@ class SignUpUseCase(
         runCatching<User> {
             userRepository.signUp(
                 UserInput(
-                    password = userName,
-                    userName = password
+                    password = password,
+                    userName = userName
                 )
             )
         }

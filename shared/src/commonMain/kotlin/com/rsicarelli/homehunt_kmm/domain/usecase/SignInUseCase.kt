@@ -17,8 +17,8 @@ class SignInUseCase(
         kotlin.runCatching {
             userRepository.signIn(
                 UserInput(
-                    password = userName,
-                    userName = password
+                    password = password,
+                    userName = userName
                 )
             )
         }
