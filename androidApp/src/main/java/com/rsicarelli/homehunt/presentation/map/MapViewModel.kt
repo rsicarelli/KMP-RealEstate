@@ -14,6 +14,7 @@ import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.flow.single
 import kotlinx.coroutines.launch
+import timber.log.Timber
 import javax.inject.Inject
 
 //TODO the same as HomeViewModel, unify somehow
@@ -63,6 +64,7 @@ class MapViewModel @Inject constructor(
     }
 
     fun onMarkerSelected(property: Property) {
+        Timber.d("MEMES -> onMarkerSelected: ${property._id}")
         onPropertyViewed(property)
         state.value = state.value.copy(
             propertySnippet = listOf(property),

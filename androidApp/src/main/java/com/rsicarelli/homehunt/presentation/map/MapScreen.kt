@@ -24,6 +24,7 @@ import com.rsicarelli.homehunt.presentation.map.components.PropertiesMapView
 import com.rsicarelli.homehunt.ui.navigation.Screen
 import com.rsicarelli.homehunt.ui.theme.Size_Regular
 import com.rsicarelli.homehunt.ui.theme.Size_Small
+import timber.log.Timber
 
 
 @Composable
@@ -143,7 +144,7 @@ private fun SinglePropertyPreview(
         enter = expandVertically(expandFrom = Alignment.Top),
         exit = shrinkVertically(shrinkTowards = Alignment.Top)
     ) {
-        state.properties.firstOrNull()?.let { property ->
+        state.propertySnippet.firstOrNull()?.let { property ->
             LazyColumn(
                 modifier = Modifier
                     .fillMaxWidth()

@@ -28,7 +28,7 @@ class PropertyRepositoryImpl(
     )
 
     init {
-        propertyCache.properties.distinctUntilChanged().onEach {
+        propertyCache.properties.onEach {
             _properties.tryEmit(it)
         }.launchIn(CoroutineScope(Dispatchers.Default))
 
