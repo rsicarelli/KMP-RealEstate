@@ -35,6 +35,11 @@ class DiscoverViewModel @Inject constructor(
     init {
         viewModelScope.launch {
             listen = searchOptionRepository.listen {
+                state.value = state.value.copy(
+                    properties = emptyList(),
+                    progressBarState = ProgressBarState.Loading,
+                    isEmpty = true
+                )
                 loadProperties()
             }
         }
