@@ -53,7 +53,9 @@ class PropertyRepositoryImpl(
         propertyCache.getAll().filter { it.isUpVoted }
 
     override suspend fun fetchFavourites(): List<Property> {
-        return getFavourites()
+        propertyService.fetchFavourites()?.let {
+            propertyCache.updateFavourites(it)
+        }.also { return getFavourites() }
     }
 
     override suspend fun getPropertyById(id: String): Property? = propertyCache.get(id)
