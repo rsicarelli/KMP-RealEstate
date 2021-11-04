@@ -58,7 +58,11 @@ class PropertyRepositoryImpl(
         }.also { return getFavourites() }
     }
 
-    override suspend fun getPropertyById(id: String): Property? = propertyCache.get(id)
+    override suspend fun getPropertyById(id: String): Property? {
+        return propertyCache.get(id) ?: propertyService.getPropertyById(id)?.let {
+            it.also { propertyCache.saveAll(listOf(it)) }
+        }
+    }
 
     override suspend fun markAsViewed(viewedPropertyInput: ViewedPropertyInput) {
         propertyService.markAsViewed(viewedPropertyInput)

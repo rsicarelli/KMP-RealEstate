@@ -2,6 +2,7 @@ package com.rsicarelli.homehunt_kmm.data.network
 
 import com.apollographql.apollo.api.ApolloExperimental
 import com.rsicarelli.homehunt_kmm.*
+import com.rsicarelli.homehunt_kmm.data.cache.mappers.toProperty
 import com.rsicarelli.homehunt_kmm.data.cache.mappers.toPropertyList
 import com.rsicarelli.homehunt_kmm.domain.model.Property
 import com.rsicarelli.homehunt_kmm.type.DownVoteInput
@@ -36,7 +37,10 @@ class PropertyServiceImpl constructor(
     }
 
     override suspend fun getPropertyById(id: String): Property? {
-        TODO("Not yet implemented")
+        val response =
+            apolloProvider.apolloClient.query(GetPropertyByIdQuery(referenceId = id)).execute()
+                .single()
+        return response.data?.property?.toProperty()
     }
 
     override suspend fun markAsViewed(viewedPropertyInput: ViewedPropertyInput): Boolean {

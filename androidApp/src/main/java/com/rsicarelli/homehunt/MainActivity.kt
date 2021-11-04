@@ -9,6 +9,7 @@ import androidx.compose.ui.Modifier
 import androidx.core.view.WindowCompat
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
+import androidx.navigation.navDeepLink
 import com.google.accompanist.insets.ProvideWindowInsets
 import com.google.accompanist.insets.systemBarsPadding
 import com.rsicarelli.homehunt.presentation.favourites.FavouritesScreen
@@ -66,9 +67,14 @@ private fun MainContent() {
                     content = { HomeScreen(appState) }
                 )
 
+                val uri = "https://www.homehunt.com"
+
                 composable(
                     route = Screen.PropertyDetail.route + "/{${NavArguments.PROPERTY_DETAIL}}",
                     arguments = Screen.PropertyDetail.arguments,
+                    deepLinks = listOf(navDeepLink {
+                        uriPattern = "$uri/{${NavArguments.PROPERTY_DETAIL}}"
+                    }),
                     content = { PropertyDetailScreen(appState) }
                 )
 

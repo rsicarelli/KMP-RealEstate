@@ -68,3 +68,32 @@ query GetRatings {
     downVoted
   }
 }
+
+query GetPropertyById($referenceId: String!) {
+    property(propertyId:$referenceId) {
+        _id
+        avatarUrl
+        bathCount
+        characteristics
+        dormCount
+        fullDescription
+        isActive
+        location {
+            isApproximated
+            isUnknown
+            lat
+            lng
+            name
+        }
+        locationDescription
+        origin
+        pdfUrl
+        photoGalleryUrls
+        price
+        propertyUrl
+        surface
+        tag
+        title
+        videoUrl
+    }
+}
