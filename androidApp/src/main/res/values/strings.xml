@@ -50,6 +50,9 @@
     <string name="properties">properties</string>
     <string name="down_vote">Down vote</string>
     <string name="apply">Apply</string>
+    <string name="share">share</string>
+    <string name="share_property">Share property</string>
+    <string name="share_message">Se liga nesse cafô: https://www.homehunt.com/%1$s</string>
     <plurals name="see_results_plurals">
         <item quantity="one">See %d result</item>
         <item quantity="other">See %d results</item>

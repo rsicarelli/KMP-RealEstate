@@ -6,9 +6,13 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.stringResource
+import androidx.core.app.ShareCompat
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.flowWithLifecycle
+import com.rsicarelli.homehunt.R
 import com.rsicarelli.homehunt.ui.state.AppState
 import com.rsicarelli.homehunt.presentation.components.rememberOnLifecycle
 import com.rsicarelli.homehunt.presentation.propertyDetail.components.GalleryBottomSheet
@@ -50,6 +54,8 @@ private fun PropertyDetailContent(
     state: PropertyDetailState,
     actions: PropertyDetailActions,
 ) {
+    val context = LocalContext.current
+
     state.property?.let { property ->
         Box(modifier = Modifier.fillMaxSize()) {
             PropertyDetail(
@@ -65,6 +71,13 @@ private fun PropertyDetailContent(
                         property._id,
                         !property.isUpVoted
                     )
+                },
+                onShareClick = {
+                    ShareCompat.IntentBuilder(context)
+                        .setType("text/plain")
+                        .setChooserTitle(context.resources.getString(R.string.share_property))
+                        .setText(context.resources.getString(R.string.share_message, property._id))
+                        .startChooser();
                 }
             )
             GalleryBottomSheet(
