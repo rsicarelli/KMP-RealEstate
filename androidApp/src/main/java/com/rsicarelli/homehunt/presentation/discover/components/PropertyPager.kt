@@ -24,6 +24,7 @@ import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextOverflow
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.util.lerp
 import androidx.constraintlayout.compose.ConstraintLayout
@@ -35,9 +36,11 @@ import com.rsicarelli.homehunt.BuildConfig
 import com.rsicarelli.homehunt.R
 import com.rsicarelli.homehunt.core.util.toCurrency
 import com.rsicarelli.homehunt.presentation.components.IconText
+import com.rsicarelli.homehunt.presentation.propertyDetail.components.PropertyHeader
 import com.rsicarelli.homehunt.ui.theme.*
 import com.rsicarelli.homehunt_kmm.domain.model.Location
 import com.rsicarelli.homehunt_kmm.domain.model.Property
+import utils.Fixtures
 import kotlin.math.absoluteValue
 
 @OptIn(ExperimentalPagerApi::class)
@@ -55,35 +58,16 @@ fun PropertyPager(
     onPropertyViewed(properties[pagerState.currentPage])
 
     ConstraintLayout(modifier = Modifier.fillMaxSize()) {
-        val (header, pager, bottomBar) = createRefs()
-
-        Row(
-            modifier = Modifier
-                .fillMaxWidth()
-                .constrainAs(header) {
-                    top.linkTo(parent.top, Size_Regular)
-                    start.linkTo(parent.start, Size_Large)
-                },
-            horizontalArrangement = Arrangement.End,
-            verticalAlignment = Alignment.CenterVertically
-        ) {
-            Text(
-                modifier = Modifier.weight(1.0f),
-                text = "${properties.size} ${stringResource(id = R.string.properties)}",
-                style = MaterialTheme.typography.h6
-            )
-        }
-
+        val (pager, bottomBar) = createRefs()
 
         HorizontalPager(
             modifier = Modifier
+                .heightIn(500.dp, 520.dp)
                 .constrainAs(pager) {
-                    top.linkTo(header.bottom, Size_Large)
-                    bottom.linkTo(bottomBar.top)
+                    top.linkTo(parent.top, Size_2X_Large)
                     start.linkTo(parent.start)
                     end.linkTo(parent.end)
-                }
-                .height(510.dp),
+                },
             state = pagerState,
             count = properties.size,
             contentPadding = PaddingValues(horizontal = 24.dp),
@@ -96,7 +80,7 @@ fun PropertyPager(
         BottomBar(
             modifier = Modifier.constrainAs(bottomBar) {
                 top.linkTo(pager.bottom)
-                bottom.linkTo(parent.bottom, Size_Small)
+                bottom.linkTo(parent.bottom)
                 start.linkTo(parent.start)
                 end.linkTo(parent.end)
             },
@@ -152,7 +136,8 @@ fun PagerScope.PropertySnapshot(
 
                 MainPicture(
                     modifier = Modifier.constrainAs(mainPhoto) {
-                        top.linkTo(parent.top, 8.dp)
+                        top.linkTo(propertyDetails.bottom)
+                        bottom.linkTo(map.top)
                         end.linkTo(parent.end)
                         start.linkTo(parent.start)
                     },
@@ -163,10 +148,10 @@ fun PagerScope.PropertySnapshot(
                 PropertyInfo(
                     property = property,
                     modifier = Modifier.constrainAs(propertyDetails) {
-                        top.linkTo(map.bottom)
-                        bottom.linkTo(parent.bottom, 8.dp)
+                        top.linkTo(parent.top)
                         end.linkTo(parent.end)
                         start.linkTo(parent.start)
+                        bottom.linkTo(mainPhoto.top)
                     },
                 )
 
@@ -174,6 +159,7 @@ fun PagerScope.PropertySnapshot(
                     location = property.location,
                     modifier = Modifier.constrainAs(map) {
                         top.linkTo(mainPhoto.bottom)
+                        bottom.linkTo(parent.bottom)
                         end.linkTo(parent.end)
                         start.linkTo(parent.start)
                     },
@@ -214,38 +200,39 @@ fun PropertyInfo(
     modifier: Modifier = Modifier,
     property: Property,
 ) {
-    Column(
-        modifier.padding(top = 0.dp, start = 16.dp, end = 16.dp, bottom = 0.dp)
-    ) {
-        Row(
-            modifier = Modifier.fillMaxWidth(),
-            horizontalArrangement = Arrangement.Start,
-            verticalAlignment = Alignment.CenterVertically,
-        ) {
-            Text(
-                modifier = Modifier.weight(1f),
-                text = "${property.price.toCurrency()}",
-                style = MaterialTheme.typography.h5,
-                maxLines = 1,
-                overflow = TextOverflow.Ellipsis
-            )
-
-            IconText(
-                text = "${property.dormCount}",
-                leadingIcon = R.drawable.ic_round_double_bed
-            )
-            Spacer(modifier = Modifier.width(Size_Small))
-            IconText(
-                text = "${property.bathCount}",
-                leadingIcon = R.drawable.ic_round_shower
-            )
-            Spacer(modifier = Modifier.width(Size_Small))
-            IconText(
-                text = "${property.surface} m²",
-                leadingIcon = R.drawable.ic_round_ruler
-            )
-        }
-    }
+    PropertyHeader(modifier = modifier, property = property)
+//    Column(
+//        modifier.padding(top = 0.dp, start = 16.dp, end = 16.dp, bottom = 0.dp)
+//    ) {
+//        Row(
+//            modifier = Modifier.fillMaxWidth(),
+//            horizontalArrangement = Arrangement.Start,
+//            verticalAlignment = Alignment.CenterVertically,
+//        ) {
+//            Text(
+//                modifier = Modifier.weight(1f),
+//                text = "${property.price.toCurrency()}",
+//                style = MaterialTheme.typography.h5,
+//                maxLines = 1,
+//                overflow = TextOverflow.Ellipsis
+//            )
+//
+//            IconText(
+//                text = "${property.dormCount}",
+//                leadingIcon = R.drawable.ic_round_double_bed
+//            )
+//            Spacer(modifier = Modifier.width(Size_Small))
+//            IconText(
+//                text = "${property.bathCount}",
+//                leadingIcon = R.drawable.ic_round_shower
+//            )
+//            Spacer(modifier = Modifier.width(Size_Small))
+//            IconText(
+//                text = "${property.surface} m²",
+//                leadingIcon = R.drawable.ic_round_ruler
+//            )
+//        }
+//    }
 }
 
 
@@ -287,5 +274,20 @@ fun MainPicture(
                 )
             }
         }
+    }
+}
+
+@Preview
+@Composable
+private fun PropertyPagerPreview() {
+    HomeHuntTheme(isPreview = true) {
+        PropertyPager(
+            properties = Fixtures.aListOfProperty,
+            onPropertyViewed = {},
+            onNavigate = {},
+            onUpVote = {},
+            onDownVote = {},
+            itemRemoved = ""
+        )
     }
 }
