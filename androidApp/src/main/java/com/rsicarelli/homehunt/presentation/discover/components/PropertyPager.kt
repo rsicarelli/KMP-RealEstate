@@ -4,12 +4,12 @@ import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.ExperimentalAnimationApi
 import androidx.compose.animation.fadeIn
 import androidx.compose.animation.fadeOut
+import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
-import androidx.compose.foundation.lazy.LazyRow
-import androidx.compose.foundation.lazy.itemsIndexed
+import androidx.compose.foundation.lazy.*
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Card
 import androidx.compose.material.MaterialTheme
@@ -146,31 +146,23 @@ fun PagerScope.PropertySnapshot(
             ConstraintLayout(
                 modifier = Modifier.fillMaxWidth()
             ) {
-                val (mainPhoto, propertyDetails, photoGallery, map) = createRefs()
+                val (mainPhoto, propertyDetails, map) = createRefs()
 
                 MainPicture(
                     modifier = Modifier.constrainAs(mainPhoto) {
-                        top.linkTo(parent.top)
+                        top.linkTo(parent.top, 8.dp)
                         end.linkTo(parent.end)
                         start.linkTo(parent.start)
                     },
-                    image = property.photoGalleryUrls.first(),
+                    images = property.photoGalleryUrls,
                     onClick = { onNavigate(property._id) }
                 )
 
                 PropertyInfo(
                     property = property,
                     modifier = Modifier.constrainAs(propertyDetails) {
-                        bottom.linkTo(mainPhoto.bottom)
-                        end.linkTo(parent.end)
-                        start.linkTo(parent.start)
-                    },
-                )
-
-                PropertyGallery(
-                    photoGallery = property.photoGalleryUrls,
-                    modifier = Modifier.constrainAs(photoGallery) {
-                        top.linkTo(mainPhoto.bottom)
+                        top.linkTo(map.bottom)
+                        bottom.linkTo(parent.bottom, 8.dp)
                         end.linkTo(parent.end)
                         start.linkTo(parent.start)
                     },
@@ -179,10 +171,9 @@ fun PagerScope.PropertySnapshot(
                 PropertyMap(
                     location = property.location,
                     modifier = Modifier.constrainAs(map) {
-                        top.linkTo(photoGallery.bottom)
+                        top.linkTo(mainPhoto.bottom)
                         end.linkTo(parent.end)
                         start.linkTo(parent.start)
-                        bottom.linkTo(parent.bottom)
                     },
                 )
             }
@@ -217,132 +208,78 @@ private fun PropertyMap(
 }
 
 @Composable
-fun PropertyGallery(
-    modifier: Modifier,
-    photoGallery: List<String>,
-) {
-    LazyRow(
-        modifier = modifier
-            .fillMaxWidth()
-            .padding(top = 8.dp),
-        horizontalArrangement = Arrangement.spacedBy(8.dp)
-    ) {
-        itemsIndexed(photoGallery.drop(1)) { index, url ->
-            val startPadding = if (index == 0) 8.dp else 0.dp
-            val endPadding = if (index == photoGallery.size - 2) 8.dp else 0.dp
-
-            Box(
-                modifier = Modifier
-                    .height(100.dp)
-                    .width(140.dp)
-                    .padding(start = startPadding, end = endPadding)
-                    .clip(MaterialTheme.shapes.medium)
-            ) {
-                Image(
-                    modifier = Modifier.fillMaxSize(),
-                    painter = rememberImagePainter(
-                        data = url,
-                        builder = {
-                            crossfade(true)
-                        }
-                    ),
-                    contentDescription = null,
-                    contentScale = ContentScale.Crop,
-                )
-            }
-        }
-    }
-}
-
-@Composable
 fun PropertyInfo(
     modifier: Modifier = Modifier,
     property: Property,
 ) {
-    Box(
-        modifier = modifier.clip(
-            RoundedCornerShape(
-                bottomEnd = Size_Medium,
-                bottomStart = Size_Medium
-            )
-        )
+    Column(
+        modifier.padding(top = 0.dp, start = 16.dp, end = 16.dp, bottom = 0.dp)
     ) {
-        Column(
-            modifier = Modifier
-                .background(
-                    brush = Brush.verticalGradient(
-                        colors = listOf(
-                            Color.Black.copy(alpha = 0f),
-                            Color.Black.copy(alpha = 0.3f),
-                            Color.Black.copy(alpha = 0.4f),
-                            Color.Black.copy(alpha = 0.6f),
-                            Color.Black.copy(alpha = 0.7f),
-                        )
-                    )
-                )
-                .padding(top = 4.dp, start = 8.dp, end = 8.dp)
+        Row(
+            modifier = Modifier.fillMaxWidth(),
+            horizontalArrangement = Arrangement.Start,
+            verticalAlignment = Alignment.CenterVertically,
         ) {
-            Row(
-                modifier = Modifier
-                    .fillMaxWidth(),
-                horizontalArrangement = Arrangement.Start,
-                verticalAlignment = Alignment.CenterVertically
-            ) {
-                IconText(
-                    text = "${property.dormCount}",
-                    leadingIcon = R.drawable.ic_round_double_bed
-                )
-                Spacer(modifier = Modifier.width(Size_Small))
-                IconText(
-                    text = "${property.bathCount}",
-                    leadingIcon = R.drawable.ic_round_shower
-                )
-                Spacer(modifier = Modifier.width(Size_Small))
-                IconText(
-                    modifier = Modifier.weight(1f),
-                    text = "${property.surface} m²",
-                    leadingIcon = R.drawable.ic_round_ruler
-                )
-                Text(
-                    modifier = Modifier
-                        .padding(start = 8.dp),
-                    text = "${property.price.toCurrency()}",
-                    style = MaterialTheme.typography.h4,
-                    maxLines = 1,
-                    overflow = TextOverflow.Ellipsis
-                )
-            }
+            Text(
+                modifier = Modifier.weight(1f),
+                text = "${property.price.toCurrency()}",
+                style = MaterialTheme.typography.h5,
+                maxLines = 1,
+                overflow = TextOverflow.Ellipsis
+            )
+
+            IconText(
+                text = "${property.dormCount}",
+                leadingIcon = R.drawable.ic_round_double_bed
+            )
+            Spacer(modifier = Modifier.width(Size_Small))
+            IconText(
+                text = "${property.bathCount}",
+                leadingIcon = R.drawable.ic_round_shower
+            )
+            Spacer(modifier = Modifier.width(Size_Small))
+            IconText(
+                text = "${property.surface} m²",
+                leadingIcon = R.drawable.ic_round_ruler
+            )
         }
     }
-
 }
 
 
+@OptIn(ExperimentalFoundationApi::class)
 @Composable
 fun MainPicture(
     modifier: Modifier = Modifier,
-    image: String,
+    images: List<String>,
     onClick: () -> Unit
 ) {
-    Box(
-        modifier = modifier.clip(
-            RoundedCornerShape(
-                bottomEnd = Size_Medium,
-                bottomStart = Size_Medium
-            )
-        )
+    LazyRow(
+        modifier = modifier.fillMaxWidth()
     ) {
-        Image(
-            modifier = modifier
-                .height(256.dp)
-                .fillMaxWidth()
-                .clickable { onClick() },
-            painter = rememberImagePainter(
-                data = image,
-                builder = { crossfade(true) }
-            ),
-            contentDescription = null,
-            contentScale = ContentScale.Crop,
-        )
+        itemsIndexed(images) { index, url ->
+            val startPadding = if (index == 0) 8.dp else 0.dp
+
+            Card(
+                modifier = Modifier
+                    .height(240.dp)
+                    .width(320.dp)
+                    .padding(start = startPadding, end = 8.dp),
+                elevation = 8.dp,
+                shape = MaterialTheme.shapes.medium
+            ) {
+                Image(
+                    modifier = modifier
+                        .fillMaxSize()
+                        .clickable { onClick() },
+                    painter = rememberImagePainter(
+                        data = url,
+                        builder = { crossfade(true) }
+                    ),
+                    contentDescription = null,
+                    contentScale = ContentScale.FillBounds,
+                )
+            }
+        }
     }
 }
