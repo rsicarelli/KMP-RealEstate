@@ -28,6 +28,8 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.util.lerp
 import androidx.constraintlayout.compose.ConstraintLayout
 import coil.compose.rememberImagePainter
+import coil.size.OriginalSize
+import coil.size.Scale
 import com.google.accompanist.pager.*
 import com.rsicarelli.homehunt.BuildConfig
 import com.rsicarelli.homehunt.R
@@ -274,7 +276,11 @@ fun MainPicture(
                         .clickable { onClick() },
                     painter = rememberImagePainter(
                         data = url,
-                        builder = { crossfade(true) }
+                        builder = {
+                            size(OriginalSize)
+                            scale(Scale.FILL)
+                            crossfade(true)
+                        }
                     ),
                     contentDescription = null,
                     contentScale = ContentScale.FillBounds,
