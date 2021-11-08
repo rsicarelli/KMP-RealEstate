@@ -28,10 +28,10 @@ fun PropertyHeader(
     Column(
         modifier = modifier
             .fillMaxWidth()
-            .padding(Size_Regular)
+            .padding(top = Size_Regular, start = Size_Regular, end = Size_Regular)
     ) {
         ConstraintLayout(modifier = Modifier.fillMaxWidth()) {
-            val (specs, price, title, location) = createRefs()
+            val (specs, price, title, location, bath, beds, surface) = createRefs()
             val barrier = createEndBarrier(location, specs)
 
             Text(
@@ -53,34 +53,68 @@ fun PropertyHeader(
                 leadingIcon = R.drawable.ic_round_location,
             )
 
-            Row(modifier = Modifier
-                .constrainAs(specs) {
-                    top.linkTo(location.bottom, Size_X_Small)
-                }) {
-                IconText(
-                    text = property.dormCount.toString(),
-                    textStyle = MaterialTheme.typography.subtitle2.copy(color = contentColor),
-                    leadingIcon = R.drawable.ic_round_double_bed
-                )
-                Spacer(modifier = Modifier.width(Size_Small))
-                IconText(
-                    text = property.bathCount.toString(),
-                    textStyle = MaterialTheme.typography.subtitle2.copy(color = contentColor),
-                    leadingIcon = R.drawable.ic_round_shower
-                )
-                Spacer(modifier = Modifier.width(Size_Small))
-                IconText(
-                    text = "${property.surface} m²",
-                    textStyle = MaterialTheme.typography.subtitle2.copy(color = contentColor),
-                    leadingIcon = R.drawable.ic_round_ruler
-                )
-            }
+//            Row(modifier = Modifier
+//                .constrainAs(specs) {
+//                    top.linkTo(location.bottom)
+//                }) {
+//                IconText(
+//                    text = property.dormCount.toString(),
+//                    textStyle = MaterialTheme.typography.subtitle2.copy(color = contentColor),
+//                    leadingIcon = R.drawable.ic_round_double_bed
+//                )
+//                Spacer(modifier = Modifier.width(Size_Small))
+//                IconText(
+//                    text = property.bathCount.toString(),
+//                    textStyle = MaterialTheme.typography.subtitle2.copy(color = contentColor),
+//                    leadingIcon = R.drawable.ic_round_shower
+//                )
+//                Spacer(modifier = Modifier.width(Size_Small))
+//                IconText(
+//                    text = "${property.surface} m²",
+//                    textStyle = MaterialTheme.typography.subtitle2.copy(color = contentColor),
+//                    leadingIcon = R.drawable.ic_round_ruler
+//                )
+//            }
+
+            IconText(
+                modifier = Modifier.constrainAs(beds) {
+                    linkTo(
+                        top = location.bottom,
+                        bottom = parent.bottom,
+                    )
+                },
+                text = property.dormCount.toString(),
+                textStyle = MaterialTheme.typography.subtitle2.copy(color = contentColor),
+                leadingIcon = R.drawable.ic_round_double_bed
+            )
+
+            IconText(
+                modifier = Modifier.constrainAs(bath) {
+                    top.linkTo(location.bottom)
+                    start.linkTo(beds.end, Size_Small)
+                    bottom.linkTo(parent.bottom)
+                },
+                text = property.bathCount.toString(),
+                textStyle = MaterialTheme.typography.subtitle2.copy(color = contentColor),
+                leadingIcon = R.drawable.ic_round_shower
+            )
+
+            IconText(
+                modifier = Modifier.constrainAs(surface) {
+                    top.linkTo(location.bottom)
+                    start.linkTo(bath.end, Size_Small)
+                    bottom.linkTo(parent.bottom)
+                },
+                text = "${property.surface} m²",
+                textStyle = MaterialTheme.typography.subtitle2.copy(color = contentColor),
+                leadingIcon = R.drawable.ic_round_ruler
+            )
 
             Text(
                 modifier = Modifier.constrainAs(price) {
                     bottom.linkTo(parent.bottom)
-                    end.linkTo(parent.end, margin = (-Size_Regular))
-                    start.linkTo(barrier, Size_Regular)
+                    end.linkTo(parent.end)
+                    baseline.linkTo(surface.baseline)
                 },
                 text = "${property.price.toCurrency()}",
                 style = MaterialTheme.typography.h4,
